@@ -12,62 +12,85 @@ export async function POST(request) {
       name: body.name,
       email: body.email,
       phone: body.phone ?? "",
-      course: body.course,
+      course: body.course ?? "",
       notes: body.notes ?? "",
       payment_status: "pending",
     };
 
-    const { error } = await supabase.from("participants").insert([payload]);
+    const { data, error, status, statusText } = await supabase
+      .from("participants")
+      .insert([payload])
+      .select();
 
     if (error) {
-      return Response.json({ error: error.message }, { status: 500 });
+      return Response.json(
+        {
+          source: "supabase",
+          error: error.message,
+          details: error.details ?? null,
+          hint: error.hint ?? null,
+          code: error.code ?? null,
+          status,
+          statusText,
+        },
+        { status: 500 }
+      );
     }
 
-    return Response.json({ ok: true });
+    return Response.json({ ok: true, data });
   } catch (err) {
     return Response.json(
-      { error: err instanceof Error ? err.message : "Unknown error" },
+      {
+        source: "catch",
+        error: err instanceof Error ? err.message : String(err),
+        cause:
+          err && typeof err === "object" && "cause" in err
+            ? String(err.cause)
+            : null,
+        stack:
+          err instanceof Error && err.stack ? err.stack.split("\\n").slice(0, 6) : null,
+      },
       { status: 500 }
     );
   }
 }
 
-export async function GET(request) {
+export async function GET() {
   try {
-    const { searchParams } = new URL(request.url);
-    const course = searchParams.get("course");
-    const paymentStatus = searchParams.get("payment_status");
-    const q = searchParams.get("q");
-
     const supabase = getSupabaseAdmin();
-
-    let query = supabase
+    const { data, error, status, statusText } = await supabase
       .from("participants")
       .select("*")
-      .order("created_at", { ascending: false });
-
-    if (course) {
-      query = query.eq("course", course);
-    }
-
-    if (paymentStatus) {
-      query = query.eq("payment_status", paymentStatus);
-    }
-
-    if (q) {
-      query = query.or(`name.ilike.%${q}%,email.ilike.%${q}%`);
-    }
-
-    const { data, error } = await query;
+      .limit(5);
 
     if (error) {
-      return Response.json({ error: error.message }, { status: 500 });
+      return Response.json(
+        {
+          source: "supabase",
+          error: error.message,
+          details: error.details ?? null,
+          hint: error.hint ?? null,
+          code: error.code ?? null,
+          status,
+          statusText,
+        },
+        { status: 500 }
+      );
     }
 
-    return Response.json(data);
+    return Response.json({ ok: true, data });
   } catch (err) {
     return Response.json(
-      { error: err instanceof Error ? err.message : "Unknown error" },
+      {
+        source: "catch",
+        error: err instanceof Error ? err.message : String(err),
+        cause:
+          err && typeof err === "object" && "cause" in err
+            ? String(err.cause)
+            : null,
+        stack:
+          err instanceof Error && err.stack ? err.stack.split("\\n").slice(0, 6) : null,
+      },
       { status: 500 }
     );
   }
