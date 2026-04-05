@@ -17,7 +17,7 @@ export async function POST(request) {
       payment_status: "pending",
     };
 
-    const { data, error, status, statusText } = await supabase
+    const { data, error } = await supabase
       .from("participants")
       .insert([payload])
       .select();
@@ -30,8 +30,6 @@ export async function POST(request) {
           details: error.details ?? null,
           hint: error.hint ?? null,
           code: error.code ?? null,
-          status,
-          statusText,
         },
         { status: 500 }
       );
@@ -47,8 +45,6 @@ export async function POST(request) {
           err && typeof err === "object" && "cause" in err
             ? String(err.cause)
             : null,
-        stack:
-          err instanceof Error && err.stack ? err.stack.split("\\n").slice(0, 6) : null,
       },
       { status: 500 }
     );
@@ -58,10 +54,11 @@ export async function POST(request) {
 export async function GET() {
   try {
     const supabase = getSupabaseAdmin();
-    const { data, error, status, statusText } = await supabase
+    const { data, error } = await supabase
       .from("participants")
       .select("*")
-      .limit(5);
+      .order("created_at", { ascending: false })
+      .limit(20);
 
     if (error) {
       return Response.json(
@@ -71,8 +68,6 @@ export async function GET() {
           details: error.details ?? null,
           hint: error.hint ?? null,
           code: error.code ?? null,
-          status,
-          statusText,
         },
         { status: 500 }
       );
@@ -88,8 +83,6 @@ export async function GET() {
           err && typeof err === "object" && "cause" in err
             ? String(err.cause)
             : null,
-        stack:
-          err instanceof Error && err.stack ? err.stack.split("\\n").slice(0, 6) : null,
       },
       { status: 500 }
     );
