@@ -14,15 +14,31 @@ export default function AdminPage() {
 
   async function loadParticipants() {
     setLoading(true);
-    const params = new URLSearchParams();
-    if (filters.q) params.set("q", filters.q);
-    if (filters.course) params.set("course", filters.course);
-    if (filters.payment_status) params.set("payment_status", filters.payment_status);
 
-    const res = await fetch(`/api/booking?${params.toString()}`, { cache: "no-store" });
-    const data = await res.json();
-    setItems(Array.isArray(data) ? data : []);
-    setLoading(false);
+    try {
+      const params = new URLSearchParams();
+      if (filters.q) params.set("q", filters.q);
+      if (filters.course) params.set("course", filters.course);
+      if (filters.payment_status) params.set("payment_status", filters.payment_status);
+
+      const res = await fetch(`/api/booking?${params.toString()}`, {
+        cache: "no-store",
+      });
+
+      const payload = await res.json();
+      const rows = Array.isArray(payload)
+        ? payload
+        : Array.isArray(payload.data)
+          ? payload.data
+          : [];
+
+      setItems(rows);
+    } catch (error) {
+      console.error("Kunne ikke hente deltagere:", error);
+      setItems([]);
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -54,38 +70,77 @@ export default function AdminPage() {
 
   return (
     <main style={{ maxWidth: 1200, margin: "0 auto", padding: 32 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          gap: 16,
+          alignItems: "center",
+          flexWrap: "wrap",
+        }}
+      >
         <div>
-          <h1 style={{ marginBottom: 8, color: "#1f3a2b" }}>Admin · Deltagerstyring</h1>
-          <div style={{ color: "#4b6355" }}>Beskyttet område. Filtrér, opdatér betalingsstatus og eksportér CSV.</div>
+          <h1 style={{ marginBottom: 8, color: "#1f3a2b" }}>
+            Admin · Deltagerstyring
+          </h1>
+          <div style={{ color: "#4b6355" }}>
+            Beskyttet område. Filtrér, opdatér betalingsstatus og eksportér CSV.
+          </div>
         </div>
+
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-          <a href="/api/participants/export" style={button("#d8782f")}>Eksportér CSV</a>
-          <button onClick={() => signOut({ callbackUrl: "/" })} style={button("#2f5f43")}>Log ud</button>
+          <a href="/api/participants/export" style={button("#d8782f")}>
+            Eksportér CSV
+          </a>
+          <button
+            onClick={() => signOut({ callbackUrl: "/" })}
+            style={button("#2f5f43")}
+          >
+            Log ud
+          </button>
         </div>
       </div>
 
       <section style={cardStyle}>
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr auto", gap: 12 }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "2fr 1fr 1fr auto",
+            gap: 12,
+          }}
+        >
           <input
             placeholder="Søg på navn eller email"
             value={filters.q}
-            onChange={(e) => setFilters((prev) => ({ ...prev, q: e.target.value }))}
+            onChange={(e) =>
+              setFilters((prev) => ({ ...prev, q: e.target.value }))
+            }
             style={inputStyle}
           />
+
           <select
             value={filters.course}
-            onChange={(e) => setFilters((prev) => ({ ...prev, course: e.target.value }))}
+            onChange={(e) =>
+              setFilters((prev) => ({ ...prev, course: e.target.value }))
+            }
             style={inputStyle}
           >
             <option value="">Alle kurser</option>
             {courseOptions.map((course) => (
-              <option key={course} value={course}>{course}</option>
+              <option key={course} value={course}>
+                {course}
+              </option>
             ))}
           </select>
+
           <select
             value={filters.payment_status}
-            onChange={(e) => setFilters((prev) => ({ ...prev, payment_status: e.target.value }))}
+            onChange={(e) =>
+              setFilters((prev) => ({
+                ...prev,
+                payment_status: e.target.value,
+              }))
+            }
             style={inputStyle}
           >
             <option value="">Alle betalingsstatus</option>
@@ -93,7 +148,10 @@ export default function AdminPage() {
             <option value="paid">paid</option>
             <option value="cancelled">cancelled</option>
           </select>
-          <button onClick={loadParticipants} style={button("#577e61")}>Opdater</button>
+
+          <button onClick={loadParticipants} style={button("#577e61")}>
+            Opdater
+          </button>
         </div>
       </section>
 
@@ -107,11 +165,22 @@ export default function AdminPage() {
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr>
-                  {["Navn", "Email", "Telefon", "Kursus", "Status", "Oprettet", "Handling"].map((label) => (
-                    <th key={label} style={thStyle}>{label}</th>
+                  {[
+                    "Navn",
+                    "Email",
+                    "Telefon",
+                    "Kursus",
+                    "Status",
+                    "Oprettet",
+                    "Handling",
+                  ].map((label) => (
+                    <th key={label} style={thStyle}>
+                      {label}
+                    </th>
                   ))}
                 </tr>
               </thead>
+
               <tbody>
                 {items.map((item) => (
                   <tr key={item.id}>
@@ -120,20 +189,51 @@ export default function AdminPage() {
                     <td style={tdStyle}>{item.phone || "—"}</td>
                     <td style={tdStyle}>{item.course}</td>
                     <td style={tdStyle}>
-                      <span style={{
-                        ...pillStyle,
-                        background: item.payment_status === "paid" ? "#dff3e5" : item.payment_status === "cancelled" ? "#fbe4e2" : "#f7eddc",
-                        color: item.payment_status === "paid" ? "#165c2c" : item.payment_status === "cancelled" ? "#9a2f27" : "#7a4d08"
-                      }}>
+                      <span
+                        style={{
+                          ...pillStyle,
+                          background:
+                            item.payment_status === "paid"
+                              ? "#dff3e5"
+                              : item.payment_status === "cancelled"
+                                ? "#fbe4e2"
+                                : "#f7eddc",
+                          color:
+                            item.payment_status === "paid"
+                              ? "#165c2c"
+                              : item.payment_status === "cancelled"
+                                ? "#9a2f27"
+                                : "#7a4d08",
+                        }}
+                      >
                         {item.payment_status}
                       </span>
                     </td>
-                    <td style={tdStyle}>{item.created_at ? new Date(item.created_at).toLocaleString("da-DK") : "—"}</td>
+                    <td style={tdStyle}>
+                      {item.created_at
+                        ? new Date(item.created_at).toLocaleString("da-DK")
+                        : "—"}
+                    </td>
                     <td style={tdStyle}>
                       <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                        <button onClick={() => updateStatus(item.id, "paid")} style={miniButton("#2f5f43")}>Marker betalt</button>
-                        <button onClick={() => updateStatus(item.id, "pending")} style={miniButton("#d8782f")}>Sæt pending</button>
-                        <button onClick={() => updateStatus(item.id, "cancelled")} style={miniButton("#8f2d20")}>Annullér</button>
+                        <button
+                          onClick={() => updateStatus(item.id, "paid")}
+                          style={miniButton("#2f5f43")}
+                        >
+                          Marker betalt
+                        </button>
+                        <button
+                          onClick={() => updateStatus(item.id, "pending")}
+                          style={miniButton("#d8782f")}
+                        >
+                          Sæt pending
+                        </button>
+                        <button
+                          onClick={() => updateStatus(item.id, "cancelled")}
+                          style={miniButton("#8f2d20")}
+                        >
+                          Annullér
+                        </button>
                       </div>
                     </td>
                   </tr>
