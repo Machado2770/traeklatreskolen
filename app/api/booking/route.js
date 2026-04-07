@@ -54,6 +54,7 @@ export async function POST(request) {
 export async function GET() {
   try {
     const supabase = getSupabaseAdmin();
+
     const { data, error } = await supabase
       .from("participants")
       .select("*")
