@@ -10,7 +10,7 @@ export default function OplevelseDetaljePage({ params }) {
     <main style={page}>
       <div style={grid}>
         <div>
-          <div style={price}>{item.price}</div>
+          <span style={price}>{item.price}</span>
           <h1 style={h1}>{item.title}</h1>
           <p style={lead}>{item.description}</p>
 
@@ -21,7 +21,7 @@ export default function OplevelseDetaljePage({ params }) {
           </ul>
 
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 24 }}>
-            <a href="/booking" style={ctaPrimary}>Book / kontakt</a>
+            <a href={item.bookingHref} style={ctaPrimary}>Book / tilmeld</a>
             <a href="/oplevelser" style={ctaSecondary}>Tilbage til oplevelser</a>
           </div>
         </div>

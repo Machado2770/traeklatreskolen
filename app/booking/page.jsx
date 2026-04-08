@@ -1,20 +1,45 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const defaultCourse = "Begynder i træklatring";
+
+const courseOptions = [
+  "Begynder i træklatring",
+  "Træklatreinstruktør",
+  "Avanceret træklatring",
+  "Oplevelsestur i trækronerne",
+  "Overnatning i trækronerne",
+  "Den vilde klatretur",
+  "Brush-up",
+];
 
 export default function BookingPage() {
   const [form, setForm] = useState({
     name: "",
     email: "",
     phone: "",
-    course: "Begynder i træklatring",
+    course: defaultCourse,
     notes: "",
   });
   const [status, setStatus] = useState("");
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const selectedCourse = params.get("course");
+
+    if (selectedCourse && courseOptions.includes(selectedCourse)) {
+      setForm((prev) => ({
+        ...prev,
+        course: selectedCourse,
+      }));
+    }
+  }, []);
+
   async function submit(e) {
     e.preventDefault();
     setStatus("Sender...");
+
     const response = await fetch("/api/booking", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -22,6 +47,8 @@ export default function BookingPage() {
     });
 
     if (!response.ok) {
+      const errorPayload = await response.json().catch(() => null);
+      console.error(errorPayload);
       setStatus("Noget gik galt. Prøv igen.");
       return;
     }
@@ -31,7 +58,7 @@ export default function BookingPage() {
       name: "",
       email: "",
       phone: "",
-      course: "Begynder i træklatring",
+      course: defaultCourse,
       notes: "",
     });
   }
@@ -39,36 +66,84 @@ export default function BookingPage() {
   return (
     <main style={{ maxWidth: 760, margin: "0 auto", padding: 40 }}>
       <h1 style={{ color: "#1f3a2b" }}>Kursustilmelding</h1>
-      <p>Betaling sker via bankoverførsel. Deltageren oprettes først som <strong>pending</strong>, og kan derefter markeres som betalt i admin.</p>
+      <p>
+        Betaling sker via bankoverførsel. Deltageren oprettes først som <strong>pending</strong>,
+        og kan derefter markeres som betalt i admin.
+      </p>
 
-      <div style={{ background: "#fff", borderRadius: 16, padding: 20, marginBottom: 24, boxShadow: "0 6px 24px rgba(0,0,0,0.06)" }}>
+      <div
+        style={{
+          background: "#fff",
+          borderRadius: 16,
+          padding: 20,
+          marginBottom: 24,
+          boxShadow: "0 6px 24px rgba(0,0,0,0.06)",
+        }}
+      >
         <div><strong>Reg.nr.:</strong> 1234</div>
         <div><strong>Konto:</strong> 567890</div>
         <div><strong>Reference:</strong> Navn + kursus</div>
       </div>
 
-      <form onSubmit={submit} style={{ display: "grid", gap: 14, background: "white", padding: 24, borderRadius: 16, boxShadow: "0 6px 24px rgba(0,0,0,0.06)" }}>
+      <form
+        onSubmit={submit}
+        style={{
+          display: "grid",
+          gap: 14,
+          background: "white",
+          padding: 24,
+          borderRadius: 16,
+          boxShadow: "0 6px 24px rgba(0,0,0,0.06)",
+        }}
+      >
         <Field label="Navn">
-          <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required style={inputStyle} />
+          <input
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            required
+            style={inputStyle}
+          />
         </Field>
+
         <Field label="E-mail">
-          <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required style={inputStyle} />
+          <input
+            type="email"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            required
+            style={inputStyle}
+          />
         </Field>
+
         <Field label="Telefon">
-          <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} style={inputStyle} />
+          <input
+            value={form.phone}
+            onChange={(e) => setForm({ ...form, phone: e.target.value })}
+            style={inputStyle}
+          />
         </Field>
-        <Field label="Kursus">
-          <select value={form.course} onChange={(e) => setForm({ ...form, course: e.target.value })} style={inputStyle}>
-            <option>Begynder i træklatring</option>
-            <option>Brush-up</option>
-            <option>Træklatreinstruktør</option>
-            <option>Eksamen træklatreinstruktør</option>
-            <option>Avanceret træklatring</option>
+
+        <Field label="Kursus / oplevelse">
+          <select
+            value={form.course}
+            onChange={(e) => setForm({ ...form, course: e.target.value })}
+            style={inputStyle}
+          >
+            {courseOptions.map((option) => (
+              <option key={option} value={option}>{option}</option>
+            ))}
           </select>
         </Field>
+
         <Field label="Bemærkninger">
-          <textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} rows={4} style={inputStyle} />
+          <textarea
+            value={form.notes}
+            onChange={(e) => setForm({ ...form, notes: e.target.value })}
+            rows={4}
+            style={inputStyle}
+          />
         </Field>
+
         <button type="submit" style={btnStyle}>Send tilmelding</button>
         {status ? <div>{status}</div> : null}
       </form>
