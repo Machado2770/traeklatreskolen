@@ -1,67 +1,188 @@
-import { courses } from "@/lib/siteData";
+import { courses, experiences } from "@/lib/siteData";
 
-export default function KurserPage() {
+export default function Home() {
+  const featuredCourses = courses.slice(0, 3);
+  const featuredExperiences = experiences.slice(0, 3);
+
   return (
     <main>
       <section style={hero}>
         <div style={heroOverlay}>
           <div style={heroInner}>
-            <p style={eyebrow}>Kurser</p>
-            <h1 style={heroTitle}>Kurser i træklatring</h1>
-            <p style={heroText}>
-              Her finder du alle kurser i Træklatreskolen — fra begynderniveau
-              til brush-up, instruktørforløb, avanceret træklatring og eksamen.
+            <p style={eyebrow}>Træklatring · Natur · Faglighed</p>
+            <h1 style={heroTitle}>Træklatreskolen</h1>
+            <p style={heroLead}>
+              Kurser og oplevelser i levende træer for dig, der vil lære,
+              udfordre dig selv og opleve skoven fra en ny vinkel.
             </p>
+
+            <div style={heroButtons}>
+              <a href="/kurser" style={primaryBtn}>Se kurser</a>
+              <a href="/oplevelser" style={secondaryBtn}>Se oplevelser</a>
+              <a href="/booking" style={ghostBtn}>Tilmeld</a>
+            </div>
           </div>
         </div>
       </section>
 
       <section style={section}>
-        <div style={grid}>
-          {courses.map((item) => (
-            <CourseCard key={item.slug} item={item} />
+        <div style={introGrid}>
+          <div>
+            <p style={sectionEyebrow}>Velkommen</p>
+            <h2 style={h2}>Træklatring med tryghed, eventyr og høj faglighed</h2>
+            <p style={bodyText}>
+              Træklatreskolen skaber forløb, hvor naturmøde, teknik og læring
+              går hånd i hånd. Her er plads til både det første møde med
+              træklatring og til videre udvikling for mere erfarne deltagere.
+            </p>
+            <p style={bodyText}>
+              Vi arbejder med levende træer som læringsrum, oplevelsesrum og
+              fællesskabsrum. Det handler ikke kun om at komme op i højden, men
+              om at gøre det sikkert, meningsfuldt og med respekt for naturen.
+            </p>
+          </div>
+
+          <div style={pillars}>
+            <div style={pillarCard}>
+              <h3 style={pillarTitle}>Sikkerhed først</h3>
+              <p style={pillarText}>
+                Klare procedurer, ansvarlig praksis og tydelige rammer i alle forløb.
+              </p>
+            </div>
+            <div style={pillarCard}>
+              <h3 style={pillarTitle}>Faglig progression</h3>
+              <p style={pillarText}>
+                Kurser og forløb med udvikling, teknik og læring i centrum.
+              </p>
+            </div>
+            <div style={pillarCard}>
+              <h3 style={pillarTitle}>Store oplevelser</h3>
+              <p style={pillarText}>
+                Skoven og trækronerne som rum for nærvær, mod og eventyr.
+              </p>
+            </div>
+            <div style={pillarCard}>
+              <h3 style={pillarTitle}>For flere målgrupper</h3>
+              <p style={pillarText}>
+                Enkeltpersoner, grupper, institutioner og virksomheder.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style={sectionSoft}>
+        <div style={sectionHeader}>
+          <div>
+            <p style={sectionEyebrow}>Kurser</p>
+            <h2 style={h2}>Udvalgte kurser</h2>
+          </div>
+          <a href="/kurser" style={sectionLink}>Se alle kurser</a>
+        </div>
+
+        <div style={cardGrid}>
+          {featuredCourses.map((item) => (
+            <a key={item.slug} href={`/kurser/${item.slug}`} style={card}>
+              <div
+                style={{
+                  ...cardImage,
+                  backgroundImage: `url('${item.image}')`,
+                }}
+              />
+              <div style={cardBody}>
+                <div style={tagRow}>
+                  <span style={priceTag}>{item.price}</span>
+                  <span style={levelTag}>{item.level}</span>
+                </div>
+                <h3 style={cardTitle}>{item.title}</h3>
+                <p style={cardText}>{item.short}</p>
+              </div>
+            </a>
           ))}
+        </div>
+      </section>
+
+      <section style={section}>
+        <div style={sectionHeader}>
+          <div>
+            <p style={sectionEyebrow}>Oplevelser</p>
+            <h2 style={h2}>Oplev skoven fra oven</h2>
+          </div>
+          <a href="/oplevelser" style={sectionLink}>Se alle oplevelser</a>
+        </div>
+
+        <div style={cardGrid}>
+          {featuredExperiences.map((item) => (
+            <a key={item.slug} href={`/oplevelser/${item.slug}`} style={card}>
+              <div
+                style={{
+                  ...cardImage,
+                  backgroundImage: `url('${item.image}')`,
+                }}
+              />
+              <div style={cardBody}>
+                <div style={tagRow}>
+                  <span style={priceTag}>{item.price}</span>
+                </div>
+                <h3 style={cardTitle}>{item.title}</h3>
+                <p style={cardText}>{item.short}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section style={band}>
+        <div style={bandInner}>
+          <div>
+            <p style={sectionEyebrowLight}>Hvorfor vælge os</p>
+            <h2 style={h2Light}>En skole med naturforståelse, teknik og menneskelighed</h2>
+            <p style={bandText}>
+              Træklatreskolen forener praktisk kunnen, faglig refleksion og stærke
+              naturoplevelser. Vi tror på, at de bedste forløb opstår, når tryghed,
+              progression og eventyr får lov at hænge sammen.
+            </p>
+          </div>
+
+          <div style={bandList}>
+            <div style={bandItem}>Begynderkurser med trygge rammer</div>
+            <div style={bandItem}>Videregående forløb og instruktørspor</div>
+            <div style={bandItem}>Oplevelser for grupper og enkeltpersoner</div>
+            <div style={bandItem}>Skov, højder og nærvær i samme rum</div>
+          </div>
+        </div>
+      </section>
+
+      <section style={ctaSection}>
+        <p style={sectionEyebrow}>Klar til næste skridt?</p>
+        <h2 style={h2}>Find det rigtige forløb</h2>
+        <p style={ctaText}>
+          Gå videre til kurser, oplevelser eller direkte til tilmelding. Har du
+          spørgsmål, kan du også kontakte Træklatreskolen og få hjælp til at
+          vælge det rigtige niveau.
+        </p>
+
+        <div style={heroButtonsCentered}>
+          <a href="/kurser" style={primaryBtn}>Se kurser</a>
+          <a href="/kursuskalender" style={secondaryLightBtn}>Se kursuskalender</a>
+          <a href="/kontakt" style={secondaryDarkBtn}>Kontakt os</a>
         </div>
       </section>
     </main>
   );
 }
 
-function CourseCard({ item }) {
-  return (
-    <div style={card}>
-      <a href={`/kurser/${item.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
-        <div style={{ ...image, backgroundImage: `url('${item.image}')` }} />
-      </a>
-
-      <div style={cardBody}>
-        <div style={tagRow}>
-          <span style={priceTag}>{item.price}</span>
-          <span style={levelTag}>{item.level}</span>
-        </div>
-
-        <h3 style={cardTitle}>{item.title}</h3>
-        <p style={cardText}>{item.short}</p>
-
-        <div style={actionRow}>
-          <a href={`/kurser/${item.slug}`} style={secondaryButton}>Læs mere</a>
-          <a href={item.bookingHref} style={primaryButton}>Tilmeld</a>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 const hero = {
-  minHeight: 320,
-  backgroundImage: "url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1800&q=80')",
+  minHeight: "78vh",
+  backgroundImage:
+    "url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1800&q=80')",
   backgroundSize: "cover",
   backgroundPosition: "center",
 };
 
 const heroOverlay = {
-  minHeight: 320,
-  background: "linear-gradient(rgba(18,33,26,0.62), rgba(18,33,26,0.62))",
+  minHeight: "78vh",
+  background: "linear-gradient(rgba(18,33,26,0.6), rgba(18,33,26,0.6))",
   display: "flex",
   alignItems: "center",
 };
@@ -69,50 +190,159 @@ const heroOverlay = {
 const heroInner = {
   maxWidth: 1180,
   margin: "0 auto",
-  padding: "56px 24px",
+  padding: "64px 24px",
   color: "white",
 };
 
 const eyebrow = {
   textTransform: "uppercase",
-  letterSpacing: 1.8,
-  fontSize: 13,
+  letterSpacing: 2,
+  fontSize: 12,
   marginBottom: 12,
 };
 
 const heroTitle = {
-  fontSize: "clamp(38px, 6vw, 64px)",
+  fontSize: "clamp(44px, 7vw, 76px)",
   margin: "0 0 14px",
 };
 
-const heroText = {
+const heroLead = {
   maxWidth: 760,
-  fontSize: 18,
-  lineHeight: 1.8,
+  fontSize: 22,
+  lineHeight: 1.7,
   margin: 0,
+};
+
+const heroButtons = {
+  display: "flex",
+  gap: 12,
+  flexWrap: "wrap",
+  marginTop: 28,
+};
+
+const heroButtonsCentered = {
+  display: "flex",
+  gap: 12,
+  flexWrap: "wrap",
+  justifyContent: "center",
+  marginTop: 24,
 };
 
 const section = {
   maxWidth: 1180,
   margin: "0 auto",
-  padding: "48px 24px 72px",
+  padding: "64px 24px",
 };
 
-const grid = {
+const sectionSoft = {
+  maxWidth: 1180,
+  margin: "0 auto",
+  padding: "64px 24px",
+};
+
+const introGrid = {
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-  gap: 24,
+  gridTemplateColumns: "1.05fr 0.95fr",
+  gap: 28,
+  alignItems: "start",
+};
+
+const sectionEyebrow = {
+  textTransform: "uppercase",
+  letterSpacing: 1.8,
+  fontSize: 12,
+  color: "#a3521d",
+  marginBottom: 10,
+  fontWeight: 700,
+};
+
+const sectionEyebrowLight = {
+  textTransform: "uppercase",
+  letterSpacing: 1.8,
+  fontSize: 12,
+  color: "#ffd0af",
+  marginBottom: 10,
+  fontWeight: 700,
+};
+
+const h2 = {
+  color: "#1f3a2b",
+  fontSize: 36,
+  marginTop: 0,
+  marginBottom: 14,
+};
+
+const h2Light = {
+  color: "white",
+  fontSize: 36,
+  marginTop: 0,
+  marginBottom: 14,
+};
+
+const bodyText = {
+  color: "#4b6355",
+  lineHeight: 1.8,
+  fontSize: 17,
+  marginBottom: 14,
+};
+
+const pillars = {
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr",
+  gap: 16,
+};
+
+const pillarCard = {
+  background: "white",
+  borderRadius: 18,
+  padding: 20,
+  boxShadow: "0 8px 24px rgba(0,0,0,0.07)",
+};
+
+const pillarTitle = {
+  marginTop: 0,
+  marginBottom: 8,
+  color: "#1f3a2b",
+};
+
+const pillarText = {
+  margin: 0,
+  color: "#4b6355",
+  lineHeight: 1.7,
+};
+
+const sectionHeader = {
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  gap: 12,
+  flexWrap: "wrap",
+  marginBottom: 20,
+};
+
+const sectionLink = {
+  color: "#d8782f",
+  textDecoration: "none",
+  fontWeight: 700,
+};
+
+const cardGrid = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+  gap: 22,
 };
 
 const card = {
+  display: "block",
   background: "white",
   borderRadius: 20,
   overflow: "hidden",
-  boxShadow: "0 10px 28px rgba(0,0,0,0.08)",
+  textDecoration: "none",
+  boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
 };
 
-const image = {
-  height: 240,
+const cardImage = {
+  height: 220,
   backgroundSize: "cover",
   backgroundPosition: "center",
 };
@@ -158,19 +388,60 @@ const cardText = {
   margin: 0,
   color: "#4b6355",
   lineHeight: 1.7,
-  minHeight: 48,
 };
 
-const actionRow = {
-  display: "flex",
-  gap: 10,
-  flexWrap: "wrap",
-  marginTop: 18,
+const band = {
+  background: "#1f3a2b",
 };
 
-const primaryButton = {
+const bandInner = {
+  maxWidth: 1180,
+  margin: "0 auto",
+  padding: "70px 24px",
+  color: "white",
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr",
+  gap: 28,
+  alignItems: "start",
+};
+
+const bandText = {
+  lineHeight: 1.8,
+  fontSize: 17,
+  opacity: 0.95,
+};
+
+const bandList = {
+  display: "grid",
+  gap: 14,
+};
+
+const bandItem = {
+  padding: "16px 18px",
+  background: "rgba(255,255,255,0.08)",
+  borderRadius: 16,
+  border: "1px solid rgba(255,255,255,0.08)",
+  fontWeight: 600,
+};
+
+const ctaSection = {
+  maxWidth: 1180,
+  margin: "0 auto",
+  padding: "70px 24px 72px",
+  textAlign: "center",
+};
+
+const ctaText = {
+  maxWidth: 760,
+  margin: "0 auto",
+  color: "#4b6355",
+  lineHeight: 1.8,
+  fontSize: 17,
+};
+
+const primaryBtn = {
   display: "inline-block",
-  padding: "12px 16px",
+  padding: "14px 22px",
   background: "#d8782f",
   color: "white",
   borderRadius: 10,
@@ -178,9 +449,40 @@ const primaryButton = {
   fontWeight: 700,
 };
 
-const secondaryButton = {
+const secondaryBtn = {
   display: "inline-block",
-  padding: "12px 16px",
+  padding: "14px 22px",
+  background: "#1f3a2b",
+  color: "white",
+  borderRadius: 10,
+  textDecoration: "none",
+  fontWeight: 700,
+};
+
+const ghostBtn = {
+  display: "inline-block",
+  padding: "14px 22px",
+  background: "transparent",
+  color: "white",
+  borderRadius: 10,
+  textDecoration: "none",
+  fontWeight: 700,
+  border: "1px solid rgba(255,255,255,0.35)",
+};
+
+const secondaryLightBtn = {
+  display: "inline-block",
+  padding: "14px 22px",
+  background: "#f5e5d8",
+  color: "#a3521d",
+  borderRadius: 10,
+  textDecoration: "none",
+  fontWeight: 700,
+};
+
+const secondaryDarkBtn = {
+  display: "inline-block",
+  padding: "14px 22px",
   background: "#e7efe9",
   color: "#1f3a2b",
   borderRadius: 10,
