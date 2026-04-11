@@ -1,234 +1,316 @@
-import { courses, experiences } from "@/lib/siteData";
+"use client";
 
-export default function Home() {
+import { signOut } from "next-auth/react";
+import { useEffect, useMemo, useState } from "react";
+
+export default function AdminPage() {
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filters, setFilters] = useState({
+    q: "",
+    course: "",
+    payment_status: "",
+  });
+
+  async function loadParticipants() {
+    setLoading(true);
+
+    try {
+      const params = new URLSearchParams();
+      if (filters.q) params.set("q", filters.q);
+      if (filters.course) params.set("course", filters.course);
+      if (filters.payment_status) params.set("payment_status", filters.payment_status);
+
+      const res = await fetch(`/api/booking?${params.toString()}`, {
+        cache: "no-store",
+      });
+
+      const payload = await res.json();
+      const rows = Array.isArray(payload)
+        ? payload
+        : Array.isArray(payload.data)
+          ? payload.data
+          : [];
+
+      setItems(rows);
+    } catch (error) {
+      console.error("Kunne ikke hente deltagere:", error);
+      setItems([]);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    loadParticipants();
+  }, [filters.q, filters.course, filters.payment_status]);
+
+  const courseOptions = useMemo(() => {
+    const set = new Set(items.map((i) => i.course).filter(Boolean));
+    return Array.from(set).sort();
+  }, [items]);
+
+  async function updateStatus(id, paymentStatus) {
+    const res = await fetch(`/api/participants/${id}/status`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ payment_status: paymentStatus }),
+    });
+
+    if (res.ok) {
+      setItems((prev) =>
+        prev.map((item) =>
+          item.id === id ? { ...item, payment_status: paymentStatus } : item
+        )
+      );
+    } else {
+      alert("Kunne ikke opdatere betalingsstatus.");
+    }
+  }
+
   return (
-    <main>
-      <section style={hero}>
-        <div style={heroOverlay}>
-          <div style={heroContent}>
-            <p style={eyebrow}>Træklatring · Friluftsliv · Oplevelser</p>
-            <h1 style={heroTitle}>Træklatring i højden</h1>
-            <p style={heroText}>
-              Kurser, oplevelser og faglighed i træernes verden. For begyndere,
-              instruktører og grupper, der vil opleve skoven fra en ny vinkel.
-            </p>
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
-              <a href="/kurser" style={ctaPrimary}>Se kurser</a>
-              <a href="/oplevelser" style={ctaSecondary}>Se oplevelser</a>
-            </div>
+    <main style={{ maxWidth: 1200, margin: "0 auto", padding: 32 }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          gap: 16,
+          alignItems: "center",
+          flexWrap: "wrap",
+        }}
+      >
+        <div>
+          <h1 style={{ marginBottom: 8, color: "#1f3a2b" }}>
+            Admin · Deltagerstyring
+          </h1>
+          <div style={{ color: "#4b6355" }}>
+            Beskyttet område. Filtrér, opdatér betalingsstatus og eksportér CSV.
           </div>
         </div>
+
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+          <a href="/api/participants/export" style={button("#d8782f")}>
+            Eksportér CSV
+          </a>
+          <button
+            onClick={() => signOut({ callbackUrl: "/" })}
+            style={button("#2f5f43")}
+          >
+            Log ud
+          </button>
+        </div>
+      </div>
+
+      <section style={cardStyle}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "2fr 1fr 1fr auto",
+            gap: 12,
+          }}
+        >
+          <input
+            placeholder="Søg på navn eller email"
+            value={filters.q}
+            onChange={(e) =>
+              setFilters((prev) => ({ ...prev, q: e.target.value }))
+            }
+            style={inputStyle}
+          />
+
+          <select
+            value={filters.course}
+            onChange={(e) =>
+              setFilters((prev) => ({ ...prev, course: e.target.value }))
+            }
+            style={inputStyle}
+          >
+            <option value="">Alle kurser</option>
+            {courseOptions.map((course) => (
+              <option key={course} value={course}>
+                {course}
+              </option>
+            ))}
+          </select>
+
+          <select
+            value={filters.payment_status}
+            onChange={(e) =>
+              setFilters((prev) => ({
+                ...prev,
+                payment_status: e.target.value,
+              }))
+            }
+            style={inputStyle}
+          >
+            <option value="">Alle betalingsstatus</option>
+            <option value="pending">pending</option>
+            <option value="paid">paid</option>
+            <option value="cancelled">cancelled</option>
+          </select>
+
+          <button onClick={loadParticipants} style={button("#577e61")}>
+            Opdater
+          </button>
+        </div>
       </section>
 
-      <section style={section}>
-        <h2 style={h2}>Velkommen til Træklatreskolen</h2>
-        <p style={lead}>
-          Vi forener sikkerhed, faglighed og eventyr i levende træer. Her er der
-          plads til både læring, naturforbindelse og stærke oplevelser.
-        </p>
-      </section>
+      <section style={cardStyle}>
+        {loading ? (
+          <div>Henter deltagere…</div>
+        ) : items.length === 0 ? (
+          <div>Ingen deltagere fundet.</div>
+        ) : (
+          <div style={{ overflowX: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+              <thead>
+                <tr>
+                  {[
+                    "Navn",
+                    "Email",
+                    "Telefon",
+                    "Kursus",
+                    "Status",
+                    "Oprettet",
+                    "Handling",
+                  ].map((label) => (
+                    <th key={label} style={thStyle}>
+                      {label}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
 
-      <section style={section}>
-        <div style={sectionHeader}>
-          <h2 style={h2}>Kurser</h2>
-          <a href="/kurser" style={sectionLink}>Se alle kurser</a>
-        </div>
-        <div style={grid}>
-          {courses.map((item) => (
-            <Card
-              key={item.slug}
-              href={`/kurser/${item.slug}`}
-              title={item.title}
-              text={item.short}
-              image={item.image}
-              price={item.price}
-            />
-          ))}
-        </div>
-      </section>
-
-      <section style={section}>
-        <div style={sectionHeader}>
-          <h2 style={h2}>Oplevelser</h2>
-          <a href="/oplevelser" style={sectionLink}>Se alle oplevelser</a>
-        </div>
-        <div style={grid}>
-          {experiences.map((item) => (
-            <Card
-              key={item.slug}
-              href={`/oplevelser/${item.slug}`}
-              title={item.title}
-              text={item.short}
-              image={item.image}
-              price={item.price}
-            />
-          ))}
-        </div>
-      </section>
-
-      <section style={ctaBand}>
-        <h2 style={{ marginTop: 0 }}>Klar til at komme op i træerne?</h2>
-        <p style={{ maxWidth: 700, margin: "0 auto 18px" }}>
-          Uanset om du vil lære træklatring, udvikle dig fagligt eller give en gruppe
-          en særlig oplevelse, så er næste skridt her.
-        </p>
-        <a href="/booking" style={ctaPrimary}>Tilmeld kursus</a>
+              <tbody>
+                {items.map((item) => (
+                  <tr key={item.id}>
+                    <td style={tdStyle}>{item.name}</td>
+                    <td style={tdStyle}>{item.email}</td>
+                    <td style={tdStyle}>{item.phone || "—"}</td>
+                    <td style={tdStyle}>{item.course}</td>
+                    <td style={tdStyle}>
+                      <span
+                        style={{
+                          ...pillStyle,
+                          background:
+                            item.payment_status === "paid"
+                              ? "#dff3e5"
+                              : item.payment_status === "cancelled"
+                                ? "#fbe4e2"
+                                : "#f7eddc",
+                          color:
+                            item.payment_status === "paid"
+                              ? "#165c2c"
+                              : item.payment_status === "cancelled"
+                                ? "#9a2f27"
+                                : "#7a4d08",
+                        }}
+                      >
+                        {item.payment_status}
+                      </span>
+                    </td>
+                    <td style={tdStyle}>
+                      {item.created_at
+                        ? new Date(item.created_at).toLocaleString("da-DK")
+                        : "—"}
+                    </td>
+                    <td style={tdStyle}>
+                      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                        <button
+                          onClick={() => updateStatus(item.id, "paid")}
+                          style={miniButton("#2f5f43")}
+                        >
+                          Marker betalt
+                        </button>
+                        <button
+                          onClick={() => updateStatus(item.id, "pending")}
+                          style={miniButton("#d8782f")}
+                        >
+                          Sæt pending
+                        </button>
+                        <button
+                          onClick={() => updateStatus(item.id, "cancelled")}
+                          style={miniButton("#8f2d20")}
+                        >
+                          Annullér
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </section>
     </main>
   );
 }
 
-function Card({ href, title, text, image, price }) {
-  return (
-    <a href={href} style={card}>
-      <div
-        style={{
-          ...cardImage,
-          backgroundImage: `url('${image}')`,
-        }}
-      />
-      <div style={{ padding: 20 }}>
-        <div style={priceTag}>{price}</div>
-        <h3 style={{ margin: "10px 0 8px", color: "#1f3a2b" }}>{title}</h3>
-        <p style={{ margin: 0, color: "#4b6355" }}>{text}</p>
-      </div>
-    </a>
-  );
-}
-
-const hero = {
-  minHeight: "72vh",
-  backgroundImage:
-    "url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1800&q=80')",
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-};
-
-const heroOverlay = {
-  minHeight: "72vh",
-  background: "linear-gradient(rgba(20,35,28,0.55), rgba(20,35,28,0.55))",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  padding: 24,
-};
-
-const heroContent = {
-  maxWidth: 860,
-  textAlign: "center",
-  color: "white",
-};
-
-const eyebrow = {
-  textTransform: "uppercase",
-  letterSpacing: 2,
-  fontSize: 13,
-  opacity: 0.9,
-  marginBottom: 10,
-};
-
-const heroTitle = {
-  fontSize: "clamp(38px, 7vw, 68px)",
-  margin: "0 0 12px",
-};
-
-const heroText = {
-  fontSize: 18,
-  lineHeight: 1.6,
-  maxWidth: 760,
-  margin: "0 auto 24px",
-};
-
-const section = {
-  maxWidth: 1180,
-  margin: "0 auto",
-  padding: "64px 24px",
-};
-
-const h2 = {
-  color: "#1f3a2b",
-  fontSize: 34,
-  marginTop: 0,
-};
-
-const lead = {
-  maxWidth: 760,
-  color: "#4b6355",
-  fontSize: 18,
-  lineHeight: 1.7,
-};
-
-const sectionHeader = {
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "end",
-  gap: 16,
-  flexWrap: "wrap",
-  marginBottom: 20,
-};
-
-const sectionLink = {
-  color: "#d8782f",
-  fontWeight: 700,
-  textDecoration: "none",
-};
-
-const grid = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-  gap: 22,
-};
-
-const card = {
-  display: "block",
+const cardStyle = {
   background: "white",
-  borderRadius: 18,
-  overflow: "hidden",
-  textDecoration: "none",
-  boxShadow: "0 8px 28px rgba(0,0,0,0.08)",
+  borderRadius: 16,
+  padding: 20,
+  boxShadow: "0 6px 24px rgba(0,0,0,0.06)",
+  marginTop: 20,
 };
 
-const cardImage = {
-  height: 220,
-  backgroundSize: "cover",
-  backgroundPosition: "center",
+const inputStyle = {
+  width: "100%",
+  padding: "10px 12px",
+  borderRadius: 10,
+  border: "1px solid #cfd8d3",
+  boxSizing: "border-box",
+  font: "inherit",
 };
 
-const priceTag = {
+const thStyle = {
+  textAlign: "left",
+  padding: "12px 10px",
+  borderBottom: "1px solid #e5ece7",
+  color: "#486051",
+  fontSize: 14,
+};
+
+const tdStyle = {
+  padding: "12px 10px",
+  borderBottom: "1px solid #eef3ef",
+  verticalAlign: "top",
+};
+
+const pillStyle = {
   display: "inline-block",
-  background: "#f5e5d8",
-  color: "#a3521d",
   padding: "6px 10px",
   borderRadius: 999,
   fontSize: 12,
   fontWeight: 700,
+  textTransform: "uppercase",
 };
 
-const ctaBand = {
-  background: "#1f3a2b",
-  color: "white",
-  textAlign: "center",
-  padding: "70px 24px",
-  marginTop: 20,
-};
+function button(bg) {
+  return {
+    display: "inline-block",
+    padding: "12px 16px",
+    borderRadius: 10,
+    background: bg,
+    color: "white",
+    border: 0,
+    textDecoration: "none",
+    fontWeight: 700,
+    cursor: "pointer",
+  };
+}
 
-const ctaPrimary = {
-  display: "inline-block",
-  padding: "14px 22px",
-  background: "#d8782f",
-  color: "white",
-  borderRadius: 10,
-  textDecoration: "none",
-  fontWeight: 700,
-};
-
-const ctaSecondary = {
-  display: "inline-block",
-  padding: "14px 22px",
-  background: "rgba(255,255,255,0.12)",
-  color: "white",
-  borderRadius: 10,
-  textDecoration: "none",
-  fontWeight: 700,
-  border: "1px solid rgba(255,255,255,0.25)",
-};
+function miniButton(bg) {
+  return {
+    display: "inline-block",
+    padding: "8px 10px",
+    borderRadius: 10,
+    background: bg,
+    color: "white",
+    border: 0,
+    fontWeight: 700,
+    cursor: "pointer",
+    fontSize: 12,
+  };
+}
