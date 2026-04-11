@@ -1,6 +1,12 @@
 import { courses } from "@/lib/siteData";
 import { notFound } from "next/navigation";
 
+export function generateStaticParams() {
+  return courses.map((course) => ({
+    slug: course.slug,
+  }));
+}
+
 export default function KursusDetaljePage({ params }) {
   const item = courses.find((course) => course.slug === params.slug);
 
@@ -30,7 +36,12 @@ export default function KursusDetaljePage({ params }) {
           </div>
         </div>
 
-        <div style={{ ...image, backgroundImage: `url('${item.image}')` }} />
+        <div
+          style={{
+            ...image,
+            backgroundImage: `url('${item.image}')`,
+          }}
+        />
       </div>
     </main>
   );
