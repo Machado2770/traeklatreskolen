@@ -30,12 +30,7 @@ export default function KursusDetaljePage({ params }) {
           </div>
         </div>
 
-        <div
-          style={{
-            ...image,
-            backgroundImage: `url('${item.image}')`,
-          }}
-        />
+        <div style={{ ...image, backgroundImage: `url('${item.image}')` }} />
       </div>
     </main>
   );

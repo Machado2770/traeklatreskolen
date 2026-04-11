@@ -9,39 +9,9 @@ export default function KurserPage() {
             <p style={eyebrow}>Kurser</p>
             <h1 style={heroTitle}>Kurser i træklatring</h1>
             <p style={heroText}>
-              Fra første møde med træklatring til instruktørniveau, brush-up og
-              afsluttende eksamen. Her finder du forløb med tryg progression,
-              tydelig faglighed og stærke naturoplevelser.
+              Her finder du alle kurser i Træklatreskolen — fra begynderniveau
+              til brush-up, instruktørforløb, avanceret træklatring og eksamen.
             </p>
-          </div>
-        </div>
-      </section>
-
-      <section style={introSection}>
-        <div style={introGrid}>
-          <div>
-            <p style={sectionEyebrow}>Overblik</p>
-            <h2 style={h2}>Et kursusforløb med plads til både begyndere og erfarne</h2>
-            <p style={bodyText}>
-              Træklatreskolens kurser er bygget op med fokus på sikkerhed,
-              læring, naturforståelse og praktisk træning i levende træer.
-            </p>
-            <p style={bodyText}>
-              Du kan begynde fra bunden, genopfriske tidligere erfaring,
-              arbejde videre mod instruktørniveau eller afslutte dit forløb med eksamen.
-            </p>
-          </div>
-
-          <div style={infoPanel}>
-            <div style={infoItem}>
-              <strong>Fokus:</strong> sikkerhed, teknik og formidling
-            </div>
-            <div style={infoItem}>
-              <strong>Målgruppe:</strong> både begyndere og erfarne deltagere
-            </div>
-            <div style={infoItem}>
-              <strong>Format:</strong> praktisk læring i og omkring træet
-            </div>
           </div>
         </div>
       </section>
@@ -61,12 +31,7 @@ function CourseCard({ item }) {
   return (
     <div style={card}>
       <a href={`/kurser/${item.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
-        <div
-          style={{
-            ...image,
-            backgroundImage: `url('${item.image}')`,
-          }}
-        />
+        <div style={{ ...image, backgroundImage: `url('${item.image}')` }} />
       </a>
 
       <div style={cardBody}>
@@ -79,12 +44,8 @@ function CourseCard({ item }) {
         <p style={cardText}>{item.short}</p>
 
         <div style={actionRow}>
-          <a href={`/kurser/${item.slug}`} style={secondaryButton}>
-            Læs mere
-          </a>
-          <a href={item.bookingHref} style={primaryButton}>
-            Tilmeld
-          </a>
+          <a href={`/kurser/${item.slug}`} style={secondaryButton}>Læs mere</a>
+          <a href={item.bookingHref} style={primaryButton}>Tilmeld</a>
         </div>
       </div>
     </div>
@@ -92,15 +53,14 @@ function CourseCard({ item }) {
 }
 
 const hero = {
-  minHeight: 360,
-  backgroundImage:
-    "url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1800&q=80')",
+  minHeight: 320,
+  backgroundImage: "url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1800&q=80')",
   backgroundSize: "cover",
   backgroundPosition: "center",
 };
 
 const heroOverlay = {
-  minHeight: 360,
+  minHeight: 320,
   background: "linear-gradient(rgba(18,33,26,0.62), rgba(18,33,26,0.62))",
   display: "flex",
   alignItems: "center",
@@ -118,7 +78,6 @@ const eyebrow = {
   letterSpacing: 1.8,
   fontSize: 13,
   marginBottom: 12,
-  opacity: 0.9,
 };
 
 const heroTitle = {
@@ -133,59 +92,10 @@ const heroText = {
   margin: 0,
 };
 
-const introSection = {
-  maxWidth: 1180,
-  margin: "0 auto",
-  padding: "56px 24px 24px",
-};
-
-const introGrid = {
-  display: "grid",
-  gridTemplateColumns: "1.15fr 0.85fr",
-  gap: 28,
-  alignItems: "start",
-};
-
-const sectionEyebrow = {
-  textTransform: "uppercase",
-  fontSize: 12,
-  letterSpacing: 1.8,
-  color: "#a3521d",
-  marginBottom: 10,
-  fontWeight: 700,
-};
-
-const h2 = {
-  color: "#1f3a2b",
-  fontSize: 36,
-  marginTop: 0,
-};
-
-const bodyText = {
-  color: "#4b6355",
-  lineHeight: 1.8,
-  fontSize: 17,
-  marginBottom: 14,
-};
-
-const infoPanel = {
-  background: "white",
-  borderRadius: 20,
-  padding: 24,
-  boxShadow: "0 8px 24px rgba(0,0,0,0.07)",
-};
-
-const infoItem = {
-  padding: "12px 0",
-  borderBottom: "1px solid #edf2ee",
-  color: "#33463a",
-  lineHeight: 1.7,
-};
-
 const section = {
   maxWidth: 1180,
   margin: "0 auto",
-  padding: "12px 24px 72px",
+  padding: "48px 24px 72px",
 };
 
 const grid = {
