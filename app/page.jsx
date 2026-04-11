@@ -9,11 +9,17 @@ export default function Home() {
       <section style={hero}>
         <div style={heroOverlay}>
           <div style={heroInner}>
-            <p style={eyebrow}>Træklatring · Natur · Faglighed</p>
+            <p style={eyebrow}>Dansk skov · Træklatring · Faglighed</p>
             <h1 style={heroTitle}>Træklatreskolen</h1>
             <p style={heroLead}>
               Kurser og oplevelser i levende træer for dig, der vil lære,
-              udfordre dig selv og opleve skoven fra en ny vinkel.
+              udfordre dig selv og opleve naturen fra en ny vinkel.
+            </p>
+            <p style={heroText}>
+              Vi arbejder med træklatring som læringsrum, naturoplevelse og
+              fagligt håndværk. Her mødes sikkerhed, naturforståelse og eventyr
+              i højden — fra de første skridt op i træet til mere avancerede
+              forløb og oplevelser.
             </p>
 
             <div style={heroButtons}>
@@ -36,9 +42,10 @@ export default function Home() {
               træklatring og til videre udvikling for mere erfarne deltagere.
             </p>
             <p style={bodyText}>
-              Vi arbejder med levende træer som læringsrum, oplevelsesrum og
-              fællesskabsrum. Det handler ikke kun om at komme op i højden, men
-              om at gøre det sikkert, meningsfuldt og med respekt for naturen.
+              Vi tror på, at de stærkeste oplevelser opstår, når sikkerhed,
+              progression og naturforbindelse hænger sammen. Derfor er vores
+              kurser og oplevelser bygget op med tydelige rammer, nærvær og
+              respekt for skoven.
             </p>
           </div>
 
@@ -46,17 +53,17 @@ export default function Home() {
             <div style={pillarCard}>
               <h3 style={pillarTitle}>Sikkerhed først</h3>
               <p style={pillarText}>
-                Klare procedurer, ansvarlig praksis og tydelige rammer i alle forløb.
+                Klare procedurer, ansvarlig praksis og trygge rammer i alle forløb.
               </p>
             </div>
             <div style={pillarCard}>
               <h3 style={pillarTitle}>Faglig progression</h3>
               <p style={pillarText}>
-                Kurser og forløb med udvikling, teknik og læring i centrum.
+                Kurser med udvikling, teknik og læring i centrum.
               </p>
             </div>
             <div style={pillarCard}>
-              <h3 style={pillarTitle}>Store oplevelser</h3>
+              <h3 style={pillarTitle}>Store naturoplevelser</h3>
               <p style={pillarText}>
                 Skoven og trækronerne som rum for nærvær, mod og eventyr.
               </p>
@@ -67,6 +74,26 @@ export default function Home() {
                 Enkeltpersoner, grupper, institutioner og virksomheder.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section style={gallerySection}>
+        <div style={galleryGrid}>
+          <div style={galleryText}>
+            <p style={sectionEyebrow}>Stemning</p>
+            <h2 style={h2}>Skoven som læringsrum og oplevelsesrum</h2>
+            <p style={bodyText}>
+              Træklatreskolen handler ikke kun om at komme op i højden. Det
+              handler også om ro, udsyn, fællesskab og om at møde naturen på en
+              måde, der bliver siddende i kroppen.
+            </p>
+          </div>
+
+          <div style={galleryImages}>
+            <div style={galleryLarge} />
+            <div style={gallerySmallTop} />
+            <div style={gallerySmallBottom} />
           </div>
         </div>
       </section>
@@ -138,9 +165,9 @@ export default function Home() {
             <p style={sectionEyebrowLight}>Hvorfor vælge os</p>
             <h2 style={h2Light}>En skole med naturforståelse, teknik og menneskelighed</h2>
             <p style={bandText}>
-              Træklatreskolen forener praktisk kunnen, faglig refleksion og stærke
-              naturoplevelser. Vi tror på, at de bedste forløb opstår, når tryghed,
-              progression og eventyr får lov at hænge sammen.
+              Træklatreskolen forener praktisk kunnen, faglig refleksion og
+              stærke naturoplevelser. Vi tror på, at de bedste forløb opstår,
+              når tryghed, progression og eventyr får lov at hænge sammen.
             </p>
           </div>
 
@@ -148,7 +175,7 @@ export default function Home() {
             <div style={bandItem}>Begynderkurser med trygge rammer</div>
             <div style={bandItem}>Videregående forløb og instruktørspor</div>
             <div style={bandItem}>Oplevelser for grupper og enkeltpersoner</div>
-            <div style={bandItem}>Skov, højder og nærvær i samme rum</div>
+            <div style={bandItem}>Dansk skov, højder og nærvær i samme rum</div>
           </div>
         </div>
       </section>
@@ -157,9 +184,9 @@ export default function Home() {
         <p style={sectionEyebrow}>Klar til næste skridt?</p>
         <h2 style={h2}>Find det rigtige forløb</h2>
         <p style={ctaText}>
-          Gå videre til kurser, oplevelser eller direkte til tilmelding. Har du
-          spørgsmål, kan du også kontakte Træklatreskolen og få hjælp til at
-          vælge det rigtige niveau.
+          Gå videre til kurser, oplevelser eller direkte til tilmelding. Når du
+          uploader dine egne billeder, kan vi gøre forsiden markant mere stærk,
+          dansk og personlig.
         </p>
 
         <div style={heroButtonsCentered}>
@@ -173,7 +200,7 @@ export default function Home() {
 }
 
 const hero = {
-  minHeight: "78vh",
+  minHeight: "82vh",
   backgroundImage:
     "url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1800&q=80')",
   backgroundSize: "cover",
@@ -181,8 +208,8 @@ const hero = {
 };
 
 const heroOverlay = {
-  minHeight: "78vh",
-  background: "linear-gradient(rgba(18,33,26,0.6), rgba(18,33,26,0.6))",
+  minHeight: "82vh",
+  background: "linear-gradient(rgba(16,30,24,0.62), rgba(16,30,24,0.62))",
   display: "flex",
   alignItems: "center",
 };
@@ -202,14 +229,22 @@ const eyebrow = {
 };
 
 const heroTitle = {
-  fontSize: "clamp(44px, 7vw, 76px)",
+  fontSize: "clamp(46px, 8vw, 82px)",
   margin: "0 0 14px",
 };
 
 const heroLead = {
   maxWidth: 760,
-  fontSize: 22,
-  lineHeight: 1.7,
+  fontSize: 24,
+  lineHeight: 1.65,
+  margin: "0 0 14px",
+  fontWeight: 600,
+};
+
+const heroText = {
+  maxWidth: 760,
+  fontSize: 18,
+  lineHeight: 1.85,
   margin: 0,
 };
 
@@ -309,6 +344,59 @@ const pillarText = {
   margin: 0,
   color: "#4b6355",
   lineHeight: 1.7,
+};
+
+const gallerySection = {
+  maxWidth: 1180,
+  margin: "0 auto",
+  padding: "10px 24px 48px",
+};
+
+const galleryGrid = {
+  display: "grid",
+  gridTemplateColumns: "0.9fr 1.1fr",
+  gap: 28,
+  alignItems: "center",
+};
+
+const galleryText = {
+  paddingRight: 8,
+};
+
+const galleryImages = {
+  display: "grid",
+  gridTemplateColumns: "1.2fr 0.8fr",
+  gap: 16,
+};
+
+const galleryLarge = {
+  minHeight: 430,
+  borderRadius: 24,
+  backgroundImage:
+    "url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1400&q=80')",
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  boxShadow: "0 10px 28px rgba(0,0,0,0.10)",
+};
+
+const gallerySmallTop = {
+  minHeight: 206,
+  borderRadius: 24,
+  backgroundImage:
+    "url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80')",
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  boxShadow: "0 10px 28px rgba(0,0,0,0.10)",
+};
+
+const gallerySmallBottom = {
+  minHeight: 206,
+  borderRadius: 24,
+  backgroundImage:
+    "url('https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1200&q=80')",
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  boxShadow: "0 10px 28px rgba(0,0,0,0.10)",
 };
 
 const sectionHeader = {
