@@ -1,32 +1,41 @@
 import { courses } from "@/lib/siteData";
+import { notFound } from "next/navigation";
 
-export default function KurserPage() {
+export default function KursusDetaljePage({ params }) {
+  const item = courses.find((course) => course.slug === params.slug);
+
+  if (!item) return notFound();
+
   return (
     <main style={page}>
-      <div style={hero}>
-        <h1 style={h1}>Kurser</h1>
-        <p style={lead}>
-          Fra første møde med træklatring til instruktørniveau og videre
-          faglig fordybelse.
-        </p>
-      </div>
-
       <div style={grid}>
-        {courses.map((item) => (
-          <a key={item.slug} href={`/kurser/${item.slug}`} style={card}>
-            <div
-              style={{
-                ...image,
-                backgroundImage: `url('${item.image}')`,
-              }}
-            />
-            <div style={{ padding: 20 }}>
-              <div style={price}>{item.price}</div>
-              <h2 style={{ color: "#1f3a2b" }}>{item.title}</h2>
-              <p style={{ color: "#4b6355" }}>{item.description}</p>
-            </div>
-          </a>
-        ))}
+        <div>
+          <div style={tagRow}>
+            <span style={price}>{item.price}</span>
+            <span style={level}>{item.level}</span>
+          </div>
+
+          <h1 style={h1}>{item.title}</h1>
+          <p style={lead}>{item.description}</p>
+
+          <ul style={list}>
+            {item.bullets.map((bullet) => (
+              <li key={bullet} style={listItem}>{bullet}</li>
+            ))}
+          </ul>
+
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 24 }}>
+            <a href={item.bookingHref} style={ctaPrimary}>Tilmeld kursus</a>
+            <a href="/kurser" style={ctaSecondary}>Tilbage til kurser</a>
+          </div>
+        </div>
+
+        <div
+          style={{
+            ...image,
+            backgroundImage: `url('${item.image}')`,
+          }}
+        />
       </div>
     </main>
   );
@@ -38,42 +47,17 @@ const page = {
   padding: "48px 24px 72px",
 };
 
-const hero = {
-  marginBottom: 28,
-};
-
-const h1 = {
-  color: "#1f3a2b",
-  fontSize: 42,
-  marginBottom: 12,
-};
-
-const lead = {
-  maxWidth: 760,
-  color: "#4b6355",
-  fontSize: 18,
-  lineHeight: 1.7,
-};
-
 const grid = {
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-  gap: 24,
+  gridTemplateColumns: "1.1fr 0.9fr",
+  gap: 28,
+  alignItems: "start",
 };
 
-const card = {
-  display: "block",
-  textDecoration: "none",
-  background: "white",
-  borderRadius: 18,
-  overflow: "hidden",
-  boxShadow: "0 8px 28px rgba(0,0,0,0.08)",
-};
-
-const image = {
-  height: 240,
-  backgroundSize: "cover",
-  backgroundPosition: "center",
+const tagRow = {
+  display: "flex",
+  gap: 8,
+  flexWrap: "wrap",
 };
 
 const price = {
@@ -83,5 +67,65 @@ const price = {
   padding: "6px 10px",
   borderRadius: 999,
   fontSize: 12,
+  fontWeight: 700,
+};
+
+const level = {
+  display: "inline-block",
+  background: "#e7efe9",
+  color: "#1f3a2b",
+  padding: "6px 10px",
+  borderRadius: 999,
+  fontSize: 12,
+  fontWeight: 700,
+};
+
+const h1 = {
+  color: "#1f3a2b",
+  fontSize: 42,
+  margin: "14px 0 12px",
+};
+
+const lead = {
+  color: "#4b6355",
+  fontSize: 18,
+  lineHeight: 1.7,
+};
+
+const list = {
+  marginTop: 24,
+  paddingLeft: 18,
+  color: "#2d4034",
+  lineHeight: 1.8,
+};
+
+const listItem = {
+  marginBottom: 8,
+};
+
+const image = {
+  minHeight: 420,
+  borderRadius: 22,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+};
+
+const ctaPrimary = {
+  display: "inline-block",
+  padding: "14px 22px",
+  background: "#d8782f",
+  color: "white",
+  borderRadius: 10,
+  textDecoration: "none",
+  fontWeight: 700,
+};
+
+const ctaSecondary = {
+  display: "inline-block",
+  padding: "14px 22px",
+  background: "#e7efe9",
+  color: "#1f3a2b",
+  borderRadius: 10,
+  textDecoration: "none",
   fontWeight: 700,
 };
