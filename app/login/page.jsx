@@ -4,10 +4,11 @@ import { signIn } from "next-auth/react";
 import { useState } from "react";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(false);
-  const [error, setError]       = useState("");
+  const [username,    setUsername]    = useState("");
+  const [password,    setPassword]    = useState("");
+  const [remember,    setRemember]    = useState(false);
+  const [showPass,    setShowPass]    = useState(false);
+  const [error,       setError]       = useState("");
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -24,13 +25,17 @@ export default function LoginPage() {
 
   return (
     <main style={page}>
-      <h1 style={h1}>Admin login</h1>
+      <div style={topRow}>
+        <h1 style={h1}>Admin login</h1>
+        <a href="/" style={siteLink}>← Gå til siden</a>
+      </div>
+
       <form onSubmit={onSubmit} style={formStyle}>
         <label>
           <div style={labelText}>Brugernavn</div>
           <input
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={e => setUsername(e.target.value)}
             style={inputStyle}
             autoComplete="username"
           />
@@ -38,13 +43,23 @@ export default function LoginPage() {
 
         <label>
           <div style={labelText}>Kode</div>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={inputStyle}
-            autoComplete="current-password"
-          />
+          <div style={passWrap}>
+            <input
+              type={showPass ? "text" : "password"}
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              style={{ ...inputStyle, paddingRight: 44 }}
+              autoComplete="current-password"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPass(v => !v)}
+              style={eyeBtn}
+              title={showPass ? "Skjul kode" : "Vis kode"}
+            >
+              {showPass ? "🙈" : "👁️"}
+            </button>
+          </div>
         </label>
 
         {/* Husk denne browser */}
@@ -52,7 +67,7 @@ export default function LoginPage() {
           <input
             type="checkbox"
             checked={remember}
-            onChange={(e) => setRemember(e.target.checked)}
+            onChange={e => setRemember(e.target.checked)}
             style={checkBox}
           />
           <span style={checkLabel}>Husk denne browser i 30 dage</span>
@@ -75,10 +90,25 @@ const page = {
   boxShadow: "0 6px 24px rgba(0,0,0,0.08)",
 };
 
+const topRow = {
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginBottom: 24,
+};
+
 const h1 = {
   color: "#1f3a2b",
-  marginTop: 0,
-  marginBottom: 24,
+  margin: 0,
+  fontSize: 24,
+  fontWeight: 800,
+};
+
+const siteLink = {
+  fontSize: 13,
+  color: "#3d7a57",
+  textDecoration: "none",
+  fontWeight: 600,
 };
 
 const formStyle = {
@@ -101,6 +131,23 @@ const inputStyle = {
   boxSizing: "border-box",
   fontSize: 15,
   font: "inherit",
+};
+
+const passWrap = {
+  position: "relative",
+};
+
+const eyeBtn = {
+  position: "absolute",
+  right: 10,
+  top: "50%",
+  transform: "translateY(-50%)",
+  background: "none",
+  border: "none",
+  cursor: "pointer",
+  fontSize: 16,
+  padding: "2px 4px",
+  lineHeight: 1,
 };
 
 const checkRow = {

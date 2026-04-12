@@ -15,7 +15,7 @@ export const metadata = {
 export default function OplevelserPage() {
   return (
     <main>
-      <section className="page-hero" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=80')" }}>
+      <section className="page-hero" style={{ backgroundImage: "url('/images/rebklatring.jpg')" }}>
         <div className="page-hero-overlay">
           <div className="page-hero-inner">
             <p className="page-hero-eyebrow">Oplevelser</p>
