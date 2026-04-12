@@ -57,10 +57,19 @@ export default function BillederPage() {
     setUploading(true);
     let ok = 0;
     const errors = [];
+    const MAX_MB = 50;
 
     for (const file of files) {
-      setProgress(`Uploader ${file.name} (${(file.size / 1024 / 1024).toFixed(1)} MB)…`);
+      const sizeMB = file.size / 1024 / 1024;
+      setProgress(`Uploader ${file.name} (${sizeMB.toFixed(1)} MB)…`);
       try {
+        if (sizeMB > MAX_MB) {
+          throw new Error(
+            `Filen er ${sizeMB.toFixed(0)} MB — Supabase tillader max ${MAX_MB} MB. ` +
+            `Komprimér videoen (fx med HandBrake) eller upload til YouTube og brug YouTube-linket i stedet.`
+          );
+        }
+
         const contentType = getMimeType(file);
 
         // 1. Hent signed URL fra API
