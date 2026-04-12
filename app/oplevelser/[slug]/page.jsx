@@ -32,6 +32,7 @@ export default function OplevelseDetaljePage({ params }) {
             src={item.image}
             alt={item.title}
             fill
+            priority
             style={{ objectFit: "cover" }}
             sizes="(max-width: 768px) 100vw, 50vw"
           />
