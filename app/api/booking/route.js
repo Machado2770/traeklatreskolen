@@ -3,10 +3,11 @@ export const runtime = "nodejs";
 
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { calendarItems as siteDataItems } from "@/lib/siteData";
+import { bookingConfirmationHtml } from "@/lib/emailTemplates";
+import { Resend } from "resend";
 
 // Find kalenderitem der matcher kursusstrengen — tjekker Supabase først, derefter siteData
 async function findCalendarItem(supabase, courseString) {
-  // Prøv Supabase
   try {
     const { data } = await supabase
       .from("calendar_items")
@@ -21,21 +22,47 @@ async function findCalendarItem(supabase, courseString) {
     }
   } catch { /* Supabase ikke tilgængeligt */ }
 
-  // Fallback til siteData
   return siteDataItems.find(item => {
     const key = `${item.title} – ${item.date} – ${item.place}`;
     return courseString.startsWith(key) || courseString === item.title;
   }) ?? null;
 }
 
+// Udled dato og sted fra kursusstreng "Kursus – dato – sted"
+function parseCourseString(courseString) {
+  const parts = courseString.split(" – ");
+  return {
+    course: parts[0] ?? courseString,
+    date:   parts[1] ?? null,
+    place:  parts[2] ?? null,
+  };
+}
+
+// Send bekræftelsesmail via Resend (fejler lydløst hvis ikke konfigureret)
+async function sendConfirmationEmail({ name, email, course, date, place }) {
+  if (!process.env.RESEND_API_KEY) return;
+  try {
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    await resend.emails.send({
+      from:    "Træklatreskolen <info@traeklatreskolen.dk>",
+      to:      email,
+      subject: `Tilmelding modtaget – ${course}`,
+      html:    bookingConfirmationHtml({ name, course, date, place }),
+    });
+  } catch (err) {
+    // Email-fejl stopper ikke tilmeldingen
+    console.error("Email send error:", err?.message ?? err);
+  }
+}
+
 export async function POST(request) {
   try {
-    const body      = await request.json();
-    const supabase  = getSupabaseAdmin();
+    const body         = await request.json();
+    const supabase     = getSupabaseAdmin();
     const courseString = body.course ?? "";
 
     // ── Kapacitetstjek ──────────────────────────────────
-    const matchedItem = await findCalendarItem(supabase, courseString);
+    const matchedItem    = await findCalendarItem(supabase, courseString);
     const maxParticipants = matchedItem?.max_participants ?? matchedItem?.maxParticipants ?? null;
 
     if (maxParticipants) {
@@ -71,10 +98,20 @@ export async function POST(request) {
 
     if (error) {
       return Response.json(
-        { source: "supabase", error: error.message, details: error.details ?? null, hint: error.hint ?? null, code: error.code ?? null },
+        { source: "supabase", error: error.message, details: error.details ?? null },
         { status: 500 }
       );
     }
+
+    // ── Send bekræftelsesmail ────────────────────────────
+    const { course, date, place } = parseCourseString(courseString);
+    await sendConfirmationEmail({
+      name:   body.name,
+      email:  body.email,
+      course,
+      date,
+      place,
+    });
 
     return Response.json({ ok: true, data });
   } catch (err) {

@@ -15,14 +15,14 @@ export const metadata = {
 export default function OplevelserPage() {
   return (
     <main>
-      <section className="page-hero" style={{ backgroundImage: "url('/images/rebklatring.jpg')" }}>
-        <div className="page-hero-overlay">
+      <section className="page-hero" style={{ backgroundImage: "url('/images/rebklatring.jpg')", backgroundPosition: "center 30%" }}>
+        <div className="page-hero-overlay" style={{ background: "linear-gradient(135deg, rgba(18,42,28,0.78) 0%, rgba(31,58,43,0.55) 100%)" }}>
           <div className="page-hero-inner">
-            <p className="page-hero-eyebrow">Oplevelser</p>
-            <h1 className="page-hero-title">Oplevelser i trækronerne</h1>
+            <p className="page-hero-eyebrow">Oplevelser i naturen</p>
+            <h1 className="page-hero-title">Oplev trækronerne</h1>
             <p className="page-hero-text">
-              Her finder du oplevelser i skoven og trækronerne — for dig, der
-              vil mærke naturen, højden og fællesskabet på en særlig måde.
+              Kom op i trækronerne — rolige oplevelsesture, overnatning under åben himmel
+              og vilde klatreture for dem der vil mærke det helt igennem.
             </p>
           </div>
         </div>

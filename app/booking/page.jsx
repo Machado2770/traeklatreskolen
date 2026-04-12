@@ -11,6 +11,7 @@ const courseOptions = [
   "Oplevelsestur i trækronerne",
   "Overnatning i trækronerne",
   "Den vilde klatretur",
+  "Andet / ikke sikker",
 ];
 
 export default function BookingPage() {

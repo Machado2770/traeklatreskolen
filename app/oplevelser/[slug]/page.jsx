@@ -2,6 +2,10 @@ import Image from "next/image";
 import { experiences } from "@/lib/siteData";
 import { notFound } from "next/navigation";
 
+export function generateStaticParams() {
+  return experiences.map((e) => ({ slug: e.slug }));
+}
+
 export function generateMetadata({ params }) {
   const item = experiences.find((e) => e.slug === params.slug);
   if (!item) return {};
@@ -97,8 +101,11 @@ const durationTag = {
 
 const h1 = {
   color: "#1f3a2b",
-  fontSize: 42,
+  fontSize: "clamp(26px, 6vw, 42px)",
   margin: "14px 0 12px",
+  overflowWrap: "break-word",
+  wordBreak: "break-word",
+  hyphens: "auto",
 };
 
 const lead = {
