@@ -135,13 +135,40 @@
 
 /* ── HERO HOMEPAGE — lidt større end undersider ── */
 .home-hero {
-  height: 420px;
+  height: clamp(520px, 82vh, 820px);
+}
+.home-hero .page-hero-overlay {
+  background: linear-gradient(
+    160deg,
+    rgba(10, 24, 16, 0.72) 0%,
+    rgba(20, 50, 30, 0.55) 60%,
+    rgba(10, 24, 16, 0.70) 100%
+  );
+  align-items: center;
 }
 .home-hero .page-hero-title {
-  font-size: clamp(38px, 6vw, 72px);
+  font-size: clamp(42px, 7vw, 88px);
+  letter-spacing: -1px;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.35);
 }
 .home-hero .page-hero-text {
-  font-size: 18px;
+  font-size: 19px;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.3);
+}
+.home-hero .page-hero-eyebrow {
+  letter-spacing: 3px;
+  font-size: 12px;
+  color: #f4b97a;
+  opacity: 1;
+}
+
+/* ── CARD HOVER ──────────────────────────── */
+.feature-card {
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 44px rgba(0,0,0,0.14) !important;
 }
 
 /* ── PAGE SECTIONS ───────────────────────── */
@@ -218,12 +245,12 @@
   .hamburger-btn { display: flex; }
   .header-inner { padding: 12px 16px; }
 
-  .home-hero .page-hero-title { font-size: clamp(28px, 8vw, 44px); }
-  .home-hero .page-hero-text  { font-size: 15px; }
+  .home-hero .page-hero-title { font-size: clamp(34px, 9vw, 52px); }
+  .home-hero .page-hero-text  { font-size: 16px; }
 
   /* Fælles hero-bannere — kompakt på mobil */
   .page-hero     { height: 200px; }
-  .home-hero     { height: 260px; }
+  .home-hero     { height: clamp(380px, 65vh, 520px); }
   .page-hero-title { font-size: clamp(24px, 7vw, 36px); }
   .page-hero-text  { font-size: 14px; max-width: 100%; }
 

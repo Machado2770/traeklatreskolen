@@ -83,6 +83,23 @@ export default function Home() {
         </div>
       </section>
 
+      {/* STATS BÅND */}
+      <section style={statsBand}>
+        <div style={statsInner}>
+          {[
+            { value: "500+", label: "Deltagere hvert år" },
+            { value: "15+", label: "Års erfaring" },
+            { value: "100%", label: "Forsikret aktivitet" },
+            { value: "Hele", label: "Danmark" },
+          ].map((s) => (
+            <div key={s.label} style={statItem}>
+              <span style={statValue}>{s.value}</span>
+              <span style={statLabel}>{s.label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* INTRO — hvid */}
       <section style={introSection}>
         <div style={introBox}>
@@ -110,7 +127,7 @@ export default function Home() {
           <h2 style={sectionTitle}>Udvalgte kurser</h2>
           <div style={grid}>
             {featuredCourses.map((item) => (
-              <a key={item.slug} href={`/kurser/${item.slug}`} style={card}>
+              <a key={item.slug} href={`/kurser/${item.slug}`} style={card} className="feature-card">
                 <div style={cardImageWrap}>
                   <Image
                     src={item.image}
@@ -140,7 +157,7 @@ export default function Home() {
           <h2 style={sectionTitle}>Udvalgte oplevelser</h2>
           <div style={grid}>
             {featuredExperiences.map((item) => (
-              <a key={item.slug} href={`/oplevelser/${item.slug}`} style={card}>
+              <a key={item.slug} href={`/oplevelser/${item.slug}`} style={card} className="feature-card">
                 <div style={cardImageWrap}>
                   <Image
                     src={item.image}
@@ -224,28 +241,65 @@ export default function Home() {
 
 const heroButtons = {
   display: "flex",
-  gap: 14,
+  justifyContent: "center",
+  gap: 16,
   flexWrap: "wrap",
-  marginTop: 28,
+  marginTop: 36,
 };
 const primaryBtn = {
   background: "#d8782f",
   color: "white",
   textDecoration: "none",
-  padding: "14px 26px",
-  borderRadius: 12,
+  padding: "16px 34px",
+  borderRadius: 14,
   fontWeight: 700,
-  fontSize: 16,
+  fontSize: 17,
+  boxShadow: "0 4px 20px rgba(216,120,47,0.45)",
+  letterSpacing: "0.3px",
 };
 const secondaryBtn = {
-  background: "rgba(255,255,255,0.13)",
+  background: "rgba(255,255,255,0.12)",
   color: "white",
   textDecoration: "none",
-  padding: "14px 26px",
-  borderRadius: 12,
+  padding: "16px 34px",
+  borderRadius: 14,
   fontWeight: 700,
-  fontSize: 16,
-  border: "1px solid rgba(255,255,255,0.3)",
+  fontSize: 17,
+  border: "1.5px solid rgba(255,255,255,0.45)",
+  backdropFilter: "blur(6px)",
+  letterSpacing: "0.3px",
+};
+
+/* Stats band */
+const statsBand = {
+  background: "#1f3a2b",
+  padding: "32px 24px",
+};
+const statsInner = {
+  maxWidth: 1000,
+  margin: "0 auto",
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+  gap: 24,
+  textAlign: "center",
+};
+const statItem = {
+  display: "flex",
+  flexDirection: "column",
+  gap: 4,
+};
+const statValue = {
+  fontSize: "clamp(30px, 4vw, 46px)",
+  fontWeight: 800,
+  color: "#d8782f",
+  lineHeight: 1,
+};
+const statLabel = {
+  fontSize: 14,
+  fontWeight: 600,
+  color: "rgba(255,255,255,0.7)",
+  textTransform: "uppercase",
+  letterSpacing: "1.5px",
 };
 
 /* Intro */
