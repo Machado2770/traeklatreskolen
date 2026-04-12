@@ -111,10 +111,7 @@ function Footer() {
 
         <div>
           <div style={footerHeading}>Kontakt</div>
-          <p style={footerText}>Træklatreskolen</p>
-          <p style={footerText}>
-            Kontakt via bookingsiden eller ved direkte henvendelse.
-          </p>
+          <a href="/kontakt" style={footerLink}>Træklatreskolen</a>
         </div>
       </div>
 
