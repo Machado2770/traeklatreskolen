@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { courses } from "@/lib/siteData";
 
 export default function KurserPage() {
@@ -30,12 +31,15 @@ export default function KurserPage() {
 function CourseCard({ item }) {
   return (
     <div style={card}>
-      <div
-        style={{
-          ...image,
-          backgroundImage: `url('${item.image}')`,
-        }}
-      />
+      <div style={imageWrap}>
+        <Image
+          src={item.image}
+          alt={item.title}
+          fill
+          style={{ objectFit: "cover" }}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
+      </div>
 
       <div style={cardBody}>
         <div style={tagRow}>
@@ -114,15 +118,15 @@ const grid = {
 
 const card = {
   background: "white",
-  borderRadius: 20,
+  borderRadius: 18,
   overflow: "hidden",
-  boxShadow: "0 10px 28px rgba(0,0,0,0.08)",
+  boxShadow: "0 8px 30px rgba(0,0,0,0.08)",
 };
 
-const image = {
+const imageWrap = {
+  position: "relative",
   height: 240,
-  backgroundSize: "cover",
-  backgroundPosition: "center",
+  overflow: "hidden",
 };
 
 const cardBody = {
@@ -159,7 +163,8 @@ const levelTag = {
 const cardTitle = {
   margin: "0 0 8px",
   color: "#1f3a2b",
-  fontSize: 24,
+  fontSize: 22,
+  fontWeight: 700,
 };
 
 const cardText = {
@@ -167,6 +172,7 @@ const cardText = {
   color: "#4b6355",
   lineHeight: 1.7,
   minHeight: 48,
+  fontSize: 15,
 };
 
 const actionRow = {

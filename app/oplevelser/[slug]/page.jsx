@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { experiences } from "@/lib/siteData";
 import { notFound } from "next/navigation";
 
@@ -8,7 +9,7 @@ export default function OplevelseDetaljePage({ params }) {
 
   return (
     <main style={page}>
-      <div style={grid}>
+      <div style={grid} className="detail-grid">
         <div>
           <span style={price}>{item.price}</span>
           <h1 style={h1}>{item.title}</h1>
@@ -26,12 +27,15 @@ export default function OplevelseDetaljePage({ params }) {
           </div>
         </div>
 
-        <div
-          style={{
-            ...image,
-            backgroundImage: `url('${item.image}')`,
-          }}
-        />
+        <div style={imageWrap} className="detail-image">
+          <Image
+            src={item.image}
+            alt={item.title}
+            fill
+            style={{ objectFit: "cover" }}
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        </div>
       </div>
     </main>
   );
@@ -46,7 +50,7 @@ const page = {
 const grid = {
   display: "grid",
   gridTemplateColumns: "1.1fr 0.9fr",
-  gap: 28,
+  gap: 48,
   alignItems: "start",
 };
 
@@ -83,11 +87,11 @@ const listItem = {
   marginBottom: 8,
 };
 
-const image = {
+const imageWrap = {
+  position: "relative",
   minHeight: 420,
   borderRadius: 22,
-  backgroundSize: "cover",
-  backgroundPosition: "center",
+  overflow: "hidden",
 };
 
 const ctaPrimary = {

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { courses, experiences } from "@/lib/siteData";
 
 export default function Home() {
@@ -8,7 +9,15 @@ export default function Home() {
     <main>
 
       {/* HERO */}
-      <section style={hero} className="hero-section">
+      <section style={{ position: "relative", minHeight: "90vh" }} className="hero-section">
+        <Image
+          src="/images/hero-forest.jpg"
+          alt="Skov"
+          fill
+          priority
+          style={{ objectFit: "cover", objectPosition: "center" }}
+          sizes="100vw"
+        />
         <div style={heroOverlay} className="hero-overlay">
           <div style={heroInner}>
             <p style={eyebrow}>Træklatring · Faglighed · Natur</p>
@@ -53,7 +62,15 @@ export default function Home() {
           <div style={grid}>
             {featuredCourses.map((item) => (
               <a key={item.slug} href={`/kurser/${item.slug}`} style={card}>
-                <div style={{ ...cardImage, backgroundImage: `url('${item.image}')` }} />
+                <div style={cardImageWrap}>
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    style={{ objectFit: "cover" }}
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                </div>
                 <div style={cardBody}>
                   <h3 style={cardTitle}>{item.title}</h3>
                   <p style={cardText}>{item.short}</p>
@@ -75,7 +92,15 @@ export default function Home() {
           <div style={grid}>
             {featuredExperiences.map((item) => (
               <a key={item.slug} href={`/oplevelser/${item.slug}`} style={card}>
-                <div style={{ ...cardImage, backgroundImage: `url('${item.image}')` }} />
+                <div style={cardImageWrap}>
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    style={{ objectFit: "cover" }}
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                </div>
                 <div style={cardBody}>
                   <h3 style={cardTitle}>{item.title}</h3>
                   <p style={cardText}>{item.short}</p>
@@ -114,13 +139,15 @@ export default function Home() {
               <li style={safetyItem}>✓ Aktiviteter tilpasset årstid og vejr</li>
             </ul>
           </div>
-          <div
-            style={{
-              ...safetyImage,
-              backgroundImage: "url('/images/gallery-main.jpg')",
-            }}
-            className="safety-image"
-          />
+          <div style={{ position: "relative" }} className="safety-image">
+            <Image
+              src="/images/gallery-main.jpg"
+              alt="Træklatring i skoven"
+              fill
+              style={{ objectFit: "cover" }}
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          </div>
         </div>
       </section>
 
@@ -145,21 +172,15 @@ export default function Home() {
 
 /* ── STYLES ─────────────────────────────────────────── */
 
-/* Hero */
-const hero = {
-  minHeight: "90vh",
-  backgroundImage: "url('/images/hero-forest.jpg')",
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  position: "relative",
-};
 const heroOverlay = {
-  minHeight: "90vh",
+  position: "absolute",
+  inset: 0,
   background: "rgba(16,32,24,0.54)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   padding: "40px 24px",
+  zIndex: 1,
 };
 const heroInner = {
   maxWidth: 880,
@@ -242,7 +263,7 @@ const introText = {
   margin: 0,
 };
 
-/* Shared section helpers */
+/* Sections */
 const sectionGreen = {
   padding: "88px 24px",
   background: "#eef3ef",
@@ -276,12 +297,11 @@ const card = {
   borderRadius: 18,
   overflow: "hidden",
   boxShadow: "0 8px 30px rgba(0,0,0,0.08)",
-  transition: "box-shadow 0.2s",
 };
-const cardImage = {
+const cardImageWrap = {
+  position: "relative",
   height: 230,
-  backgroundSize: "cover",
-  backgroundPosition: "center",
+  overflow: "hidden",
 };
 const cardBody = {
   padding: "20px 22px 22px",
@@ -321,7 +341,7 @@ const seeAllBtn = {
   padding: "10px 22px",
 };
 
-/* Safety — mørk grøn */
+/* Safety */
 const safetySection = {
   background: "#1f3a2b",
   padding: "0",
@@ -363,9 +383,8 @@ const safetyItem = {
   color: "rgba(255,255,255,0.9)",
   fontWeight: 600,
 };
-const safetyImage = {};
 
-/* CTA — orange */
+/* CTA */
 const ctaSection = {
   background: "#d8782f",
   padding: "80px 24px",

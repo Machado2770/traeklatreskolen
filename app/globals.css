@@ -55,6 +55,21 @@
 }
 
 /* ── MOBILE ──────────────────────────────── */
+/* ── DETAIL PAGES ────────────────────────── */
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
+  align-items: start;
+}
+.detail-image {
+  position: relative;
+  min-height: 420px;
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+/* ── MOBILE ──────────────────────────────── */
 @media (max-width: 768px) {
 
   /* Header */
@@ -80,6 +95,15 @@
   /* Page sections */
   .page-section {
     padding: 56px 20px;
+  }
+
+  /* Detail pages — stack vertically */
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+  .detail-image {
+    min-height: 280px;
+    order: -1;
   }
 
   /* Safety — stack vertically */
