@@ -3,7 +3,7 @@ export const runtime = "nodejs";
 
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { calendarItems as siteDataItems } from "@/lib/siteData";
-import { bookingConfirmationHtml } from "@/lib/emailTemplates";
+import { bookingConfirmationHtml, bookingNotificationHtml } from "@/lib/emailTemplates";
 import { Resend } from "resend";
 
 // Find kalenderitem der matcher kursusstrengen — tjekker Supabase først, derefter siteData
@@ -38,19 +38,28 @@ function parseCourseString(courseString) {
   };
 }
 
-// Send bekræftelsesmail via Resend (fejler lydløst hvis ikke konfigureret)
-async function sendConfirmationEmail({ name, email, course, date, place }) {
+// Send bekræftelsesmail til deltager + notifikation til Træklatreskolen
+async function sendEmails({ name, email, phone, course, date, place, notes }) {
   if (!process.env.RESEND_API_KEY) return;
   try {
     const resend = new Resend(process.env.RESEND_API_KEY);
-    await resend.emails.send({
-      from:    "Træklatreskolen <info@traeklatreskolen.dk>",
-      to:      email,
-      subject: `Tilmelding modtaget – ${course}`,
-      html:    bookingConfirmationHtml({ name, course, date, place }),
-    });
+    await Promise.all([
+      // Bekræftelse til deltager
+      resend.emails.send({
+        from:    "Træklatreskolen <info@traeklatreskolen.dk>",
+        to:      email,
+        subject: `Tilmelding modtaget – ${course}`,
+        html:    bookingConfirmationHtml({ name, course, date, place }),
+      }),
+      // Notifikation til Træklatreskolen
+      resend.emails.send({
+        from:    "Træklatreskolen <info@traeklatreskolen.dk>",
+        to:      "info@traeklatreskolen.dk",
+        subject: `Ny tilmelding: ${name} – ${course}`,
+        html:    bookingNotificationHtml({ name, email, phone, course, date, place, notes }),
+      }),
+    ]);
   } catch (err) {
-    // Email-fejl stopper ikke tilmeldingen
     console.error("Email send error:", err?.message ?? err);
   }
 }
@@ -103,11 +112,13 @@ export async function POST(request) {
       );
     }
 
-    // ── Send bekræftelsesmail ────────────────────────────
+    // ── Send mails ──────────────────────────────────────
     const { course, date, place } = parseCourseString(courseString);
-    await sendConfirmationEmail({
+    await sendEmails({
       name:   body.name,
       email:  body.email,
+      phone:  body.phone ?? "",
+      notes:  body.notes ?? "",
       course,
       date,
       place,
