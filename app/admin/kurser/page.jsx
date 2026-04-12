@@ -5,12 +5,13 @@ import { useEffect, useState } from "react";
 const EMPTY = { slug:"", title:"", short:"", price:"", level:"", description:"", bullets:"", image:"", booking_href:"", is_experience:false };
 
 export default function KurserAdminPage() {
-  const [items,   setItems]   = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [form,    setForm]    = useState(EMPTY);
-  const [editing, setEditing] = useState(null);
-  const [msg,     setMsg]     = useState("");
-  const [images,  setImages]  = useState([]);
+  const [items,    setItems]   = useState([]);
+  const [loading,  setLoading] = useState(true);
+  const [form,     setForm]    = useState(EMPTY);
+  const [editing,  setEditing] = useState(null);
+  const [msg,      setMsg]     = useState("");
+  const [images,   setImages]  = useState([]);
+  const [seeding,  setSeeding] = useState(false);
 
   async function load() {
     setLoading(true);
@@ -25,6 +26,17 @@ export default function KurserAdminPage() {
   useEffect(() => { load(); }, []);
 
   function flash(t) { setMsg(t); setTimeout(()=>setMsg(""),3500); }
+
+  async function seedStandard() {
+    if (!confirm("Indlæs standardkurser og -oplevelser i databasen? Eksisterende kurser overskrives ikke.")) return;
+    setSeeding(true);
+    const res  = await fetch("/api/seed-courses", { method:"POST" });
+    const json = await res.json();
+    setSeeding(false);
+    if (!res.ok) { flash("Fejl: " + (json.error || "Ukendt fejl")); return; }
+    flash(json.inserted > 0 ? `${json.inserted} standardkurser indlæst ✓` : json.message);
+    load();
+  }
 
   async function save() {
     if (!form.title) { flash("Titel er påkrævet."); return; }
@@ -56,9 +68,14 @@ export default function KurserAdminPage() {
 
   return (
     <>
-      <div style={{ marginBottom:24 }}>
-        <h1 style={h1}>Kurser & tekst</h1>
-        <p style={sub}>Rediger kursusbeskrivelser, priser og billeder. Ændringer vises øjeblikkeligt på hjemmesiden.</p>
+      <div style={{ marginBottom:24, display:"flex", justifyContent:"space-between", alignItems:"flex-start", flexWrap:"wrap", gap:12 }}>
+        <div>
+          <h1 style={h1}>Kurser & tekst</h1>
+          <p style={sub}>Rediger kursusbeskrivelser, priser og billeder. Ændringer vises øjeblikkeligt på hjemmesiden.</p>
+        </div>
+        <button onClick={seedStandard} disabled={seeding} style={btn("#1f3a2b")}>
+          {seeding ? "Indlæser…" : "Indlæs standardkurser"}
+        </button>
       </div>
 
       {/* Formular */}
