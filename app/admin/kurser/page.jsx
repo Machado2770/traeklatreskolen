@@ -28,13 +28,26 @@ export default function KurserAdminPage() {
   function flash(t) { setMsg(t); setTimeout(()=>setMsg(""),3500); }
 
   async function togglePublish(item) {
+    if (!item.id) {
+      flash("Kursus er ikke gemt i databasen endnu — klik 'Indlæs standardkurser' først.");
+      return;
+    }
     const next = !item.is_published;
     const res  = await fetch(`/api/courses-cms/${item.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ is_published: next }),
     });
-    if (!res.ok) { flash("Fejl ved opdatering af status."); return; }
+    if (!res.ok) {
+      const json = await res.json().catch(() => ({}));
+      const msg  = json.error || "";
+      if (msg.includes("is_published") || msg.includes("column")) {
+        flash("Kolonnen 'is_published' mangler i Supabase — se vejledning nedenfor.");
+      } else {
+        flash("Fejl: " + (msg || "Ukendt fejl"));
+      }
+      return;
+    }
     setItems(prev => prev.map(i => i.id === item.id ? { ...i, is_published: next } : i));
   }
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { courses as sdCourses, experiences as sdExperiences } from "@/lib/siteData";
+import { courses as sdCourses, experiences as sdExperiences, calendarItems as sdCalendar } from "@/lib/siteData";
 
 function buildCourseOptions(cmsData) {
   // siteData er altid base — sikrer at standardkurser altid vises
@@ -51,6 +51,7 @@ function buildDateString(dates) {
 export default function KalenderAdminPage() {
   const [items,   setItems]   = useState([]);
   const [loading, setLoading] = useState(true);
+  const [seeding, setSeeding] = useState(false);
   const [courses, setCourses] = useState([]);
   const [form,    setForm]    = useState(EMPTY);
   const [editing, setEditing] = useState(null);
@@ -71,6 +72,17 @@ export default function KalenderAdminPage() {
   useEffect(() => { load(); }, []);
 
   function flash(text, ok = true) { setMsg({ text, ok }); setTimeout(() => setMsg({ text: "", ok: true }), 3500); }
+
+  async function seedCalendar() {
+    if (!confirm("Indlæs standardbegivenheder i databasen? Eksisterende begivenheder berøres ikke.")) return;
+    setSeeding(true);
+    const res  = await fetch("/api/seed-calendar", { method: "POST" });
+    const json = await res.json();
+    setSeeding(false);
+    if (!res.ok) { flash("Fejl: " + (json.error || "Ukendt"), false); return; }
+    flash(json.inserted > 0 ? `${json.inserted} begivenheder indlæst ✓` : json.message);
+    load();
+  }
 
   function selectCourse(idx) {
     const c = courses[idx];
@@ -123,9 +135,14 @@ export default function KalenderAdminPage() {
 
   return (
     <>
-      <div style={{ marginBottom: 24 }}>
-        <h1 style={h1}>Kursuskalender</h1>
-        <p style={sub}>Vælg et kursus eller en oplevelse og angiv dato, sted, pris og pladser.</p>
+      <div style={{ marginBottom: 24, display:"flex", justifyContent:"space-between", alignItems:"flex-start", flexWrap:"wrap", gap:12 }}>
+        <div>
+          <h1 style={h1}>Kursuskalender</h1>
+          <p style={sub}>Vælg et kursus eller en oplevelse og angiv dato, sted, pris og pladser.</p>
+        </div>
+        <button onClick={seedCalendar} disabled={seeding} style={btn("#1f3a2b")}>
+          {seeding ? "Indlæser…" : "Indlæs standardbegivenheder"}
+        </button>
       </div>
 
       {/* ── Formular ── */}
@@ -250,7 +267,26 @@ export default function KalenderAdminPage() {
         </div>
 
         {loading && <p style={{ color: "#4b6355" }}>Henter…</p>}
-        {!loading && items.length === 0 && <div style={{ ...card, color: "#4b6355" }}>Ingen begivenheder endnu.</div>}
+
+        {/* Ingen DB-begivenheder → vis siteData-fallback som readonly */}
+        {!loading && items.length === 0 && (
+          <div>
+            <div style={{ ...card, background:"#fff8e6", border:"1px solid #f5d87a", marginBottom:12, fontSize:14, color:"#7a4d08" }}>
+              <strong>Ingen begivenheder er gemt i databasen.</strong> Nedenstående vises på kursuskalenderen som standarddata.
+              Klik <em>Indlæs standardbegivenheder</em> for at gemme dem og redigere dem herfra.
+            </div>
+            {sdCalendar.map(item => (
+              <div key={item.id} style={{ ...card, marginBottom:10, opacity:0.7, borderLeft:"4px solid #f5d87a" }}>
+                <div style={{ fontWeight:700, color:"#1f3a2b", fontSize:15 }}>{item.title}</div>
+                <div style={{ display:"flex", gap:8, marginTop:6, flexWrap:"wrap" }}>
+                  <span style={chip("#f5e5d8","#a3521d")}>{item.date}</span>
+                  <span style={chip("#e7efe9","#2d5c3e")}>{item.place}</span>
+                  <span style={{ fontSize:12, color:"#7a4d08", fontStyle:"italic" }}>Standarddata — ikke redigérbar</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
         {kurser.length > 0 && (
           <>
