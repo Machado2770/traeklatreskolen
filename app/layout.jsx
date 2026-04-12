@@ -97,7 +97,6 @@ function Footer() {
             <a href="/kurser" style={footerLink}>Kurser</a>
             <a href="/oplevelser" style={footerLink}>Oplevelser</a>
             <a href="/kursuskalender" style={footerLink}>Kursuskalender</a>
-            <a href="/kontakt" style={footerLink}>Kontakt</a>
           </div>
         </div>
 
