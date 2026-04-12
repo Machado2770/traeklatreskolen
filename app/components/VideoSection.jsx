@@ -15,6 +15,15 @@ const VIDEOS = [
 
 export default function VideoSection() {
   const [active, setActive] = useState(VIDEOS[0]);
+  // Only autoplay after user explicitly clicks a thumbnail
+  const [hasInteracted, setHasInteracted] = useState(false);
+
+  function handleSelect(v) {
+    setActive(v);
+    setHasInteracted(true);
+  }
+
+  const embedSrc = `https://www.youtube-nocookie.com/embed/${active.id}?${hasInteracted ? "autoplay=1&" : ""}rel=0`;
 
   return (
     <section style={section}>
@@ -35,8 +44,8 @@ export default function VideoSection() {
         <div style={playerWrap}>
           <div style={playerBox}>
             <iframe
-              key={active.id}
-              src={`https://www.youtube.com/embed/${active.id}?autoplay=1&rel=0`}
+              key={active.id + String(hasInteracted)}
+              src={embedSrc}
               title={active.title}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
@@ -53,7 +62,7 @@ export default function VideoSection() {
           {VIDEOS.map(v => {
             const isActive = v.id === active.id;
             return (
-              <button key={v.id} onClick={() => setActive(v)} style={thumbBtn(isActive)}>
+              <button key={v.id} onClick={() => handleSelect(v)} style={thumbBtn(isActive)}>
                 <div style={thumbImgWrap}>
                   <Image
                     src={`https://img.youtube.com/vi/${v.id}/hqdefault.jpg`}

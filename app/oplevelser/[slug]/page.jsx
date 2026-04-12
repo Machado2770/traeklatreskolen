@@ -24,7 +24,8 @@ export default function OplevelseDetaljePage({ params }) {
 
   return (
     <main style={page}>
-      <div style={grid} className="detail-grid">
+      {/* Use only className — CSS media query handles responsive layout */}
+      <div className="detail-grid">
         <div>
           <span style={price}>{item.price}</span>
           <h1 style={h1}>{item.title}</h1>
@@ -42,7 +43,8 @@ export default function OplevelseDetaljePage({ params }) {
           </div>
         </div>
 
-        <div style={imageWrap} className="detail-image">
+        {/* Use only className — CSS handles min-height, border-radius, position:relative */}
+        <div className="detail-image">
           <Image
             src={item.image}
             alt={item.title}
@@ -61,13 +63,6 @@ const page = {
   maxWidth: 1180,
   margin: "0 auto",
   padding: "48px 24px 72px",
-};
-
-const grid = {
-  display: "grid",
-  gridTemplateColumns: "1.1fr 0.9fr",
-  gap: 48,
-  alignItems: "start",
 };
 
 const price = {
@@ -101,13 +96,6 @@ const list = {
 
 const listItem = {
   marginBottom: 8,
-};
-
-const imageWrap = {
-  position: "relative",
-  minHeight: 420,
-  borderRadius: 22,
-  overflow: "hidden",
 };
 
 const ctaPrimary = {
