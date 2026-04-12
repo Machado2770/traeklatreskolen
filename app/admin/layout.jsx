@@ -77,6 +77,8 @@ export default function AdminLayout({ children }) {
           })}
         </nav>
 
+          <a href="/" className="admin-nav-link admin-nav-site">← Gå til siden</a>
+
         {/* Bruger + log ud */}
         <div className="admin-sidebar-footer">
           <div className="admin-sidebar-user">
