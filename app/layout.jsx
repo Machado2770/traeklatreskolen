@@ -48,13 +48,25 @@ function Header() {
           flexWrap: "wrap",
         }}
       >
-        <a href="/" style={{ display: "flex", alignItems: "center" }}>
+        <a
+          href="/"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            textDecoration: "none",
+          }}
+        >
           <Image
             src="/logo/logo-main.png"
             alt="Træklatreskolen"
-            width={260}
-            height={60}
-            style={{ height: "auto", width: "auto", maxHeight: 52 }}
+            width={320}
+            height={72}
+            priority
+            style={{
+              width: "auto",
+              height: "auto",
+              maxHeight: 54,
+            }}
           />
         </a>
 
@@ -101,13 +113,15 @@ function Footer() {
           <Image
             src="/logo/logo-main.png"
             alt="Træklatreskolen"
-            width={220}
-            height={50}
+            width={260}
+            height={60}
             style={{
               width: "auto",
               height: "auto",
               maxHeight: 42,
-              filter: "brightness(0) invert(1)",
+              background: "white",
+              padding: 6,
+              borderRadius: 8,
               marginBottom: 12,
             }}
           />
