@@ -65,6 +65,12 @@ export default function TilmeldingPage() {
     setItems(prev => prev.map(i => i.id===id ? {...i, payment_status: status} : i));
   }
 
+  async function deleteParticipant(id, name) {
+    if (!confirm(`Slet ${name} permanent? Dette kan ikke fortrydes.`)) return;
+    await fetch(`/api/participants/${id}`, { method: "DELETE" });
+    setItems(prev => prev.filter(i => i.id !== id));
+  }
+
   const exportUrl = filters.course
     ? `/api/participants/export?course=${encodeURIComponent(filters.course)}`
     : "/api/participants/export";
@@ -133,21 +139,21 @@ export default function TilmeldingPage() {
             </div>
             <a href={`/api/participants/export?course=${encodeURIComponent(g.key)}`} style={btn("#d8782f")}>Eksportér</a>
           </div>
-          <ParticipantTable rows={g.ps} onStatus={updateStatus} showCourse={false} />
+          <ParticipantTable rows={g.ps} onStatus={updateStatus} onDelete={deleteParticipant} showCourse={false} />
         </div>
       ))}
 
       {/* Liste */}
       {!loading && viewMode==="liste" && items.length>0 && (
         <div style={card}>
-          <ParticipantTable rows={items} onStatus={updateStatus} showCourse={true} />
+          <ParticipantTable rows={items} onStatus={updateStatus} onDelete={deleteParticipant} showCourse={true} />
         </div>
       )}
     </>
   );
 }
 
-function ParticipantTable({ rows, onStatus, showCourse }) {
+function ParticipantTable({ rows, onStatus, onDelete, showCourse }) {
   return (
     <div style={{ overflowX:"auto" }}>
       <table style={{ width:"100%", borderCollapse:"collapse" }}>
@@ -172,6 +178,7 @@ function ParticipantTable({ rows, onStatus, showCourse }) {
                   <button onClick={()=>onStatus(r.id,"paid")}      style={mini("#2a7a48")}>Betalt</button>
                   <button onClick={()=>onStatus(r.id,"pending")}   style={mini("#d8782f")}>Afventer</button>
                   <button onClick={()=>onStatus(r.id,"cancelled")} style={mini("#8f2d20")}>Annullér</button>
+                  <button onClick={()=>onDelete(r.id, r.name)}     style={mini("#4a4a4a")}>Slet</button>
                 </div>
               </td>
             </tr>
