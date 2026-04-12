@@ -79,6 +79,7 @@ const page = {
   maxWidth: 1180,
   margin: "0 auto",
   padding: "48px 24px 72px",
+  overflowX: "hidden",
 };
 
 const tagRow = {
@@ -109,8 +110,11 @@ const level = {
 
 const h1 = {
   color: "#1f3a2b",
-  fontSize: 42,
+  fontSize: "clamp(26px, 6vw, 42px)",
   margin: "14px 0 12px",
+  overflowWrap: "break-word",
+  wordBreak: "break-word",
+  hyphens: "auto",
 };
 
 const lead = {
