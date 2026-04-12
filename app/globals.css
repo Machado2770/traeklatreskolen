@@ -162,6 +162,14 @@
   opacity: 1;
 }
 
+/* ── PILLAR BÅND — 2 kolonner på lille skærm ── */
+@media (max-width: 540px) {
+  .pillar-inner {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 20px 16px !important;
+  }
+}
+
 /* ── CARD HOVER ──────────────────────────── */
 .feature-card {
   transition: transform 0.22s ease, box-shadow 0.22s ease;

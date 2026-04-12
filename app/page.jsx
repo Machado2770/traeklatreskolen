@@ -83,18 +83,65 @@ export default function Home() {
         </div>
       </section>
 
-      {/* STATS BÅND */}
-      <section style={statsBand}>
-        <div style={statsInner}>
+      {/* FRILUFT-BÅND */}
+      <section style={pillarBand}>
+        <div style={pillarInner}>
           {[
-            { value: "500+", label: "Deltagere hvert år" },
-            { value: "15+", label: "Års erfaring" },
-            { value: "100%", label: "Forsikret aktivitet" },
-            { value: "Hele", label: "Danmark" },
-          ].map((s) => (
-            <div key={s.label} style={statItem}>
-              <span style={statValue}>{s.value}</span>
-              <span style={statLabel}>{s.label}</span>
+            {
+              icon: (
+                <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                  <path d="M18 4C18 4 8 13 8 21a10 10 0 0020 0C28 13 18 4 18 4z" fill="#d8782f" opacity="0.18"/>
+                  <path d="M18 4C18 4 8 13 8 21a10 10 0 0020 0C28 13 18 4 18 4z" stroke="#d8782f" strokeWidth="1.8" fill="none"/>
+                  <line x1="18" y1="22" x2="18" y2="33" stroke="#d8782f" strokeWidth="1.8" strokeLinecap="round"/>
+                  <path d="M13 17c2-2 4-2 5 0" stroke="#d8782f" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
+                  <path d="M18 14c1.5-1.5 3.5-1.5 4.5 0" stroke="#d8782f" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
+                </svg>
+              ),
+              title: "Op i trækronerne",
+              text: "Opdag skoven fra nye højder — en oplevelse ud over det sædvanlige",
+            },
+            {
+              icon: (
+                <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                  <circle cx="18" cy="13" r="5.5" stroke="#d8782f" strokeWidth="1.8" fill="#d8782f" fillOpacity="0.12"/>
+                  <path d="M12 13c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="#d8782f" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+                  <path d="M10 28c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="#d8782f" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+                  <path d="M6 22c1-1.5 2.5-2.5 4-2.5" stroke="#d8782f" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
+                  <path d="M30 22c-1-1.5-2.5-2.5-4-2.5" stroke="#d8782f" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
+                </svg>
+              ),
+              title: "For alle og enhver",
+              text: "Børn, voksne, skoler og institutioner — vi tilpasser til din gruppe",
+            },
+            {
+              icon: (
+                <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                  <path d="M18 4l2.5 7.5H28l-6.5 4.7 2.5 7.5L18 19l-6 4.7 2.5-7.5L8 11.5h7.5L18 4z" fill="#d8782f" fillOpacity="0.15" stroke="#d8782f" strokeWidth="1.8" strokeLinejoin="round"/>
+                  <path d="M18 28v4" stroke="#d8782f" strokeWidth="1.8" strokeLinecap="round"/>
+                  <path d="M13 30h10" stroke="#d8782f" strokeWidth="1.8" strokeLinecap="round"/>
+                </svg>
+              ),
+              title: "Naturen som læringsrum",
+              text: "Naturdannelse og refleksion i de bedste omgivelser — skoven",
+            },
+            {
+              icon: (
+                <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                  <path d="M18 5l1.5 4.5 4.5.5-3.3 3 1.2 4.5L18 15l-3.9 2.5 1.2-4.5-3.3-3 4.5-.5L18 5z" fill="#d8782f" fillOpacity="0.15"/>
+                  <path d="M18 5C11 10 8 15 8 21c0 7 10 11 10 11s10-4 10-11c0-6-3-11-10-16z" stroke="#d8782f" strokeWidth="1.8" fill="none" strokeLinejoin="round"/>
+                  <path d="M13 21l3.5 3.5L23 17" stroke="#d8782f" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              ),
+              title: "Sikkerhed i centrum",
+              text: "Erhvervsforsikring og Klatresamrådets normer — altid og uden undtagelse",
+            },
+          ].map((p) => (
+            <div key={p.title} style={pillarItem}>
+              <div style={pillarIcon}>{p.icon}</div>
+              <div style={pillarText}>
+                <strong style={pillarTitle}>{p.title}</strong>
+                <span style={pillarSub}>{p.text}</span>
+              </div>
             </div>
           ))}
         </div>
@@ -270,36 +317,51 @@ const secondaryBtn = {
   letterSpacing: "0.3px",
 };
 
-/* Stats band */
-const statsBand = {
-  background: "#1f3a2b",
-  padding: "32px 24px",
+/* Pillar band */
+const pillarBand = {
+  background: "#162c1e",
+  borderTop: "1px solid rgba(255,255,255,0.06)",
+  padding: "36px 24px",
 };
-const statsInner = {
-  maxWidth: 1000,
+const pillarInner = {
+  maxWidth: 1100,
   margin: "0 auto",
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
-  gap: 24,
-  textAlign: "center",
+  gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+  gap: "28px 32px",
 };
-const statItem = {
+const pillarItem = {
+  display: "flex",
+  alignItems: "flex-start",
+  gap: 16,
+};
+const pillarIcon = {
+  flexShrink: 0,
+  width: 48,
+  height: 48,
+  background: "rgba(216,120,47,0.10)",
+  borderRadius: 12,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  border: "1px solid rgba(216,120,47,0.20)",
+};
+const pillarText = {
   display: "flex",
   flexDirection: "column",
   gap: 4,
+  paddingTop: 2,
 };
-const statValue = {
-  fontSize: "clamp(30px, 4vw, 46px)",
-  fontWeight: 800,
-  color: "#d8782f",
-  lineHeight: 1,
+const pillarTitle = {
+  fontSize: 15,
+  fontWeight: 700,
+  color: "rgba(255,255,255,0.95)",
+  lineHeight: 1.3,
 };
-const statLabel = {
-  fontSize: 14,
-  fontWeight: 600,
-  color: "rgba(255,255,255,0.7)",
-  textTransform: "uppercase",
-  letterSpacing: "1.5px",
+const pillarSub = {
+  fontSize: 13,
+  color: "rgba(255,255,255,0.52)",
+  lineHeight: 1.55,
 };
 
 /* Intro */
