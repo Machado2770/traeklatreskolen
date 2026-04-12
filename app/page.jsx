@@ -8,7 +8,7 @@ export const metadata = {
   openGraph: {
     title: "Træklatreskolen – Kurser og oplevelser i træklatring",
     description:
-      "Professionelle kurser og eventyrlige oplevelser i levende træer. Sikkerhed, faglighed og natur i centrum.",
+      "Professionelle kurser og eventyrlige oplevelser i trækronerne. Naturdannelse, sikkerhed og faglighed i centrum.",
     url: "/",
   },
 };
@@ -69,11 +69,11 @@ export default function Home() {
         />
         <div className="page-hero-overlay" style={{ position: "relative", zIndex: 1 }}>
           <div className="page-hero-inner">
-            <p className="page-hero-eyebrow">Træklatring · Faglighed · Natur</p>
+            <p className="page-hero-eyebrow">Træklatring · Naturdannelse · Faglighed</p>
             <h1 className="page-hero-title">Træklatreskolen</h1>
             <p className="page-hero-text" style={{ maxWidth: 640 }}>
-              Kurser og oplevelser i levende træer for dig, der vil lære,
-              udfordre dig selv og opleve skoven fra nye højder.
+              Kurser og oplevelser i trækronerne for dig, der vil lære,
+              udfordre dig selv og opdage skoven fra nye højder.
             </p>
             <div style={heroButtons}>
               <a href="/kurser" style={primaryBtn}>Se kurser</a>
@@ -86,13 +86,13 @@ export default function Home() {
       {/* INTRO — hvid */}
       <section style={introSection}>
         <div style={introBox}>
-          <h2 style={introTitle}>Velkommen op i træerne</h2>
+          <h2 style={introTitle}>Velkommen op i trækronerne</h2>
           <div style={introAccent} />
           <p style={introText}>
-            Træklatreskolen er en virksomhed der ønsker at sikre gode oplevelser
+            Træklatreskolen er en virksomhed, der ønsker at sikre gode oplevelser
             og aktiv læring gennem kvalificeret undervisning og vejledning. Vi
             arbejder med udeliv, fordi vi er overbevist om at naturen som
-            arbejdsrum fremkalder nogle af de bedste rammer for oplevelse,
+            arbejdsrum fremkalder nogle af de bedste rammer for naturdannelse,
             udvikling og refleksion hos den enkelte.
           </p>
           <p style={{ ...introText, marginTop: 18 }}>
@@ -203,7 +203,7 @@ export default function Home() {
       {/* CTA — orange */}
       <section style={ctaSection}>
         <div style={ctaInner}>
-          <h2 style={ctaTitle}>Klar til at komme op i træerne?</h2>
+          <h2 style={ctaTitle}>Klar til at komme op i trækronerne?</h2>
           <p style={ctaText}>
             Meld dig til et kursus eller book en oplevelse for din gruppe,
             skole eller institution. Vi glæder os til at tage dig med op.
