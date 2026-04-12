@@ -34,7 +34,7 @@ export default function VideoSection() {
           <p style={eyebrow}>📹 Videovejledning</p>
           <h2 style={title}>Træklatring i praksis</h2>
           <p style={lead}>
-            Videoerne er produceret af undertegnede i regi af{" "}
+            Videoerne er produceret af Træklatreskolen i regi af{" "}
             <strong style={{ color: "#d8782f" }}>DGI Storkøbenhavn</strong> og
             viser teknikker og metoder inden for træklatring. Klik på en video for at afspille.
           </p>
