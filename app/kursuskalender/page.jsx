@@ -9,9 +9,10 @@ async function getCalendarItems() {
     const { data, error } = await supabase
       .from("calendar_items")
       .select("*")
-      .order("sort_order", { ascending: true })
       .order("created_at", { ascending: true });
-    if (!error && data && data.length > 0) {
+    if (error) {
+      console.error("[kursuskalender] Supabase error:", error.message);
+    } else if (data && data.length > 0) {
       // Normaliser felter fra Supabase til samme format som siteData
       return data.map(item => ({
         id:              item.id,
@@ -25,7 +26,9 @@ async function getCalendarItems() {
         maxParticipants: item.max_participants,
       }));
     }
-  } catch { /* falder igennem til fallback */ }
+  } catch (e) {
+    console.error("[kursuskalender] Fetch exception:", e?.message ?? e);
+  }
   // Fallback til siteData hvis Supabase er tom eller utilgængelig
   return fallbackItems;
 }

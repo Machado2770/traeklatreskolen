@@ -70,6 +70,11 @@ export async function POST(request) {
     const supabase     = getSupabaseAdmin();
     const courseString = body.course ?? "";
 
+    // ── Valider påkrævede felter ────────────────────────
+    if (!body.name?.trim())  return Response.json({ error: "Navn er påkrævet."    }, { status: 400 });
+    if (!body.email?.trim()) return Response.json({ error: "Email er påkrævet."   }, { status: 400 });
+    if (!body.phone?.trim()) return Response.json({ error: "Telefon er påkrævet." }, { status: 400 });
+
     // ── Kapacitetstjek ──────────────────────────────────
     const matchedItem    = await findCalendarItem(supabase, courseString);
     const maxParticipants = matchedItem?.max_participants ?? matchedItem?.maxParticipants ?? null;

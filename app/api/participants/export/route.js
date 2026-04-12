@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic";
-export const runtime = "nodejs";
+export const runtime  = "nodejs";
 
 import path from "path";
 import fs from "fs";
@@ -35,7 +35,8 @@ function hex(color) {
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
-  const courseFilter = searchParams.get("course") || "";
+  const courseFilter  = searchParams.get("course")         || "";
+  const statusFilter  = searchParams.get("payment_status") || "";
 
   const supabase = getSupabaseAdmin();
   let query = supabase
@@ -43,9 +44,8 @@ export async function GET(request) {
     .select("*")
     .order("created_at", { ascending: false });
 
-  if (courseFilter) {
-    query = query.ilike("course", `%${courseFilter}%`);
-  }
+  if (courseFilter)  query = query.ilike("course", `%${courseFilter}%`);
+  if (statusFilter)  query = query.eq("payment_status", statusFilter);
 
   const { data, error } = await query;
 
@@ -206,9 +206,9 @@ export async function GET(request) {
 
   return new Response(buf, {
     headers: {
-      "Content-Type":
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "Content-Type":        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       "Content-Disposition": `attachment; filename="deltagere-${fileSlug}-${today}.xlsx"`,
+      "Cache-Control":       "no-store",
     },
   });
 }

@@ -1,5 +1,7 @@
 import Image from "next/image";
-import { experiences } from "@/lib/siteData";
+import { getExperiences } from "@/lib/getCourses";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Oplevelser i trækronerne",
@@ -12,7 +14,8 @@ export const metadata = {
   },
 };
 
-export default function OplevelserPage() {
+export default async function OplevelserPage() {
+  const experiences = await getExperiences();
   return (
     <main>
       <section className="page-hero" style={{ backgroundImage: "url('/images/rebklatring.jpg')", backgroundPosition: "center 30%" }}>

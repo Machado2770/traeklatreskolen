@@ -1,13 +1,11 @@
+export const dynamic = "force-dynamic";
+
 import Image from "next/image";
-import { courses } from "@/lib/siteData";
+import { getCourseBySlug, getCourses } from "@/lib/getCourses";
 import { notFound } from "next/navigation";
 
-export function generateStaticParams() {
-  return courses.map((course) => ({ slug: course.slug }));
-}
-
-export function generateMetadata({ params }) {
-  const item = courses.find((c) => c.slug === params.slug);
+export async function generateMetadata({ params }) {
+  const item = await getCourseBySlug(params.slug);
   if (!item) return {};
   return {
     title: item.title,
@@ -21,8 +19,8 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function KursusDetaljePage({ params }) {
-  const item = courses.find((course) => course.slug === params.slug);
+export default async function KursusDetaljePage({ params }) {
+  const item = await getCourseBySlug(params.slug);
 
   if (!item) {
     notFound();
@@ -43,7 +41,7 @@ export default function KursusDetaljePage({ params }) {
           <p style={lead}>{item.description}</p>
 
           <ul style={list}>
-            {item.bullets.map((bullet) => (
+            {(item.bullets || []).map((bullet) => (
               <li key={bullet} style={listItem}>
                 {bullet}
               </li>

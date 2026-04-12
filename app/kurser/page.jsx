@@ -1,6 +1,8 @@
 import Image from "next/image";
-import { courses } from "@/lib/siteData";
+import { getCourses } from "@/lib/getCourses";
 import VideoSection from "@/app/components/VideoSection";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Kurser i træklatring",
@@ -13,7 +15,8 @@ export const metadata = {
   },
 };
 
-export default function KurserPage() {
+export default async function KurserPage() {
+  const courses = await getCourses();
   return (
     <main>
       <section className="page-hero" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1800&q=80')" }}>

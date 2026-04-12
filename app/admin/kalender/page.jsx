@@ -4,18 +4,27 @@ import { useEffect, useState } from "react";
 import { courses as sdCourses, experiences as sdExperiences } from "@/lib/siteData";
 
 function buildCourseOptions(cmsData) {
-  if (cmsData && cmsData.length > 0) {
-    return cmsData.map(c => ({
-      title:        c.title,
-      type:         c.is_experience ? "Oplevelse" : "Kursus",
-      href:         c.is_experience ? `/oplevelser/${c.slug}` : `/kurser/${c.slug}`,
-      defaultMax:   c.is_experience ? 12 : 8,
-      defaultPrice: c.price || "",
-    }));
-  }
-  const k = sdCourses.map(c     => ({ title: c.title, type: "Kursus",    href: `/kurser/${c.slug}`,     defaultMax: 8,  defaultPrice: c.price || "" }));
-  const o = sdExperiences.map(e => ({ title: e.title, type: "Oplevelse", href: `/oplevelser/${e.slug}`, defaultMax: 12, defaultPrice: e.price || "" }));
-  return [...k, ...o];
+  // siteData er altid base — sikrer at standardkurser altid vises
+  const base = [
+    ...sdCourses.map(c     => ({ slug: c.slug, title: c.title, type: "Kursus",    href: `/kurser/${c.slug}`,     defaultMax: 8,  defaultPrice: c.price || "" })),
+    ...sdExperiences.map(e => ({ slug: e.slug, title: e.title, type: "Oplevelse", href: `/oplevelser/${e.slug}`, defaultMax: 12, defaultPrice: e.price || "" })),
+  ];
+
+  if (!cmsData?.length) return base;
+
+  // Supabase-data overstyrer siteData for samme slug; nye kurser tilføjes
+  const cmsOptions = cmsData.map(c => ({
+    slug:         c.slug,
+    title:        c.title,
+    type:         c.is_experience ? "Oplevelse" : "Kursus",
+    href:         c.is_experience ? `/oplevelser/${c.slug}` : `/kurser/${c.slug}`,
+    defaultMax:   c.is_experience ? 12 : 8,
+    defaultPrice: c.price || "",
+  }));
+
+  const cmsSlugs = new Set(cmsOptions.map(c => c.slug));
+  // Behold siteData-kurser der IKKE er i Supabase, tilføj derefter alle Supabase-kurser
+  return [...base.filter(b => !cmsSlugs.has(b.slug)), ...cmsOptions];
 }
 
 const EMPTY = { courseIdx: "", dates: [""], place: "", max_participants: 8, price: "" };

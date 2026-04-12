@@ -124,10 +124,12 @@ export default function BookingPage() {
             />
           </Field>
 
-          <Field label="Telefon">
+          <Field label="Telefon *">
             <input
+              type="tel"
               value={form.phone}
               onChange={(e) => setForm({ ...form, phone: e.target.value })}
+              required
               placeholder="+45 12 34 56 78"
               style={inputStyle}
             />

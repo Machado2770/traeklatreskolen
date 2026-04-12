@@ -71,9 +71,13 @@ export default function TilmeldingPage() {
     setItems(prev => prev.filter(i => i.id !== id));
   }
 
-  const exportUrl = filters.course
-    ? `/api/participants/export?course=${encodeURIComponent(filters.course)}`
-    : "/api/participants/export";
+  const exportUrl = (() => {
+    const p = new URLSearchParams();
+    if (filters.course)         p.set("course",         filters.course);
+    if (filters.payment_status) p.set("payment_status", filters.payment_status);
+    const qs = p.toString();
+    return qs ? `/api/participants/export?${qs}` : "/api/participants/export";
+  })();
 
   return (
     <>
@@ -159,7 +163,7 @@ function ParticipantTable({ rows, onStatus, onDelete, showCourse }) {
       <table style={{ width:"100%", borderCollapse:"collapse" }}>
         <thead>
           <tr style={{ background:"#eef3ef" }}>
-            {["Navn","Email","Telefon", ...(showCourse?["Kursus"]:[]), "Status","Oprettet","Handling"].map(l=>(
+            {["Navn","Email","Telefon", ...(showCourse?["Kursus"]:[]), "Status","Bemærkninger","Oprettet","Handling"].map(l=>(
               <th key={l} style={th}>{l}</th>
             ))}
           </tr>
@@ -172,6 +176,9 @@ function ParticipantTable({ rows, onStatus, onDelete, showCourse }) {
               <td style={td}>{r.phone||"—"}</td>
               {showCourse && <td style={td}>{r.course}</td>}
               <td style={td}><span style={{...pill,...statusColors(r.payment_status)}}>{statusLabel(r.payment_status)}</span></td>
+              <td style={{...td, maxWidth:220, color: r.notes ? "#1f3a2b" : "#aaa", fontStyle: r.notes ? "normal" : "italic"}}>
+                {r.notes || "—"}
+              </td>
               <td style={td}>{r.created_at ? new Date(r.created_at).toLocaleString("da-DK") : "—"}</td>
               <td style={td}>
                 <div style={{ display:"flex", gap:5, flexWrap:"wrap" }}>

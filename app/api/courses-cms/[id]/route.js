@@ -28,6 +28,22 @@ export async function PUT(request, { params }) {
 
 export async function DELETE(request, { params }) {
   const supabase = getSupabaseAdmin();
+
+  // Hent kursets titel inden sletning, så vi kan slette relaterede kalenderbegivenheder
+  const { data: course } = await supabase
+    .from("courses_cms")
+    .select("title")
+    .eq("id", params.id)
+    .maybeSingle();
+
+  // Slet relaterede kalenderbegivenheder
+  if (course?.title) {
+    await supabase
+      .from("calendar_items")
+      .delete()
+      .eq("title", course.title);
+  }
+
   const { error } = await supabase.from("courses_cms").delete().eq("id", params.id);
   if (error) return Response.json({ error: error.message }, { status: 500 });
   return Response.json({ ok: true });

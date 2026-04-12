@@ -1,13 +1,11 @@
+export const dynamic = "force-dynamic";
+
 import Image from "next/image";
-import { experiences } from "@/lib/siteData";
+import { getExperienceBySlug } from "@/lib/getCourses";
 import { notFound } from "next/navigation";
 
-export function generateStaticParams() {
-  return experiences.map((e) => ({ slug: e.slug }));
-}
-
-export function generateMetadata({ params }) {
-  const item = experiences.find((e) => e.slug === params.slug);
+export async function generateMetadata({ params }) {
+  const item = await getExperienceBySlug(params.slug);
   if (!item) return {};
   return {
     title: item.title,
@@ -21,8 +19,8 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function OplevelseDetaljePage({ params }) {
-  const item = experiences.find((experience) => experience.slug === params.slug);
+export default async function OplevelseDetaljePage({ params }) {
+  const item = await getExperienceBySlug(params.slug);
 
   if (!item) return notFound();
 
@@ -39,7 +37,7 @@ export default function OplevelseDetaljePage({ params }) {
           <p style={lead}>{item.description}</p>
 
           <ul style={list}>
-            {item.bullets.map((bullet) => (
+            {(item.bullets || []).map((bullet) => (
               <li key={bullet} style={listItem}>{bullet}</li>
             ))}
           </ul>
