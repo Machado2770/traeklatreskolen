@@ -60,36 +60,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* IMAGE GALLERY */}
-      <section style={section}>
-        <div style={container}>
-          <h2 style={sectionTitle}>Oplev højden og naturen</h2>
-
-          <div style={galleryGrid}>
-            <div
-              style={{
-                ...galleryLarge,
-                backgroundImage: "url('/images/gallery-main.jpg')",
-              }}
-            />
-            <div style={gallerySide}>
-              <div
-                style={{
-                  ...gallerySmall,
-                  backgroundImage: "url('/images/gallery-side-1.jpg')",
-                }}
-              />
-              <div
-                style={{
-                  ...gallerySmall,
-                  backgroundImage: "url('/images/gallery-side-2.jpg')",
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* FEATURED EXPERIENCES */}
       <section style={sectionAlt}>
         <div style={container}>
@@ -258,28 +228,3 @@ const cardText = {
   lineHeight: 1.7,
 };
 
-const galleryGrid = {
-  display: "grid",
-  gridTemplateColumns: "2fr 1fr",
-  gap: 20,
-  marginTop: 30,
-};
-
-const galleryLarge = {
-  minHeight: 520,
-  borderRadius: 24,
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-};
-
-const gallerySide = {
-  display: "grid",
-  gap: 20,
-};
-
-const gallerySmall = {
-  minHeight: 250,
-  borderRadius: 24,
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-};
