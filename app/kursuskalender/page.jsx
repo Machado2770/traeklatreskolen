@@ -1,3 +1,4 @@
+import { unstable_noStore as noStore } from "next/cache";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 
 export const dynamic = "force-dynamic";
@@ -17,9 +18,9 @@ function normalize(item) {
 }
 
 async function getCalendarItems() {
+  noStore();
   try {
     const supabase = getSupabaseAdmin();
-
     const { data, error } = await supabase
       .from("calendar_items")
       .select("*")
@@ -27,18 +28,9 @@ async function getCalendarItems() {
       .order("date", { ascending: true });
 
     if (error) {
-      // Hvis kolonnen ikke eksisterer endnu, vis alle (graceful fallback)
-      if ((error.message ?? "").includes("column")) {
-        const { data: all } = await supabase
-          .from("calendar_items")
-          .select("*")
-          .order("date", { ascending: true });
-        return (all || []).map(normalize);
-      }
       console.error("[kursuskalender] Supabase error:", error.message);
       return [];
     }
-
     return (data || []).map(normalize);
   } catch (e) {
     console.error("[kursuskalender] Fetch exception:", e?.message ?? e);
