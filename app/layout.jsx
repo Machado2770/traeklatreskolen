@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export const metadata = {
   title: "Træklatreskolen",
   description: "Kurser og oplevelser i træklatring",
@@ -26,13 +28,13 @@ function Header() {
   return (
     <header
       style={{
-        background: "#1f3a2b",
-        color: "white",
-        padding: "16px 24px",
+        background: "#ffffff",
+        borderBottom: "1px solid #e7ece8",
+        padding: "14px 24px",
         position: "sticky",
         top: 0,
         zIndex: 20,
-        boxShadow: "0 4px 18px rgba(0,0,0,0.12)",
+        boxShadow: "0 4px 18px rgba(0,0,0,0.05)",
       }}
     >
       <div
@@ -46,17 +48,14 @@ function Header() {
           flexWrap: "wrap",
         }}
       >
-        <a
-          href="/"
-          style={{
-            color: "white",
-            textDecoration: "none",
-            fontWeight: 800,
-            fontSize: 24,
-            letterSpacing: 0.2,
-          }}
-        >
-          🌳 Træklatreskolen
+        <a href="/" style={{ display: "flex", alignItems: "center" }}>
+          <Image
+            src="/logo/logo-main.png"
+            alt="Træklatreskolen"
+            width={260}
+            height={60}
+            style={{ height: "auto", width: "auto", maxHeight: 52 }}
+          />
         </a>
 
         <nav
@@ -99,9 +98,19 @@ function Footer() {
         }}
       >
         <div>
-          <div style={{ fontWeight: 800, fontSize: 20, marginBottom: 10 }}>
-            Træklatreskolen
-          </div>
+          <Image
+            src="/logo/logo-main.png"
+            alt="Træklatreskolen"
+            width={220}
+            height={50}
+            style={{
+              width: "auto",
+              height: "auto",
+              maxHeight: 42,
+              filter: "brightness(0) invert(1)",
+              marginBottom: 12,
+            }}
+          />
           <p style={footerText}>
             Kurser, faglighed og eventyrlige oplevelser i træernes verden.
           </p>
@@ -130,7 +139,9 @@ function Footer() {
         <div>
           <div style={footerHeading}>Kontakt</div>
           <p style={footerText}>Træklatreskolen</p>
-          <p style={footerText}>Kontakt via bookingsiden eller ved direkte henvendelse.</p>
+          <p style={footerText}>
+            Kontakt via bookingsiden eller ved direkte henvendelse.
+          </p>
         </div>
       </div>
 
@@ -150,10 +161,9 @@ function Footer() {
 }
 
 const navLink = {
-  color: "white",
+  color: "#1f3a2b",
   textDecoration: "none",
   fontWeight: 600,
-  opacity: 0.95,
 };
 
 const ctaLink = {
