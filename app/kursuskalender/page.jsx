@@ -48,16 +48,21 @@ export default async function KursuskalenderPage() {
 
   return (
     <main style={page}>
-      <div style={hero}>
-        <h1 style={h1}>Kursuskalender</h1>
-        <p style={lead}>
-          Her finder du kommende kurser og oplevelser. Tilmeld dig direkte —
-          du modtager en bekræftelse med faktura.
-        </p>
-      </div>
+      <section className="page-hero" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1800&q=80')", marginBottom: 32 }}>
+        <div className="page-hero-overlay">
+          <div className="page-hero-inner">
+            <p className="page-hero-eyebrow">Kalender</p>
+            <h1 className="page-hero-title">Kursuskalender</h1>
+            <p className="page-hero-text">
+              Her finder du kommende kurser og oplevelser. Tilmeld dig direkte —
+              du modtager en bekræftelse med faktura.
+            </p>
+          </div>
+        </div>
+      </section>
 
-      <section style={tableWrap}>
-        <div style={tableHeaderRow}>
+      <section className="cal-table-wrap">
+        <div className="cal-header-row">
           <div style={th}>Dato</div>
           <div style={th}>Aktivitet</div>
           <div style={th}>Type</div>
@@ -78,28 +83,28 @@ export default async function KursuskalenderPage() {
           const available = max !== null ? max - taken : null;
 
           return (
-            <div key={item.id} style={row}>
-              <div style={td}>{item.date}</div>
-              <div style={td}>
+            <div key={item.id} className="cal-row">
+              <div style={td} className="cal-cell-date">{item.date}</div>
+              <div style={td} className="cal-cell-activity">
                 <div style={{ fontWeight:700, color:"#1f3a2b" }}>{item.title}</div>
                 {item.price && <div style={{ fontSize:13, color:"#a3521d", fontWeight:600, marginTop:3 }}>{item.price}</div>}
               </div>
-              <div style={td}>
+              <div style={td} className="cal-cell-type">
                 <span style={{ ...pill, background: item.type==="Kursus" ? "#e7efe9" : "#f5e5d8", color: item.type==="Kursus" ? "#1f3a2b" : "#a3521d" }}>
                   {item.type}
                 </span>
               </div>
-              <div style={td}>{item.place}</div>
-              <div style={td}>
+              <div style={td} className="cal-cell-place">{item.place}</div>
+              <div style={td} className="cal-cell-spots">
                 {max !== null ? (
                   <span style={spotsStyle(isFull, available, max)}>
-                    {isFull ? "Fuldt" : `${available}/${max}`}
+                    {isFull ? "Fuldt" : `${available}/${max} pladser`}
                   </span>
                 ) : (
                   <span style={{ color:"#4b6355", fontSize:14 }}>—</span>
                 )}
               </div>
-              <div style={td}>
+              <div style={td} className="cal-cell-actions">
                 <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
                   {item.href && <a href={item.href} style={secondaryButton}>Læs mere</a>}
                   {isFull ? (
@@ -147,13 +152,7 @@ function spotsStyle(isFull, available, max) {
   return { display:"inline-block", padding:"6px 12px", borderRadius:999, fontSize:13, fontWeight:700, background:bg, color };
 }
 
-const page           = { maxWidth:1180, margin:"0 auto", padding:"48px 24px 72px" };
-const hero           = { marginBottom:28 };
-const h1             = { color:"#1f3a2b", fontSize:42, marginBottom:12 };
-const lead           = { maxWidth:760, color:"#4b6355", fontSize:18, lineHeight:1.7 };
-const tableWrap      = { background:"white", borderRadius:18, overflow:"hidden", boxShadow:"0 8px 28px rgba(0,0,0,0.08)" };
-const tableHeaderRow = { display:"grid", gridTemplateColumns:"1fr 1.8fr 0.8fr 1fr 0.8fr 1.2fr", gap:12, padding:"16px 18px", background:"#eef4ef" };
-const row            = { display:"grid", gridTemplateColumns:"1fr 1.8fr 0.8fr 1fr 0.8fr 1.2fr", gap:12, padding:"16px 18px", borderTop:"1px solid #edf2ee", alignItems:"center" };
+const page           = { maxWidth:1180, margin:"0 auto", padding:"0 24px 72px" };
 const th             = { fontSize:12, fontWeight:700, color:"#486051", textTransform:"uppercase", letterSpacing:0.8 };
 const td             = { color:"#33463a", fontSize:15 };
 const pill           = { display:"inline-block", padding:"5px 10px", borderRadius:999, fontSize:12, fontWeight:700 };

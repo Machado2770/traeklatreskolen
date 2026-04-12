@@ -1,6 +1,6 @@
-import Image from "next/image";
 import "./globals.css";
 import Providers from "./providers";
+import Header from "./components/Header";
 
 export const metadata = {
   metadataBase: new URL(
@@ -43,57 +43,9 @@ export default function RootLayout({ children }) {
           {children}
           <Footer />
         </Providers>
+
       </body>
     </html>
-  );
-}
-
-function Header() {
-  return (
-    <header
-      style={{
-        background: "#ffffff",
-        borderBottom: "1px solid #e7ece8",
-        padding: "14px 24px",
-        position: "sticky",
-        top: 0,
-        zIndex: 20,
-        boxShadow: "0 4px 18px rgba(0,0,0,0.05)",
-      }}
-    >
-      <div className="header-inner">
-        <a
-          href="/"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            textDecoration: "none",
-          }}
-        >
-          <Image
-            src="/logo/logo-main.png"
-            alt="Træklatreskolen"
-            width={320}
-            height={72}
-            priority
-            style={{
-              width: "auto",
-              height: "auto",
-              maxHeight: 54,
-            }}
-          />
-        </a>
-
-        <nav className="main-nav">
-          <a href="/" style={navLink}>Forside</a>
-          <a href="/kurser" style={navLink}>Kurser</a>
-          <a href="/oplevelser" style={navLink}>Oplevelser</a>
-          <a href="/kursuskalender" style={navLink}>Kursuskalender</a>
-          <a href="/kontakt" style={navLink}>Kontakt</a>
-          <a href="/booking" style={ctaLink}>Tilmelding</a>
-        </nav>
-      </div>
-    </header>
   );
 }
 
@@ -179,21 +131,6 @@ function Footer() {
     </footer>
   );
 }
-
-const navLink = {
-  color: "#1f3a2b",
-  textDecoration: "none",
-  fontWeight: 600,
-};
-
-const ctaLink = {
-  color: "white",
-  textDecoration: "none",
-  fontWeight: 700,
-  background: "#d8782f",
-  padding: "10px 14px",
-  borderRadius: 10,
-};
 
 const footerHeading = {
   fontWeight: 700,

@@ -15,12 +15,12 @@ export const metadata = {
 export default function KurserPage() {
   return (
     <main>
-      <section style={hero}>
-        <div style={heroOverlay}>
-          <div style={heroInner}>
-            <p style={eyebrow}>Kurser</p>
-            <h1 style={heroTitle}>Kurser i træklatring</h1>
-            <p style={heroText}>
+      <section className="page-hero" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1800&q=80')" }}>
+        <div className="page-hero-overlay">
+          <div className="page-hero-inner">
+            <p className="page-hero-eyebrow">Kurser</p>
+            <h1 className="page-hero-title">Kurser i træklatring</h1>
+            <p className="page-hero-text">
               Her finder du alle kurser i Træklatreskolen — fra begynderniveau
               til brush-up, instruktørforløb, avanceret træklatring og eksamen.
             </p>

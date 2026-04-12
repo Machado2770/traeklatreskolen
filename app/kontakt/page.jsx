@@ -1,14 +1,16 @@
 export default function KontaktPage() {
   return (
     <main style={page}>
-      <section style={hero}>
-        <div style={heroTextWrap}>
-          <p style={eyebrow}>Kontakt</p>
-          <h1 style={h1}>Kontakt Træklatreskolen</h1>
-          <p style={lead}>
-            Har du spørgsmål om kurser, oplevelser, booking eller hvilket niveau
-            der passer til dig, så er du velkommen til at tage kontakt.
-          </p>
+      <section className="page-hero" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1800&q=80')" }}>
+        <div className="page-hero-overlay">
+          <div className="page-hero-inner">
+            <p className="page-hero-eyebrow">Kontakt</p>
+            <h1 className="page-hero-title">Kontakt Træklatreskolen</h1>
+            <p className="page-hero-text">
+              Har du spørgsmål om kurser, oplevelser, booking eller hvilket niveau
+              der passer til dig, så er du velkommen til at tage kontakt.
+            </p>
+          </div>
         </div>
       </section>
 

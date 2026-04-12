@@ -15,12 +15,12 @@ export const metadata = {
 export default function OplevelserPage() {
   return (
     <main>
-      <section style={hero}>
-        <div style={heroOverlay}>
-          <div style={heroInner}>
-            <p style={eyebrow}>Oplevelser</p>
-            <h1 style={heroTitle}>Oplevelser i trækronerne</h1>
-            <p style={heroText}>
+      <section className="page-hero" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=80')" }}>
+        <div className="page-hero-overlay">
+          <div className="page-hero-inner">
+            <p className="page-hero-eyebrow">Oplevelser</p>
+            <h1 className="page-hero-title">Oplevelser i trækronerne</h1>
+            <p className="page-hero-text">
               Her finder du oplevelser i skoven og trækronerne — for dig, der
               vil mærke naturen, højden og fællesskabet på en særlig måde.
             </p>

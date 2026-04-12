@@ -6,21 +6,133 @@
 .header-inner {
   max-width: 1180px;
   margin: 0 auto;
+  padding: 14px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  flex-wrap: wrap;
 }
 
 .main-nav {
   display: flex;
   gap: 18px;
-  flex-wrap: wrap;
   align-items: center;
 }
 
-/* ── HERO ────────────────────────────────── */
+/* ── HAMBURGER ───────────────────────────── */
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+}
+
+.ham-bar {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: #1f3a2b;
+  border-radius: 2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.ham-bar.open-top { transform: translateY(7px) rotate(45deg); }
+.ham-bar.open-mid { opacity: 0; }
+.ham-bar.open-bot { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── MOBIL-MENU ──────────────────────────── */
+.mobile-nav {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-top: 1px solid #e7ece8;
+  padding: 12px 16px 20px;
+  gap: 4px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: 13px 16px;
+  color: #1f3a2b;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 10px;
+}
+.mobile-nav-link:active {
+  background: #eef3ef;
+}
+
+.mobile-nav-cta {
+  display: block;
+  margin-top: 8px;
+  padding: 14px 16px;
+  background: #d8782f;
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* ── FÆLLES HERO BANNER ──────────────────── */
+.page-hero {
+  min-height: 300px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+}
+
+.page-hero-overlay {
+  width: 100%;
+  min-height: 300px;
+  background: linear-gradient(rgba(18,33,26,0.65), rgba(18,33,26,0.60));
+  display: flex;
+  align-items: center;
+  padding: 56px 24px;
+}
+
+.page-hero-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  width: 100%;
+  color: white;
+}
+
+.page-hero-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  font-size: 13px;
+  margin: 0 0 12px;
+  opacity: 0.85;
+  font-weight: 600;
+}
+
+.page-hero-title {
+  font-size: clamp(34px, 6vw, 60px);
+  font-weight: 800;
+  margin: 0 0 14px;
+  line-height: 1.1;
+}
+
+.page-hero-text {
+  max-width: 680px;
+  font-size: 18px;
+  line-height: 1.75;
+  margin: 0;
+  opacity: 0.92;
+}
+
+/* ── HERO HOMEPAGE ───────────────────────── */
 .hero-section {
   min-height: 90vh;
 }
@@ -54,7 +166,6 @@
   min-height: 420px;
 }
 
-/* ── MOBILE ──────────────────────────────── */
 /* ── DETAIL PAGES ────────────────────────── */
 .detail-grid {
   display: grid;
@@ -69,22 +180,39 @@
   overflow: hidden;
 }
 
-/* ── MOBILE ──────────────────────────────── */
+/* ── KURSUSKALENDER TABEL ────────────────── */
+.cal-table-wrap {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+}
+.cal-header-row {
+  display: grid;
+  grid-template-columns: 1fr 1.8fr 0.8fr 1fr 0.8fr 1.2fr;
+  gap: 12px;
+  padding: 16px 18px;
+  background: #eef4ef;
+}
+.cal-row {
+  display: grid;
+  grid-template-columns: 1fr 1.8fr 0.8fr 1fr 0.8fr 1.2fr;
+  gap: 12px;
+  padding: 16px 18px;
+  border-top: 1px solid #edf2ee;
+  align-items: center;
+}
+
+/* ── MOBIL (≤768px) ──────────────────────── */
 @media (max-width: 768px) {
 
   /* Header */
-  .header-inner {
-    gap: 12px;
-  }
-  .main-nav {
-    gap: 12px;
-    font-size: 14px;
-  }
+  .main-nav { display: none; }
+  .hamburger-btn { display: flex; }
+  .header-inner { padding: 12px 16px; }
 
-  /* Hero */
-  .hero-section {
-    min-height: 100svh;
-  }
+  /* Hero homepage */
+  .hero-section { min-height: 100svh; }
   .hero-overlay {
     min-height: 100svh;
     padding: 32px 20px;
@@ -92,58 +220,64 @@
     padding-bottom: 60px;
   }
 
-  /* Page sections */
-  .page-section {
-    padding: 56px 20px;
+  /* Fælles hero-bannere */
+  .page-hero { min-height: 220px; }
+  .page-hero-overlay {
+    min-height: 220px;
+    padding: 40px 20px;
   }
+  .page-hero-text { font-size: 16px; }
+
+  /* Page sections */
+  .page-section { padding: 56px 20px; }
 
   /* Detail pages — stack vertically */
-  .detail-grid {
-    grid-template-columns: 1fr;
-  }
-  .detail-image {
-    min-height: 280px;
-    order: -1;
-  }
+  .detail-grid { grid-template-columns: 1fr; }
+  .detail-image { min-height: 280px; order: -1; }
 
   /* Safety — stack vertically */
   .safety-grid {
     grid-template-columns: 1fr;
     min-height: unset;
   }
-  .safety-content {
-    padding: 52px 24px;
-    order: 2;
+  .safety-content { padding: 52px 24px; order: 2; }
+  .safety-image { min-height: 280px; order: 1; }
+
+  /* Kursuskalender → kortvisning */
+  .cal-header-row { display: none; }
+  .cal-table-wrap { border-radius: 0; box-shadow: none; }
+  .cal-row {
+    display: flex !important;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px 16px !important;
+    background: white;
+    border-radius: 14px;
+    border: 1px solid #edf2ee;
+    margin-bottom: 10px;
   }
-  .safety-image {
-    min-height: 280px;
-    order: 1;
+  .cal-row:first-child { border-top: 1px solid #edf2ee; }
+  .cal-cell-actions { margin-top: 4px; }
+  .cal-cell-actions a,
+  .cal-cell-actions span {
+    display: block !important;
+    text-align: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Inputs — forhindrer iOS-zoom */
+  input, select, textarea {
+    font-size: 16px !important;
   }
 }
 
+/* ── LILLE MOBIL (≤480px) ────────────────── */
 @media (max-width: 480px) {
 
-  /* Header: logo smaller, nav wraps fully */
-  .main-nav {
-    gap: 8px;
-    font-size: 13px;
-  }
-
-  /* Hero */
-  .hero-overlay {
-    padding: 24px 16px 48px;
-  }
-
-  /* Page sections */
-  .page-section {
-    padding: 48px 16px;
-  }
-
-  /* Safety */
-  .safety-content {
-    padding: 40px 20px;
-  }
-  .safety-image {
-    min-height: 220px;
-  }
+  .hero-overlay { padding: 24px 16px 48px; }
+  .page-hero-overlay { padding: 32px 16px; }
+  .page-section { padding: 48px 16px; }
+  .safety-content { padding: 40px 20px; }
+  .safety-image { min-height: 220px; }
 }
