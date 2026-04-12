@@ -1,6 +1,6 @@
 export default function KontaktPage() {
   return (
-    <main style={page}>
+    <main>
       <section className="page-hero" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1800&q=80')" }}>
         <div className="page-hero-overlay">
           <div className="page-hero-inner">
@@ -14,6 +14,7 @@ export default function KontaktPage() {
         </div>
       </section>
 
+      <div style={pageInner}>
       <section style={grid}>
         <div style={card}>
           <h2 style={h2}>Kontaktinformation</h2>
@@ -75,14 +76,15 @@ export default function KontaktPage() {
           <a href="/oplevelser" style={secondaryDarkBtn}>Se oplevelser</a>
         </div>
       </section>
+      </div>
     </main>
   );
 }
 
-const page = {
+const pageInner = {
   maxWidth: 1180,
   margin: "0 auto",
-  padding: "48px 24px 72px",
+  padding: "40px 24px 72px",
 };
 
 const hero = {
