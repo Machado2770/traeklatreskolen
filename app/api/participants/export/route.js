@@ -33,12 +33,21 @@ function hex(color) {
   return { argb: "FF" + color };
 }
 
-export async function GET() {
+export async function GET(request) {
+  const { searchParams } = new URL(request.url);
+  const courseFilter = searchParams.get("course") || "";
+
   const supabase = getSupabaseAdmin();
-  const { data, error } = await supabase
+  let query = supabase
     .from("participants")
     .select("*")
     .order("created_at", { ascending: false });
+
+  if (courseFilter) {
+    query = query.ilike("course", `%${courseFilter}%`);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     return Response.json({ error: error.message }, { status: 500 });
@@ -66,33 +75,36 @@ export async function GET() {
     { key: "notes",   width: 36 },
   ];
 
-  // ── Logo (række 1–3) ─────────────────────────────────
+  // ── Logo — naturlig aspect ratio (543×122px → ~4.45:1), spænder A+B+C ──
+  // Bredde sat til 290px → højde = 290 / (543/122) ≈ 65px (ikke klemt)
   const logoPath = path.join(process.cwd(), "public", "logo", "logo-main.png");
   if (fs.existsSync(logoPath)) {
     const logoId = wb.addImage({ filename: logoPath, extension: "png" });
     ws.addImage(logoId, {
       tl: { col: 0, row: 0 },
-      ext: { width: 220, height: 50 },
+      ext: { width: 290, height: 65 },
     });
   }
 
-  // Titel i kolonne C, række 1
-  ws.mergeCells("C1:I1");
-  const titleCell = ws.getCell("C1");
-  titleCell.value = "Træklatreskolen – Deltagerliste";
+  // Titel i kolonne D–I, række 1
+  ws.mergeCells("D1:I1");
+  const titleCell = ws.getCell("D1");
+  const titleSuffix = courseFilter ? ` · ${courseFilter.split(" – ")[0]}` : "";
+  titleCell.value = `Træklatreskolen – Deltagerliste${titleSuffix}`;
   titleCell.font = { bold: true, size: 16, color: hex(C.darkGreen) };
   titleCell.alignment = { vertical: "middle" };
 
-  // Dato i kolonne C, række 2
-  ws.mergeCells("C2:I2");
-  const dateCell = ws.getCell("C2");
+  // Dato i kolonne D–I, række 2
+  ws.mergeCells("D2:I2");
+  const dateCell = ws.getCell("D2");
   dateCell.value = `Eksporteret: ${new Date().toLocaleDateString("da-DK", { day: "2-digit", month: "long", year: "numeric" })}`;
   dateCell.font = { size: 11, color: hex(C.midGreen) };
+  dateCell.alignment = { vertical: "middle" };
 
-  // Sæt højde på logo-rækker
-  ws.getRow(1).height = 32;
+  // Rækker 1+2+3 giver logo ~65px luft (48+18+8pt ≈ 64+24+11px)
+  ws.getRow(1).height = 36;
   ws.getRow(2).height = 20;
-  ws.getRow(3).height = 10; // luft
+  ws.getRow(3).height = 10;
 
   // ── Kolonneoverskrifter (række 4) ────────────────────
   const HEADERS = ["Nr.", "Oprettet", "Navn", "Email", "Telefon",
@@ -188,12 +200,15 @@ export async function GET() {
   // ── Generer fil ──────────────────────────────────────
   const buf = await wb.xlsx.writeBuffer();
   const today = new Date().toISOString().slice(0, 10);
+  const fileSlug = courseFilter
+    ? courseFilter.split(" – ")[0].toLowerCase().replace(/\s+/g, "-").replace(/[æ]/g, "ae").replace(/[ø]/g, "oe").replace(/[å]/g, "aa").replace(/[^a-z0-9-]/g, "")
+    : "alle";
 
   return new Response(buf, {
     headers: {
       "Content-Type":
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      "Content-Disposition": `attachment; filename="deltagere-${today}.xlsx"`,
+      "Content-Disposition": `attachment; filename="deltagere-${fileSlug}-${today}.xlsx"`,
     },
   });
 }

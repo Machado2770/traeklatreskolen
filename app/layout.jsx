@@ -1,5 +1,6 @@
 import Image from "next/image";
 import "./globals.css";
+import Providers from "./providers";
 
 export const metadata = {
   metadataBase: new URL(
@@ -37,9 +38,11 @@ export default function RootLayout({ children }) {
           color: "#1f2f25",
         }}
       >
-        <Header />
-        {children}
-        <Footer />
+        <Providers>
+          <Header />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
@@ -150,7 +153,6 @@ function Footer() {
           <div style={footerList}>
             <a href="/booking" style={footerLink}>Tilmeld kursus</a>
             <a href="/admin" style={footerLink}>Admin</a>
-            <a href="/login" style={footerLink}>Login</a>
           </div>
         </div>
 

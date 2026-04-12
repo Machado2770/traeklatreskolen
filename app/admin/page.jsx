@@ -1,316 +1,195 @@
 "use client";
 
-import { signOut } from "next-auth/react";
 import { useEffect, useMemo, useState } from "react";
 
-export default function AdminPage() {
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [filters, setFilters] = useState({
-    q: "",
-    course: "",
-    payment_status: "",
-  });
+function statusColors(s) {
+  if (s === "paid")      return { background: "#dff3e5", color: "#165c2c" };
+  if (s === "cancelled") return { background: "#fbe4e2", color: "#9a2f27" };
+  return                        { background: "#f7eddc", color: "#7a4d08" };
+}
+function statusLabel(s) {
+  return s === "paid" ? "Betalt" : s === "cancelled" ? "Annulleret" : "Afventer";
+}
 
-  async function loadParticipants() {
+const DANISH_MONTHS = { januar:0,februar:1,marts:2,april:3,maj:4,juni:5,juli:6,august:7,september:8,oktober:9,november:10,december:11 };
+function parseDanishDate(str) {
+  const m = (str||"").match(/(\d+)\.\s+(\w+)\s+(\d{4})/);
+  if (!m) return null;
+  const mo = DANISH_MONTHS[m[2].toLowerCase()];
+  return mo !== undefined ? new Date(+m[3], mo, +m[1]) : null;
+}
+
+export default function TilmeldingPage() {
+  const [items, setItems]       = useState([]);
+  const [loading, setLoading]   = useState(true);
+  const [viewMode, setViewMode] = useState("kurser");
+  const [filters, setFilters]   = useState({ q: "", course: "", payment_status: "" });
+
+  async function load() {
     setLoading(true);
-
     try {
-      const params = new URLSearchParams();
-      if (filters.q) params.set("q", filters.q);
-      if (filters.course) params.set("course", filters.course);
-      if (filters.payment_status) params.set("payment_status", filters.payment_status);
-
-      const res = await fetch(`/api/booking?${params.toString()}`, {
-        cache: "no-store",
-      });
-
-      const payload = await res.json();
-      const rows = Array.isArray(payload)
-        ? payload
-        : Array.isArray(payload.data)
-          ? payload.data
-          : [];
-
-      setItems(rows);
-    } catch (error) {
-      console.error("Kunne ikke hente deltagere:", error);
-      setItems([]);
-    } finally {
-      setLoading(false);
-    }
+      const p = new URLSearchParams();
+      if (filters.q)              p.set("q", filters.q);
+      if (filters.course)         p.set("course", filters.course);
+      if (filters.payment_status) p.set("payment_status", filters.payment_status);
+      const res = await fetch(`/api/booking?${p}`, { cache: "no-store" });
+      const d = await res.json();
+      setItems(Array.isArray(d) ? d : Array.isArray(d.data) ? d.data : []);
+    } catch { setItems([]); }
+    finally  { setLoading(false); }
   }
 
-  useEffect(() => {
-    loadParticipants();
-  }, [filters.q, filters.course, filters.payment_status]);
+  useEffect(() => { load(); }, [filters.q, filters.course, filters.payment_status]);
 
-  const courseOptions = useMemo(() => {
-    const set = new Set(items.map((i) => i.course).filter(Boolean));
-    return Array.from(set).sort();
+  const courseOptions = useMemo(() => Array.from(new Set(items.map(i => i.course).filter(Boolean))).sort(), [items]);
+
+  const grouped = useMemo(() => {
+    const map = {};
+    items.forEach(i => { const k = i.course||"Ukendt"; (map[k]||=[]).push(i); });
+    return Object.entries(map).map(([key, ps]) => {
+      const parts = key.split(" – ");
+      return { key, name: parts[0], date: parts[1]||"", place: parts[2]||"",
+        dateObj: parseDanishDate(parts[1]||""), ps,
+        paid: ps.filter(p=>p.payment_status==="paid").length,
+        pending: ps.filter(p=>p.payment_status==="pending").length,
+        cancelled: ps.filter(p=>p.payment_status==="cancelled").length,
+      };
+    }).sort((a,b) => a.dateObj&&b.dateObj ? a.dateObj-b.dateObj : a.dateObj?-1:b.dateObj?1:0);
   }, [items]);
 
-  async function updateStatus(id, paymentStatus) {
-    const res = await fetch(`/api/participants/${id}/status`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ payment_status: paymentStatus }),
+  async function updateStatus(id, status) {
+    await fetch(`/api/participants/${id}/status`, {
+      method: "PATCH", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ payment_status: status }),
     });
-
-    if (res.ok) {
-      setItems((prev) =>
-        prev.map((item) =>
-          item.id === id ? { ...item, payment_status: paymentStatus } : item
-        )
-      );
-    } else {
-      alert("Kunne ikke opdatere betalingsstatus.");
-    }
+    setItems(prev => prev.map(i => i.id===id ? {...i, payment_status: status} : i));
   }
 
-  return (
-    <main style={{ maxWidth: 1200, margin: "0 auto", padding: 32 }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          gap: 16,
-          alignItems: "center",
-          flexWrap: "wrap",
-        }}
-      >
-        <div>
-          <h1 style={{ marginBottom: 8, color: "#1f3a2b" }}>
-            Admin · Deltagerstyring
-          </h1>
-          <div style={{ color: "#4b6355" }}>
-            Beskyttet område. Filtrér, opdatér betalingsstatus og eksportér CSV.
-          </div>
-        </div>
+  const exportUrl = filters.course
+    ? `/api/participants/export?course=${encodeURIComponent(filters.course)}`
+    : "/api/participants/export";
 
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-          <a href="/api/participants/export" style={button("#d8782f")}>
-            Eksportér CSV
-          </a>
-          <button
-            onClick={() => signOut({ callbackUrl: "/" })}
-            style={button("#2f5f43")}
-          >
-            Log ud
-          </button>
-        </div>
+  return (
+    <>
+      <div style={{ marginBottom: 24 }}>
+        <h1 style={h1}>Tilmeldinger</h1>
+        <p style={sub}>Overblik, betalingsstatus og eksport af deltagerlister.</p>
       </div>
 
-      <section style={cardStyle}>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "2fr 1fr 1fr auto",
-            gap: 12,
-          }}
-        >
-          <input
-            placeholder="Søg på navn eller email"
-            value={filters.q}
-            onChange={(e) =>
-              setFilters((prev) => ({ ...prev, q: e.target.value }))
-            }
-            style={inputStyle}
-          />
+      {/* Filter */}
+      <div style={{ ...card, display:"flex", flexWrap:"wrap", gap:10, marginBottom:16 }}>
+        <input placeholder="Søg navn eller email…" value={filters.q}
+          onChange={e=>setFilters(p=>({...p,q:e.target.value}))} style={{...inp, flex:"2 1 180px"}} />
+        <select value={filters.course} onChange={e=>setFilters(p=>({...p,course:e.target.value}))} style={{...inp, flex:"2 1 200px"}}>
+          <option value="">Alle kurser</option>
+          {courseOptions.map(c=><option key={c} value={c}>{c}</option>)}
+        </select>
+        <select value={filters.payment_status} onChange={e=>setFilters(p=>({...p,payment_status:e.target.value}))} style={{...inp, flex:"1 1 150px"}}>
+          <option value="">Alle status</option>
+          <option value="pending">Afventer</option>
+          <option value="paid">Betalt</option>
+          <option value="cancelled">Annulleret</option>
+        </select>
+        <button onClick={load} style={btn("#3d7a57")}>Opdater</button>
+        <a href={exportUrl} style={btn("#d8782f")}>
+          {filters.course ? "Eksportér filtreret" : "Eksportér alle"}
+        </a>
+      </div>
 
-          <select
-            value={filters.course}
-            onChange={(e) =>
-              setFilters((prev) => ({ ...prev, course: e.target.value }))
-            }
-            style={inputStyle}
-          >
-            <option value="">Alle kurser</option>
-            {courseOptions.map((course) => (
-              <option key={course} value={course}>
-                {course}
-              </option>
+      {!loading && items.length > 0 && (
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:12 }}>
+          <span style={{ color:"#4b6355", fontSize:14 }}>{items.length} tilmeldinger</span>
+          <div style={{ display:"flex", gap:4 }}>
+            {["kurser","liste"].map(v=>(
+              <button key={v} onClick={()=>setViewMode(v)} style={{
+                padding:"6px 14px", borderRadius:8, border:"none", cursor:"pointer", fontSize:13, fontWeight:600,
+                background: viewMode===v ? "#1f3a2b" : "#eef3ef",
+                color:      viewMode===v ? "white"   : "#4b6355",
+              }}>{v==="kurser"?"Kursoversigt":"Liste"}</button>
             ))}
-          </select>
-
-          <select
-            value={filters.payment_status}
-            onChange={(e) =>
-              setFilters((prev) => ({
-                ...prev,
-                payment_status: e.target.value,
-              }))
-            }
-            style={inputStyle}
-          >
-            <option value="">Alle betalingsstatus</option>
-            <option value="pending">pending</option>
-            <option value="paid">paid</option>
-            <option value="cancelled">cancelled</option>
-          </select>
-
-          <button onClick={loadParticipants} style={button("#577e61")}>
-            Opdater
-          </button>
-        </div>
-      </section>
-
-      <section style={cardStyle}>
-        {loading ? (
-          <div>Henter deltagere…</div>
-        ) : items.length === 0 ? (
-          <div>Ingen deltagere fundet.</div>
-        ) : (
-          <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse" }}>
-              <thead>
-                <tr>
-                  {[
-                    "Navn",
-                    "Email",
-                    "Telefon",
-                    "Kursus",
-                    "Status",
-                    "Oprettet",
-                    "Handling",
-                  ].map((label) => (
-                    <th key={label} style={thStyle}>
-                      {label}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-
-              <tbody>
-                {items.map((item) => (
-                  <tr key={item.id}>
-                    <td style={tdStyle}>{item.name}</td>
-                    <td style={tdStyle}>{item.email}</td>
-                    <td style={tdStyle}>{item.phone || "—"}</td>
-                    <td style={tdStyle}>{item.course}</td>
-                    <td style={tdStyle}>
-                      <span
-                        style={{
-                          ...pillStyle,
-                          background:
-                            item.payment_status === "paid"
-                              ? "#dff3e5"
-                              : item.payment_status === "cancelled"
-                                ? "#fbe4e2"
-                                : "#f7eddc",
-                          color:
-                            item.payment_status === "paid"
-                              ? "#165c2c"
-                              : item.payment_status === "cancelled"
-                                ? "#9a2f27"
-                                : "#7a4d08",
-                        }}
-                      >
-                        {item.payment_status}
-                      </span>
-                    </td>
-                    <td style={tdStyle}>
-                      {item.created_at
-                        ? new Date(item.created_at).toLocaleString("da-DK")
-                        : "—"}
-                    </td>
-                    <td style={tdStyle}>
-                      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                        <button
-                          onClick={() => updateStatus(item.id, "paid")}
-                          style={miniButton("#2f5f43")}
-                        >
-                          Marker betalt
-                        </button>
-                        <button
-                          onClick={() => updateStatus(item.id, "pending")}
-                          style={miniButton("#d8782f")}
-                        >
-                          Sæt pending
-                        </button>
-                        <button
-                          onClick={() => updateStatus(item.id, "cancelled")}
-                          style={miniButton("#8f2d20")}
-                        >
-                          Annullér
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
           </div>
-        )}
-      </section>
-    </main>
+        </div>
+      )}
+
+      {loading && <p style={{color:"#4b6355"}}>Henter…</p>}
+      {!loading && items.length===0 && <div style={card}>Ingen tilmeldinger fundet.</div>}
+
+      {/* Kursoversigt */}
+      {!loading && viewMode==="kurser" && grouped.map(g=>(
+        <div key={g.key} style={{...card, marginBottom:16}}>
+          <div style={{ display:"flex", justifyContent:"space-between", flexWrap:"wrap", gap:12, marginBottom:12 }}>
+            <div>
+              <div style={{ fontWeight:700, fontSize:17, color:"#1f3a2b" }}>{g.name}</div>
+              <div style={{ display:"flex", gap:6, marginTop:6, flexWrap:"wrap" }}>
+                {g.date  && <span style={chip("#f5e5d8","#a3521d")}>{g.date}</span>}
+                {g.place && <span style={chip("#e7efe9","#2d5c3e")}>{g.place}</span>}
+                <span style={chip("#e9f0ff","#2a3f8a")}>{g.ps.length} deltager{g.ps.length!==1?"e":""}</span>
+              </div>
+              <div style={{ display:"flex", gap:8, marginTop:8, flexWrap:"wrap" }}>
+                {g.paid>0      && <span style={chip("#dff3e5","#165c2c")}>✓ {g.paid} betalt</span>}
+                {g.pending>0   && <span style={chip("#f7eddc","#7a4d08")}>⏳ {g.pending} afventer</span>}
+                {g.cancelled>0 && <span style={chip("#fbe4e2","#9a2f27")}>✕ {g.cancelled} annulleret</span>}
+              </div>
+            </div>
+            <a href={`/api/participants/export?course=${encodeURIComponent(g.key)}`} style={btn("#d8782f")}>Eksportér</a>
+          </div>
+          <ParticipantTable rows={g.ps} onStatus={updateStatus} showCourse={false} />
+        </div>
+      ))}
+
+      {/* Liste */}
+      {!loading && viewMode==="liste" && items.length>0 && (
+        <div style={card}>
+          <ParticipantTable rows={items} onStatus={updateStatus} showCourse={true} />
+        </div>
+      )}
+    </>
   );
 }
 
-const cardStyle = {
-  background: "white",
-  borderRadius: 16,
-  padding: 20,
-  boxShadow: "0 6px 24px rgba(0,0,0,0.06)",
-  marginTop: 20,
-};
-
-const inputStyle = {
-  width: "100%",
-  padding: "10px 12px",
-  borderRadius: 10,
-  border: "1px solid #cfd8d3",
-  boxSizing: "border-box",
-  font: "inherit",
-};
-
-const thStyle = {
-  textAlign: "left",
-  padding: "12px 10px",
-  borderBottom: "1px solid #e5ece7",
-  color: "#486051",
-  fontSize: 14,
-};
-
-const tdStyle = {
-  padding: "12px 10px",
-  borderBottom: "1px solid #eef3ef",
-  verticalAlign: "top",
-};
-
-const pillStyle = {
-  display: "inline-block",
-  padding: "6px 10px",
-  borderRadius: 999,
-  fontSize: 12,
-  fontWeight: 700,
-  textTransform: "uppercase",
-};
-
-function button(bg) {
-  return {
-    display: "inline-block",
-    padding: "12px 16px",
-    borderRadius: 10,
-    background: bg,
-    color: "white",
-    border: 0,
-    textDecoration: "none",
-    fontWeight: 700,
-    cursor: "pointer",
-  };
+function ParticipantTable({ rows, onStatus, showCourse }) {
+  return (
+    <div style={{ overflowX:"auto" }}>
+      <table style={{ width:"100%", borderCollapse:"collapse" }}>
+        <thead>
+          <tr style={{ background:"#eef3ef" }}>
+            {["Navn","Email","Telefon", ...(showCourse?["Kursus"]:[]), "Status","Oprettet","Handling"].map(l=>(
+              <th key={l} style={th}>{l}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(r=>(
+            <tr key={r.id} style={{ borderBottom:"1px solid #eef3ef" }}>
+              <td style={td}>{r.name}</td>
+              <td style={td}>{r.email}</td>
+              <td style={td}>{r.phone||"—"}</td>
+              {showCourse && <td style={td}>{r.course}</td>}
+              <td style={td}><span style={{...pill,...statusColors(r.payment_status)}}>{statusLabel(r.payment_status)}</span></td>
+              <td style={td}>{r.created_at ? new Date(r.created_at).toLocaleString("da-DK") : "—"}</td>
+              <td style={td}>
+                <div style={{ display:"flex", gap:5, flexWrap:"wrap" }}>
+                  <button onClick={()=>onStatus(r.id,"paid")}      style={mini("#2a7a48")}>Betalt</button>
+                  <button onClick={()=>onStatus(r.id,"pending")}   style={mini("#d8782f")}>Afventer</button>
+                  <button onClick={()=>onStatus(r.id,"cancelled")} style={mini("#8f2d20")}>Annullér</button>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 }
 
-function miniButton(bg) {
-  return {
-    display: "inline-block",
-    padding: "8px 10px",
-    borderRadius: 10,
-    background: bg,
-    color: "white",
-    border: 0,
-    fontWeight: 700,
-    cursor: "pointer",
-    fontSize: 12,
-  };
-}
+const h1  = { color:"#1f3a2b", fontSize:24, margin:0, fontWeight:800 };
+const sub = { color:"#4b6355", fontSize:14, margin:"6px 0 0" };
+const card = { background:"white", borderRadius:14, padding:20, boxShadow:"0 4px 18px rgba(0,0,0,0.06)" };
+const inp  = { padding:"10px 12px", borderRadius:10, border:"1px solid #cfd8d3", font:"inherit", fontSize:14 };
+const th   = { textAlign:"left", padding:"10px 12px", fontSize:13, fontWeight:700, color:"#3d5c47" };
+const td   = { padding:"11px 12px", fontSize:14, color:"#2d4034", verticalAlign:"middle" };
+const pill = { display:"inline-block", padding:"4px 10px", borderRadius:999, fontSize:12, fontWeight:700 };
+
+function chip(bg,color){ return { display:"inline-block", background:bg, color, padding:"3px 9px", borderRadius:999, fontSize:12, fontWeight:600 }; }
+function btn(bg){ return { display:"inline-block", padding:"10px 16px", borderRadius:10, background:bg, color:"white", border:0, textDecoration:"none", fontWeight:700, cursor:"pointer", fontSize:14, whiteSpace:"nowrap" }; }
+function mini(bg){ return { padding:"5px 9px", borderRadius:7, background:bg, color:"white", border:0, fontWeight:600, cursor:"pointer", fontSize:12 }; }
