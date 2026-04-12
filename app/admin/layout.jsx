@@ -2,83 +2,101 @@
 
 import { signOut, useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const NAV = [
   { href: "/admin",          label: "Tilmeldinger" },
   { href: "/admin/arkiv",    label: "Arkiv" },
   { href: "/admin/kalender", label: "Kursuskalender" },
   { href: "/admin/kurser",   label: "Kurser & tekst" },
-  { href: "/admin/billeder", label: "Billeder" },
+  { href: "/admin/billeder", label: "Billeder & Videoer" },
   { href: "/admin/brugere",  label: "Admin-brugere" },
 ];
 
 export default function AdminLayout({ children }) {
-  const pathname  = usePathname();
+  const pathname = usePathname();
   const { data: session, status } = useSession();
-  const router = useRouter();
+  const router   = useRouter();
+  const [navOpen, setNavOpen] = useState(false);
 
   useEffect(() => {
     if (status === "unauthenticated") router.push("/login");
   }, [status]);
 
+  // Close nav when navigating
+  useEffect(() => { setNavOpen(false); }, [pathname]);
+
   if (status === "loading") return null;
 
-  return (
-    <div style={{ position: "fixed", inset: 0, zIndex: 50, display: "flex", background: "#f4f7f5", overflow: "hidden" }}>
+  const currentLabel = NAV.find(n => n.href === pathname)?.label ?? "Admin";
 
-      {/* Sidebar */}
-      <aside style={{
-        width: 220, background: "#1f3a2b", display: "flex",
-        flexDirection: "column", padding: "28px 0", flexShrink: 0,
-        position: "sticky", top: 0, height: "100vh",
-      }}>
-        {/* Logo/navn */}
-        <div style={{ padding: "0 20px 28px", borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
-          <div style={{ color: "white", fontWeight: 800, fontSize: 15, lineHeight: 1.3 }}>
-            Træklatreskolen
-          </div>
-          <div style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, marginTop: 2 }}>
-            Admin
-          </div>
+  return (
+    <div className="admin-wrap">
+
+      {/* ── MOBILE TOP BAR ── */}
+      <header className="admin-topbar">
+        <button
+          className="admin-hamburger"
+          onClick={() => setNavOpen(v => !v)}
+          aria-label="Åbn menu"
+        >
+          <span className={`adm-bar ${navOpen ? "adm-top" : ""}`} />
+          <span className={`adm-bar ${navOpen ? "adm-mid" : ""}`} />
+          <span className={`adm-bar ${navOpen ? "adm-bot" : ""}`} />
+        </button>
+        <span className="admin-topbar-title">{currentLabel}</span>
+        <a href="/" className="admin-topbar-site">← Siden</a>
+      </header>
+
+      {/* ── OVERLAY (mobil, når nav er åben) ── */}
+      {navOpen && (
+        <div className="admin-overlay" onClick={() => setNavOpen(false)} />
+      )}
+
+      {/* ── SIDEBAR ── */}
+      <aside className={`admin-sidebar ${navOpen ? "admin-sidebar-open" : ""}`}>
+        {/* Logo */}
+        <div className="admin-sidebar-logo">
+          <div className="admin-sidebar-name">Træklatreskolen</div>
+          <div className="admin-sidebar-sub">Admin</div>
         </div>
 
         {/* Navigation */}
-        <nav style={{ flex: 1, padding: "16px 12px" }}>
+        <nav className="admin-nav">
           {NAV.map((item) => {
             const active = pathname === item.href;
             return (
-              <a key={item.href} href={item.href} style={{
-                display: "block", padding: "10px 12px", borderRadius: 10,
-                marginBottom: 2, textDecoration: "none", fontSize: 14, fontWeight: active ? 700 : 400,
-                background: active ? "rgba(255,255,255,0.15)" : "transparent",
-                color: active ? "white" : "rgba(255,255,255,0.65)",
-              }}>
+              <a
+                key={item.href}
+                href={item.href}
+                className={`admin-nav-link ${active ? "active" : ""}`}
+              >
                 {item.label}
               </a>
             );
           })}
+          <a href="/" className="admin-nav-link admin-nav-site">← Gå til siden</a>
         </nav>
 
         {/* Bruger + log ud */}
-        <div style={{ padding: "16px 20px", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
-          <div style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, marginBottom: 10 }}>
+        <div className="admin-sidebar-footer">
+          <div className="admin-sidebar-user">
             {session?.user?.name || session?.user?.email || "Admin"}
           </div>
-          <button onClick={() => signOut({ callbackUrl: "/" })} style={{
-            width: "100%", padding: "9px 12px", borderRadius: 10,
-            background: "rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.75)",
-            border: "none", cursor: "pointer", fontWeight: 600, fontSize: 13, textAlign: "left",
-          }}>
+          <button
+            onClick={() => signOut({ callbackUrl: "/" })}
+            className="admin-logout-btn"
+          >
             Log ud →
           </button>
         </div>
       </aside>
 
-      {/* Indhold */}
-      <main style={{ flex: 1, padding: "36px 32px", overflowY: "auto", minWidth: 0 }}>
+      {/* ── INDHOLD ── */}
+      <main className="admin-main">
         {children}
       </main>
+
     </div>
   );
 }
