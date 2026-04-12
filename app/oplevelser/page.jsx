@@ -1,6 +1,17 @@
 import Image from "next/image";
 import { experiences } from "@/lib/siteData";
 
+export const metadata = {
+  title: "Oplevelser i trækronerne",
+  description:
+    "Book en naturoplevelse med Træklatreskolen — oplevelsestur i trækronerne, overnatning i hængekøje og den vilde klatretur. For grupper, familier og institutioner.",
+  openGraph: {
+    title: "Oplevelser i trækronerne | Træklatreskolen",
+    description: "Uforglemmelige naturoplevelser i trækronerne for alle aldre og grupper.",
+    url: "/oplevelser",
+  },
+};
+
 export default function OplevelserPage() {
   return (
     <main>

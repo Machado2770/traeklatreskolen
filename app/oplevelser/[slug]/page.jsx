@@ -2,6 +2,21 @@ import Image from "next/image";
 import { experiences } from "@/lib/siteData";
 import { notFound } from "next/navigation";
 
+export function generateMetadata({ params }) {
+  const item = experiences.find((e) => e.slug === params.slug);
+  if (!item) return {};
+  return {
+    title: item.title,
+    description: item.description,
+    openGraph: {
+      title: `${item.title} | Træklatreskolen`,
+      description: item.description,
+      url: `/oplevelser/${item.slug}`,
+      images: [{ url: item.image }],
+    },
+  };
+}
+
 export default function OplevelseDetaljePage({ params }) {
   const item = experiences.find((experience) => experience.slug === params.slug);
 

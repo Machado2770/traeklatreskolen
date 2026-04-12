@@ -3,9 +3,22 @@ import { courses } from "@/lib/siteData";
 import { notFound } from "next/navigation";
 
 export function generateStaticParams() {
-  return courses.map((course) => ({
-    slug: course.slug,
-  }));
+  return courses.map((course) => ({ slug: course.slug }));
+}
+
+export function generateMetadata({ params }) {
+  const item = courses.find((c) => c.slug === params.slug);
+  if (!item) return {};
+  return {
+    title: item.title,
+    description: item.description,
+    openGraph: {
+      title: `${item.title} | Træklatreskolen`,
+      description: item.description,
+      url: `/kurser/${item.slug}`,
+      images: [{ url: item.image }],
+    },
+  };
 }
 
 export default function KursusDetaljePage({ params }) {

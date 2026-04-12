@@ -2,8 +2,28 @@ import Image from "next/image";
 import "./globals.css";
 
 export const metadata = {
-  title: "Træklatreskolen",
-  description: "Kurser og oplevelser i træklatring",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://traeklatreskolen.vercel.app"
+  ),
+  title: {
+    default: "Træklatreskolen – Kurser og oplevelser i træklatring",
+    template: "%s | Træklatreskolen",
+  },
+  description:
+    "Træklatreskolen tilbyder professionelle kurser og oplevelser i træklatring i hele Danmark. Begynderkurser, instruktøruddannelse, overnatning i trækronerne og skovoplevelser for private, skoler og institutioner.",
+  keywords: [
+    "træklatring", "træklatreskole", "træklatrekursus", "træklatreinstruktør",
+    "begynderkursus træklatring", "naturoplevelse", "skovoplevelse",
+    "overnatning trækroner", "udendørs kursus Danmark",
+  ],
+  openGraph: {
+    siteName: "Træklatreskolen",
+    locale: "da_DK",
+    type: "website",
+    images: [{ url: "/images/hero-forest.jpg", width: 1600, height: 900 }],
+  },
+  twitter: { card: "summary_large_image" },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({ children }) {

@@ -1,11 +1,60 @@
 import Image from "next/image";
 import { courses, experiences } from "@/lib/siteData";
 
+export const metadata = {
+  title: "Træklatreskolen – Kurser og oplevelser i træklatring",
+  description:
+    "Oplev skoven fra nye højder. Træklatreskolen tilbyder begynderkurser, instruktøruddannelse og naturoplevelser i trækronerne for private, skoler og institutioner i hele Danmark.",
+  openGraph: {
+    title: "Træklatreskolen – Kurser og oplevelser i træklatring",
+    description:
+      "Professionelle kurser og eventyrlige oplevelser i levende træer. Sikkerhed, faglighed og natur i centrum.",
+    url: "/",
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://traeklatreskolen.vercel.app/#org",
+      name: "Træklatreskolen",
+      url: "https://traeklatreskolen.vercel.app",
+      logo: "https://traeklatreskolen.vercel.app/logo/logo-main.png",
+      email: "info@traeklatreskolen.dk",
+      description:
+        "Træklatreskolen tilbyder professionelle kurser og naturoplevelser i træklatring i Danmark.",
+      areaServed: "DK",
+      sameAs: [],
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://traeklatreskolen.vercel.app/#business",
+      name: "Træklatreskolen",
+      description:
+        "Kurser og oplevelser i træklatring — begyndere, instruktører og oplevelsesture i trækronerne.",
+      email: "info@traeklatreskolen.dk",
+      areaServed: [
+        { "@type": "AdministrativeArea", name: "Sjælland" },
+        { "@type": "AdministrativeArea", name: "Fyn" },
+        { "@type": "AdministrativeArea", name: "Jylland" },
+      ],
+      priceRange: "500–4000 kr.",
+    },
+  ],
+};
+
 export default function Home() {
   const featuredCourses = courses.slice(0, 3);
   const featuredExperiences = experiences.slice(0, 3);
 
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     <main>
 
       {/* HERO */}
@@ -167,6 +216,7 @@ export default function Home() {
       </section>
 
     </main>
+    </>
   );
 }
 

@@ -1,6 +1,17 @@
 import Image from "next/image";
 import { courses } from "@/lib/siteData";
 
+export const metadata = {
+  title: "Kurser i træklatring",
+  description:
+    "Se alle kurser hos Træklatreskolen — begynderkursus, brush-up, træklatreinstruktør, avanceret træklatring og eksamen. Kurser efter Klatresamrådets normer.",
+  openGraph: {
+    title: "Kurser i træklatring | Træklatreskolen",
+    description: "Professionelle træklatrekurser for alle niveauer i hele Danmark.",
+    url: "/kurser",
+  },
+};
+
 export default function KurserPage() {
   return (
     <main>
