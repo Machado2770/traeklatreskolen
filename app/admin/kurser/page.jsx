@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const EMPTY = { slug:"", title:"", short:"", price:"", level:"", description:"", bullets:"", image:"", booking_href:"", is_experience:false };
+const EMPTY = { slug:"", title:"", short:"", price:"", level:"", description:"", bullets:"", image:"", booking_href:"", is_experience:false, is_published:false };
 
 export default function KurserAdminPage() {
   const [items,    setItems]   = useState([]);
@@ -26,6 +26,17 @@ export default function KurserAdminPage() {
   useEffect(() => { load(); }, []);
 
   function flash(t) { setMsg(t); setTimeout(()=>setMsg(""),3500); }
+
+  async function togglePublish(item) {
+    const next = !item.is_published;
+    const res  = await fetch(`/api/courses-cms/${item.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ is_published: next }),
+    });
+    if (!res.ok) { flash("Fejl ved opdatering af status."); return; }
+    setItems(prev => prev.map(i => i.id === item.id ? { ...i, is_published: next } : i));
+  }
 
   async function seedStandard() {
     if (!confirm("Indlæs standardkurser og -oplevelser i databasen? Eksisterende kurser overskrives ikke.")) return;
@@ -141,8 +152,8 @@ export default function KurserAdminPage() {
       {/* Lister */}
       {loading && <p style={{color:"#4b6355", marginTop:20}}>Henter…</p>}
 
-      {!loading && <CourseList title="Kurser" items={kurser} onEdit={startEdit} onDelete={del} />}
-      {!loading && <CourseList title="Oplevelser" items={oplevelser} onEdit={startEdit} onDelete={del} />}
+      {!loading && <CourseList title="Kurser" items={kurser} onEdit={startEdit} onDelete={del} onToggle={togglePublish} />}
+      {!loading && <CourseList title="Oplevelser" items={oplevelser} onEdit={startEdit} onDelete={del} onToggle={togglePublish} />}
       {!loading && ukendte.length > 0 && (
         <div style={{ marginTop:24 }}>
           <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:8 }}>
@@ -151,18 +162,18 @@ export default function KurserAdminPage() {
               Vises på hjemmesiden — slet dem her
             </span>
           </div>
-          <CourseList title="" items={ukendte} onEdit={startEdit} onDelete={del} />
+          <CourseList title="" items={ukendte} onEdit={startEdit} onDelete={del} onToggle={togglePublish} />
         </div>
       )}
     </>
   );
 }
 
-function CourseList({ title, items, onEdit, onDelete }) {
+function CourseList({ title, items, onEdit, onDelete, onToggle }) {
   if (!items.length) return null;
   return (
     <div style={{ marginTop:24 }}>
-      <h2 style={{ ...h2, marginBottom:12 }}>{title} ({items.length})</h2>
+      {title && <h2 style={{ ...h2, marginBottom:12 }}>{title} ({items.length})</h2>}
       {items.map(item=>(
         <div key={item.id} style={{ ...card, marginBottom:10, display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:12 }}>
           <div style={{ display:"flex", gap:14, alignItems:"center" }}>
@@ -172,11 +183,27 @@ function CourseList({ title, items, onEdit, onDelete }) {
               </div>
             )}
             <div>
-              <div style={{ fontWeight:700, color:"#1f3a2b" }}>{item.title}</div>
+              <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+                <span style={{ fontWeight:700, color:"#1f3a2b" }}>{item.title}</span>
+                <span style={{
+                  fontSize:11, fontWeight:700, padding:"2px 8px", borderRadius:999,
+                  background: item.is_published ? "#dff3e5" : "#f0f0f0",
+                  color:      item.is_published ? "#165c2c" : "#888",
+                }}>
+                  {item.is_published ? "● Offentlig" : "○ Kladde"}
+                </span>
+              </div>
               <div style={{ fontSize:13, color:"#4b6355", marginTop:2 }}>{item.price} · {item.level}</div>
             </div>
           </div>
-          <div style={{ display:"flex", gap:8 }}>
+          <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
+            <button
+              onClick={()=>onToggle(item)}
+              style={btn(item.is_published ? "#2a7a48" : "#3d7a57")}
+              title={item.is_published ? "Skjul fra kursuskalender" : "Publicér til kursuskalender"}
+            >
+              {item.is_published ? "Skjul" : "Publicér"}
+            </button>
             <button onClick={()=>onEdit(item)} style={btn("#3d7a57")}>Rediger</button>
             <button onClick={()=>onDelete(item.id)} style={btn("#8f2d20")}>Slet</button>
           </div>

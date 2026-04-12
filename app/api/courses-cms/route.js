@@ -30,6 +30,7 @@ export async function POST(request) {
       description:   body.description || "",
       bullets:       body.bullets || [],
       is_experience: body.is_experience || false,
+      is_published:  body.is_published  ?? false,
       sort_order:    body.sort_order || 0,
     }])
     .select();

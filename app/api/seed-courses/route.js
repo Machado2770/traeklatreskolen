@@ -17,6 +17,7 @@ const ALL = [
     description:   c.description   || "",
     bullets:       c.bullets       || [],
     is_experience: false,
+    is_published:  true,
     sort_order:    i,
   })),
   ...experiences.map((e, i) => ({
@@ -31,6 +32,7 @@ const ALL = [
     description:   e.description   || "",
     bullets:       e.bullets       || [],
     is_experience: true,
+    is_published:  true,
     sort_order:    i,
   })),
 ];

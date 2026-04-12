@@ -18,10 +18,24 @@ export async function PUT(request, { params }) {
       description:   body.description || "",
       bullets:       body.bullets || [],
       is_experience: body.is_experience || false,
+      is_published:  body.is_published  ?? false,
       sort_order:    body.sort_order ?? 0,
     })
     .eq("id", params.id)
     .select();
+  if (error) return Response.json({ error: error.message }, { status: 500 });
+  return Response.json({ ok: true, data });
+}
+
+export async function PATCH(request, { params }) {
+  const body = await request.json();
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from("courses_cms")
+    .update({ is_published: body.is_published })
+    .eq("id", params.id)
+    .select()
+    .single();
   if (error) return Response.json({ error: error.message }, { status: 500 });
   return Response.json({ ok: true, data });
 }

@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(vercel --version)",
+      "Bash(powershell.exe -Command ':*)",
+      "Bash(python3 -c \" import json,sys d=json.load\\(sys.stdin\\) rows=d.get\\('data',[]\\) print\\(f'Test-tilmeldinger: {len\\(rows\\)}'\\) for r in rows: print\\(r['id'], r['name'], r['course'][:40]\\) \")",
+      "Bash(curl:*)",
+      "Bash(rm -rf .next)",
+      "Bash(npm run:*)",
+      "WebFetch(domain:www.youtube.com)"
+    ]
+  }
+}

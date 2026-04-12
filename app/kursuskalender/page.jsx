@@ -6,30 +6,52 @@ export const dynamic = "force-dynamic";
 async function getCalendarItems() {
   try {
     const supabase = getSupabaseAdmin();
+
+    // Hent publicerede kursus-titler fra courses_cms
+    const { data: cmsData } = await supabase
+      .from("courses_cms")
+      .select("title, is_published");
+
+    // Byg et sæt af publicerede titler (true eller null = publiceret, false = kladde)
+    const publishedTitles  = new Set(
+      (cmsData || []).filter(c => c.is_published !== false).map(c => c.title)
+    );
+    const allCmsTitles = new Set((cmsData || []).map(c => c.title));
+    const hasCmsData = (cmsData || []).length > 0;
+
     const { data, error } = await supabase
       .from("calendar_items")
       .select("*")
       .order("created_at", { ascending: true });
+
     if (error) {
       console.error("[kursuskalender] Supabase error:", error.message);
     } else if (data && data.length > 0) {
-      // Normaliser felter fra Supabase til samme format som siteData
-      return data.map(item => ({
-        id:              item.id,
-        date:            item.date,
-        title:           item.title,
-        place:           item.place,
-        type:            item.type,
-        price:           item.price || "",
-        href:            item.href || "",
-        bookingHref:     item.booking_href || `/booking?course=${encodeURIComponent(item.title)}&date=${encodeURIComponent(item.date)}&place=${encodeURIComponent(item.place)}`,
-        maxParticipants: item.max_participants,
-      }));
+      const normalized = data
+        .filter(item => {
+          // Ingen courses_cms-data → vis alle (backward compat)
+          if (!hasCmsData) return true;
+          // Kursus-titel ikke i courses_cms → siteData-kursus, vis altid
+          if (!allCmsTitles.has(item.title)) return true;
+          // Kursus er i courses_cms → kun vis hvis publiceret
+          return publishedTitles.has(item.title);
+        })
+        .map(item => ({
+          id:              item.id,
+          date:            item.date,
+          title:           item.title,
+          place:           item.place,
+          type:            item.type,
+          price:           item.price || "",
+          href:            item.href || "",
+          bookingHref:     item.booking_href || `/booking?course=${encodeURIComponent(item.title)}&date=${encodeURIComponent(item.date)}&place=${encodeURIComponent(item.place)}`,
+          maxParticipants: item.max_participants,
+        }));
+      return normalized;
     }
   } catch (e) {
     console.error("[kursuskalender] Fetch exception:", e?.message ?? e);
   }
-  // Fallback til siteData hvis Supabase er tom eller utilgængelig
   return fallbackItems;
 }
 
