@@ -27,7 +27,10 @@ export default function OplevelseDetaljePage({ params }) {
       {/* Use only className — CSS media query handles responsive layout */}
       <div className="detail-grid">
         <div>
-          <span style={price}>{item.price}</span>
+          <div style={tagRow}>
+            <span style={price}>{item.price}</span>
+            {item.duration && <span style={durationTag}>⏱ {item.duration}</span>}
+          </div>
           <h1 style={h1}>{item.title}</h1>
           <p style={lead}>{item.description}</p>
 
@@ -65,10 +68,27 @@ const page = {
   padding: "48px 24px 72px",
 };
 
+const tagRow = {
+  display: "flex",
+  gap: 8,
+  flexWrap: "wrap",
+  marginBottom: 4,
+};
+
 const price = {
   display: "inline-block",
   background: "#f5e5d8",
   color: "#a3521d",
+  padding: "6px 10px",
+  borderRadius: 999,
+  fontSize: 12,
+  fontWeight: 700,
+};
+
+const durationTag = {
+  display: "inline-block",
+  background: "#eae8f5",
+  color: "#3d3580",
   padding: "6px 10px",
   borderRadius: 999,
   fontSize: 12,

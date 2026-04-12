@@ -55,6 +55,7 @@ function ExperienceCard({ item }) {
       <div style={cardBody}>
         <div style={tagRow}>
           <span style={priceTag}>{item.price}</span>
+          {item.duration && <span style={durationTag}>⏱ {item.duration}</span>}
         </div>
 
         <h3 style={cardTitle}>{item.title}</h3>
@@ -156,6 +157,16 @@ const priceTag = {
   borderRadius: 999,
   background: "#f5e5d8",
   color: "#a3521d",
+  fontWeight: 700,
+  fontSize: 12,
+};
+
+const durationTag = {
+  display: "inline-block",
+  padding: "6px 10px",
+  borderRadius: 999,
+  background: "#eae8f5",
+  color: "#3d3580",
   fontWeight: 700,
   fontSize: 12,
 };

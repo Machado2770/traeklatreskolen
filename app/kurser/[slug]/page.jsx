@@ -34,8 +34,9 @@ export default function KursusDetaljePage({ params }) {
       <div className="detail-grid">
         <div>
           <div style={tagRow}>
-            <span style={price}>{item.price}</span>
-            <span style={level}>{item.level}</span>
+            <span style={priceTag}>{item.price}</span>
+            <span style={levelTag}>{item.level}</span>
+            {item.duration && <span style={durationTag}>⏱ {item.duration}</span>}
           </div>
 
           <h1 style={h1}>{item.title}</h1>
@@ -88,7 +89,7 @@ const tagRow = {
   flexWrap: "wrap",
 };
 
-const price = {
+const priceTag = {
   display: "inline-block",
   background: "#f5e5d8",
   color: "#a3521d",
@@ -98,10 +99,20 @@ const price = {
   fontWeight: 700,
 };
 
-const level = {
+const levelTag = {
   display: "inline-block",
   background: "#e7efe9",
   color: "#1f3a2b",
+  padding: "6px 10px",
+  borderRadius: 999,
+  fontSize: 12,
+  fontWeight: 700,
+};
+
+const durationTag = {
+  display: "inline-block",
+  background: "#eae8f5",
+  color: "#3d3580",
   padding: "6px 10px",
   borderRadius: 999,
   fontSize: 12,

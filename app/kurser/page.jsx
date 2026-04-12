@@ -59,6 +59,7 @@ function CourseCard({ item }) {
         <div style={tagRow}>
           <span style={priceTag}>{item.price}</span>
           <span style={levelTag}>{item.level}</span>
+          {item.duration && <span style={durationTag}>⏱ {item.duration}</span>}
         </div>
 
         <h3 style={cardTitle}>{item.title}</h3>
@@ -170,6 +171,16 @@ const levelTag = {
   borderRadius: 999,
   background: "#e7efe9",
   color: "#1f3a2b",
+  fontWeight: 700,
+  fontSize: 12,
+};
+
+const durationTag = {
+  display: "inline-block",
+  padding: "6px 10px",
+  borderRadius: 999,
+  background: "#eae8f5",
+  color: "#3d3580",
   fontWeight: 700,
   fontSize: 12,
 };
