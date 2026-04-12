@@ -23,7 +23,11 @@ export default function KontaktPage() {
 
           <div style={infoBlock}>
             <div style={label}>E-mail</div>
-            <div style={value}>info@traeklatreskolen.dk</div>
+            <div style={value}>
+              <a href="mailto:info@traeklatreskolen.dk" style={{ color: "#1f2f25", textDecoration: "none", borderBottom: "1px solid #3d7a57" }}>
+                info@traeklatreskolen.dk
+              </a>
+            </div>
           </div>
 
           <div style={infoBlock}>
