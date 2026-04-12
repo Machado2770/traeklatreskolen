@@ -28,6 +28,26 @@ export async function PUT(request, { params }) {
   return Response.json({ ok: true, data });
 }
 
+export async function PATCH(request, { params }) {
+  const body     = await request.json();
+  const supabase = getSupabaseAdmin();
+
+  const { data, error } = await supabase
+    .from("calendar_items")
+    .update({ is_published: body.is_published })
+    .eq("id", params.id)
+    .select()
+    .single();
+
+  if (error) {
+    const msg = (error.message ?? "").includes("column")
+      ? "Kolonnen 'is_published' mangler — kør SQL: ALTER TABLE calendar_items ADD COLUMN IF NOT EXISTS is_published boolean DEFAULT false;"
+      : error.message;
+    return Response.json({ error: msg }, { status: 500 });
+  }
+  return Response.json({ ok: true, data });
+}
+
 export async function DELETE(request, { params }) {
   const supabase = getSupabaseAdmin();
   const { error } = await supabase

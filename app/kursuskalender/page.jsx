@@ -2,6 +2,20 @@ import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 
 export const dynamic = "force-dynamic";
 
+function normalize(item) {
+  return {
+    id:              item.id,
+    date:            item.date,
+    title:           item.title,
+    place:           item.place,
+    type:            item.type,
+    price:           item.price || "",
+    href:            item.href || "",
+    bookingHref:     item.booking_href || `/booking?course=${encodeURIComponent(item.title)}&date=${encodeURIComponent(item.date)}&place=${encodeURIComponent(item.place)}`,
+    maxParticipants: item.max_participants,
+  };
+}
+
 async function getCalendarItems() {
   try {
     const supabase = getSupabaseAdmin();
@@ -9,24 +23,23 @@ async function getCalendarItems() {
     const { data, error } = await supabase
       .from("calendar_items")
       .select("*")
+      .eq("is_published", true)
       .order("date", { ascending: true });
 
     if (error) {
+      // Hvis kolonnen ikke eksisterer endnu, vis alle (graceful fallback)
+      if ((error.message ?? "").includes("column")) {
+        const { data: all } = await supabase
+          .from("calendar_items")
+          .select("*")
+          .order("date", { ascending: true });
+        return (all || []).map(normalize);
+      }
       console.error("[kursuskalender] Supabase error:", error.message);
       return [];
     }
 
-    return (data || []).map(item => ({
-      id:              item.id,
-      date:            item.date,
-      title:           item.title,
-      place:           item.place,
-      type:            item.type,
-      price:           item.price || "",
-      href:            item.href || "",
-      bookingHref:     item.booking_href || `/booking?course=${encodeURIComponent(item.title)}&date=${encodeURIComponent(item.date)}&place=${encodeURIComponent(item.place)}`,
-      maxParticipants: item.max_participants,
-    }));
+    return (data || []).map(normalize);
   } catch (e) {
     console.error("[kursuskalender] Fetch exception:", e?.message ?? e);
     return [];

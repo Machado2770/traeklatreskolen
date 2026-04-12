@@ -115,6 +115,27 @@ export default function KalenderAdminPage() {
     setForm(EMPTY); setEditing(null); load();
   }
 
+  async function togglePublish(item) {
+    const next = !item.is_published;
+    const res  = await fetch(`/api/calendar/${item.id}`, {
+      method:  "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body:    JSON.stringify({ is_published: next }),
+    });
+    if (!res.ok) {
+      const json = await res.json().catch(() => ({}));
+      const msg  = json.error || "";
+      if (msg.includes("is_published") || msg.includes("column")) {
+        flash("Kolonnen 'is_published' mangler i Supabase — se vejledning nedenfor.", false);
+      } else {
+        flash("Fejl: " + (msg || "Ukendt fejl"), false);
+      }
+      return;
+    }
+    setItems(prev => prev.map(i => i.id === item.id ? { ...i, is_published: next } : i));
+    flash(next ? `${item.title} er nu offentlig ✓` : `${item.title} er skjult`);
+  }
+
   async function del(id) {
     if (!confirm("Slet denne kalenderbegivenhed?")) return;
     await fetch(`/api/calendar/${id}`, { method: "DELETE" });
@@ -291,13 +312,13 @@ export default function KalenderAdminPage() {
         {kurser.length > 0 && (
           <>
             <div style={groupLabel}>Kurser</div>
-            {kurser.map(item => <CalendarRow key={item.id} item={item} onEdit={startEdit} onDelete={del} />)}
+            {kurser.map(item => <CalendarRow key={item.id} item={item} onEdit={startEdit} onDelete={del} onToggle={togglePublish} />)}
           </>
         )}
         {oplevelser.length > 0 && (
           <>
             <div style={{ ...groupLabel, marginTop: 16 }}>Oplevelser</div>
-            {oplevelser.map(item => <CalendarRow key={item.id} item={item} onEdit={startEdit} onDelete={del} />)}
+            {oplevelser.map(item => <CalendarRow key={item.id} item={item} onEdit={startEdit} onDelete={del} onToggle={togglePublish} />)}
           </>
         )}
       </div>
@@ -305,11 +326,20 @@ export default function KalenderAdminPage() {
   );
 }
 
-function CalendarRow({ item, onEdit, onDelete }) {
+function CalendarRow({ item, onEdit, onDelete, onToggle }) {
   return (
     <div style={{ ...card, marginBottom: 10, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
       <div>
-        <div style={{ fontWeight: 700, color: "#1f3a2b", fontSize: 15 }}>{item.title}</div>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ fontWeight: 700, color: "#1f3a2b", fontSize: 15 }}>{item.title}</span>
+          <span style={{
+            fontSize: 11, fontWeight: 700, padding: "2px 8px", borderRadius: 999,
+            background: item.is_published ? "#dff3e5" : "#f0f0f0",
+            color:      item.is_published ? "#165c2c" : "#888",
+          }}>
+            {item.is_published ? "● Offentlig" : "○ Kladde"}
+          </span>
+        </div>
         <div style={{ display: "flex", gap: 8, marginTop: 6, flexWrap: "wrap" }}>
           <span style={chip("#f5e5d8", "#a3521d")}>{item.date}</span>
           <span style={chip("#e7efe9", "#2d5c3e")}>{item.place}</span>
@@ -318,8 +348,15 @@ function CalendarRow({ item, onEdit, onDelete }) {
           <span style={chip(item.type === "Kursus" ? "#e7efe9" : "#f5e5d8", item.type === "Kursus" ? "#1f3a2b" : "#a3521d")}>{item.type}</span>
         </div>
       </div>
-      <div style={{ display: "flex", gap: 8 }}>
-        <button onClick={() => onEdit(item)}     style={btn("#3d7a57")}>Rediger</button>
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+        <button
+          onClick={() => onToggle(item)}
+          style={btn(item.is_published ? "#2a7a48" : "#3d7a57")}
+          title={item.is_published ? "Skjul fra kursuskalender" : "Vis på kursuskalender"}
+        >
+          {item.is_published ? "Skjul" : "Publicér"}
+        </button>
+        <button onClick={() => onEdit(item)}      style={btn("#3d7a57")}>Rediger</button>
         <button onClick={() => onDelete(item.id)} style={btn("#8f2d20")}>Slet</button>
       </div>
     </div>
