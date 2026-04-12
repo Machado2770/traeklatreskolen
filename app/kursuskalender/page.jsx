@@ -113,7 +113,7 @@ export default async function KursuskalenderPage() {
               <div style={td} className="cal-cell-date">{item.date}</div>
               <div style={td} className="cal-cell-activity">
                 <div style={{ fontWeight:700, color:"#1f3a2b" }}>{item.title}</div>
-                {item.price && <div style={{ fontSize:13, color:"#a3521d", fontWeight:600, marginTop:3 }}>{item.price}</div>}
+                {item.price && <div style={{ fontSize:13, color:"#a3521d", fontWeight:600, marginTop:3 }}>{item.price} pr. person</div>}
               </div>
               <div style={td} className="cal-cell-type">
                 <span style={{ ...pill, background: item.type==="Kursus" ? "#e7efe9" : "#f5e5d8", color: item.type==="Kursus" ? "#1f3a2b" : "#a3521d" }}>
@@ -162,7 +162,7 @@ export default async function KursuskalenderPage() {
                   <div style={{ fontWeight:800, color:"#1f3a2b", fontSize:17, lineHeight:1.3 }}>{item.title}</div>
                   <span style={{ ...pill, background: item.type==="Kursus" ? "#e7efe9" : "#f5e5d8", color: item.type==="Kursus" ? "#1f3a2b" : "#a3521d", flexShrink:0 }}>{item.type}</span>
                 </div>
-                {item.price && <div style={{ color:"#a3521d", fontWeight:700, fontSize:14, marginBottom:8 }}>{item.price}</div>}
+                {item.price && <div style={{ color:"#a3521d", fontWeight:700, fontSize:14, marginBottom:8 }}>{item.price} pr. person</div>}
                 <div style={{ display:"flex", flexWrap:"wrap", gap:6, marginBottom:12 }}>
                   <span style={metaChip}>📅 {item.date}</span>
                   <span style={metaChip}>📍 {item.place}</span>
