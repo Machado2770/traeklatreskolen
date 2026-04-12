@@ -1,5 +1,13 @@
 module.exports = {
   reactStrictMode: true,
+  async headers() {
+    return [
+      {
+        source: "/kursuskalender",
+        headers: [{ key: "Cache-Control", value: "no-store, must-revalidate" }],
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
