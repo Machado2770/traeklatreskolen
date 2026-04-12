@@ -1,3 +1,4 @@
+import Image from "next/image";
 import "./globals.css";
 import Providers from "./providers";
 import Header from "./components/Header";

@@ -183,6 +183,7 @@ export default async function KursuskalenderPage() {
             <div style={termsHeading}>Forbehold</div>
             <p style={termsText}>Træklatreskolen forbeholder sig retten til at afvise deltagere, der er under indflydelse af alkohol eller på anden måde udgør en sikkerhedsrisiko for sig selv eller andre.</p>
           </div>
+        </div>
       </section>
       </div>
     </main>
