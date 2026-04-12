@@ -21,17 +21,32 @@ async function getCalendarItems() {
   noStore();
   try {
     const supabase = getSupabaseAdmin();
-    const { data, error } = await supabase
-      .from("calendar_items")
-      .select("*")
-      .eq("is_published", true)
-      .order("date", { ascending: true });
+    const [calRes, cmsRes] = await Promise.all([
+      supabase
+        .from("calendar_items")
+        .select("*")
+        .eq("is_published", true)
+        .order("date", { ascending: true }),
+      supabase
+        .from("courses_cms")
+        .select("title, price"),
+    ]);
 
-    if (error) {
-      console.error("[kursuskalender] Supabase error:", error.message);
+    if (calRes.error) {
+      console.error("[kursuskalender] Supabase error:", calRes.error.message);
       return [];
     }
-    return (data || []).map(normalize);
+
+    // Brug pris fra calendar_items, ellers hent fra courses_cms
+    const priceMap = {};
+    for (const c of cmsRes.data || []) {
+      if (c.price) priceMap[c.title] = c.price;
+    }
+
+    return (calRes.data || []).map(item => normalize({
+      ...item,
+      price: item.price || priceMap[item.title] || "",
+    }));
   } catch (e) {
     console.error("[kursuskalender] Fetch exception:", e?.message ?? e);
     return [];
