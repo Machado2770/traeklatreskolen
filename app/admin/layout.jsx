@@ -55,9 +55,9 @@ export default function AdminLayout({ children }) {
 
       {/* ── SIDEBAR ── */}
       <aside className={`admin-sidebar ${navOpen ? "admin-sidebar-open" : ""}`}>
-        {/* Logo */}
+        {/* Logo — link til forsiden */}
         <div className="admin-sidebar-logo">
-          <div className="admin-sidebar-name">Træklatreskolen</div>
+          <a href="/" className="admin-sidebar-name">Træklatreskolen</a>
           <div className="admin-sidebar-sub">Admin</div>
         </div>
 
@@ -75,7 +75,6 @@ export default function AdminLayout({ children }) {
               </a>
             );
           })}
-          <a href="/" className="admin-nav-link admin-nav-site">← Gå til siden</a>
         </nav>
 
         {/* Bruger + log ud */}
