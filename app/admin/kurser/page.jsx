@@ -63,8 +63,10 @@ export default function KurserAdminPage() {
     window.scrollTo(0, 0);
   }
 
-  const kurser     = items.filter(i=>!i.is_experience);
-  const oplevelser = items.filter(i=> i.is_experience);
+  const kurser     = items.filter(i => i.is_experience === false);
+  const oplevelser = items.filter(i => i.is_experience === true);
+  // Fanger poster med null/undefined is_experience så ingenting kan "gemme sig"
+  const ukendte    = items.filter(i => i.is_experience !== false && i.is_experience !== true);
 
   return (
     <>
@@ -141,6 +143,17 @@ export default function KurserAdminPage() {
 
       {!loading && <CourseList title="Kurser" items={kurser} onEdit={startEdit} onDelete={del} />}
       {!loading && <CourseList title="Oplevelser" items={oplevelser} onEdit={startEdit} onDelete={del} />}
+      {!loading && ukendte.length > 0 && (
+        <div style={{ marginTop:24 }}>
+          <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:8 }}>
+            <h2 style={{ ...h2, margin:0, color:"#8f2d20" }}>Ukendte poster ({ukendte.length})</h2>
+            <span style={{ fontSize:12, color:"#8f2d20", background:"#fbe4e2", padding:"3px 9px", borderRadius:999, fontWeight:600 }}>
+              Vises på hjemmesiden — slet dem her
+            </span>
+          </div>
+          <CourseList title="" items={ukendte} onEdit={startEdit} onDelete={del} />
+        </div>
+      )}
     </>
   );
 }
