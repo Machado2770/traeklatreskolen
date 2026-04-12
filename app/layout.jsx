@@ -1,4 +1,5 @@
 import Image from "next/image";
+import "./globals.css";
 
 export const metadata = {
   title: "Træklatreskolen",
@@ -37,17 +38,7 @@ function Header() {
         boxShadow: "0 4px 18px rgba(0,0,0,0.05)",
       }}
     >
-      <div
-        style={{
-          maxWidth: 1180,
-          margin: "0 auto",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          gap: 20,
-          flexWrap: "wrap",
-        }}
-      >
+      <div className="header-inner">
         <a
           href="/"
           style={{
@@ -70,14 +61,7 @@ function Header() {
           />
         </a>
 
-        <nav
-          style={{
-            display: "flex",
-            gap: 18,
-            flexWrap: "wrap",
-            alignItems: "center",
-          }}
-        >
+        <nav className="main-nav">
           <a href="/" style={navLink}>Forside</a>
           <a href="/kurser" style={navLink}>Kurser</a>
           <a href="/oplevelser" style={navLink}>Oplevelser</a>
