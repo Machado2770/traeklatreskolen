@@ -47,8 +47,9 @@ export default async function KursuskalenderPage() {
   } catch { /* tom countMap som fallback */ }
 
   return (
-    <main style={page}>
-      <section className="page-hero" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1800&q=80')", marginBottom: 32 }}>
+    <main>
+      {/* Hero — fuld bredde */}
+      <section className="page-hero" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1800&q=80')" }}>
         <div className="page-hero-overlay">
           <div className="page-hero-inner">
             <p className="page-hero-eyebrow">Kalender</p>
@@ -61,8 +62,10 @@ export default async function KursuskalenderPage() {
         </div>
       </section>
 
-      <section className="cal-table-wrap">
-        <div className="cal-header-row">
+      {/* Tabel — desktop */}
+      <div style={wrap}>
+        <div className="cal-table-wrap cal-desktop-table">
+          <div className="cal-header-row">
           <div style={th}>Dato</div>
           <div style={th}>Aktivitet</div>
           <div style={th}>Type</div>
@@ -117,9 +120,50 @@ export default async function KursuskalenderPage() {
             </div>
           );
         })}
-      </section>
+        </div>
+
+        {/* Kort-visning — mobil */}
+        <div className="cal-mobile-cards">
+          {items.length === 0 && (
+            <p style={{ color:"#4b6355", padding:"16px 0" }}>Ingen kommende kurser er planlagt endnu.</p>
+          )}
+          {items.map((item) => {
+            const courseKey = `${item.title} – ${item.date} – ${item.place}`;
+            const taken     = countMap[courseKey] ?? 0;
+            const max       = item.maxParticipants ?? null;
+            const isFull    = max !== null && taken >= max;
+            const available = max !== null ? max - taken : null;
+            return (
+              <div key={`m-${item.id}`} style={mobileCard}>
+                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:8, marginBottom:8 }}>
+                  <div style={{ fontWeight:800, color:"#1f3a2b", fontSize:17, lineHeight:1.3 }}>{item.title}</div>
+                  <span style={{ ...pill, background: item.type==="Kursus" ? "#e7efe9" : "#f5e5d8", color: item.type==="Kursus" ? "#1f3a2b" : "#a3521d", flexShrink:0 }}>{item.type}</span>
+                </div>
+                {item.price && <div style={{ color:"#a3521d", fontWeight:700, fontSize:14, marginBottom:8 }}>{item.price}</div>}
+                <div style={{ display:"flex", flexWrap:"wrap", gap:6, marginBottom:12 }}>
+                  <span style={metaChip}>📅 {item.date}</span>
+                  <span style={metaChip}>📍 {item.place}</span>
+                  {max !== null && (
+                    <span style={spotsStyle(isFull, available, max)}>
+                      {isFull ? "Fuldt booket" : `${available}/${max} pladser`}
+                    </span>
+                  )}
+                </div>
+                <div style={{ display:"flex", gap:8 }}>
+                  {item.href && <a href={item.href} style={{ ...secondaryButton, flex:1, textAlign:"center" }}>Læs mere</a>}
+                  {isFull
+                    ? <span style={{ ...fullButton, flex:1, textAlign:"center" }}>Fuldt booket</span>
+                    : <a href={item.bookingHref} style={{ ...primaryButton, flex:1, textAlign:"center" }}>Tilmeld</a>
+                  }
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
 
       {/* Betingelser */}
+      <div style={wrap}>
       <section style={termsSection}>
         <h2 style={termsTitle}>Betingelser</h2>
         <div style={termsGrid}>
@@ -139,8 +183,8 @@ export default async function KursuskalenderPage() {
             <div style={termsHeading}>Forbehold</div>
             <p style={termsText}>Træklatreskolen forbeholder sig retten til at afvise deltagere, der er under indflydelse af alkohol eller på anden måde udgør en sikkerhedsrisiko for sig selv eller andre.</p>
           </div>
-        </div>
       </section>
+      </div>
     </main>
   );
 }
@@ -152,14 +196,16 @@ function spotsStyle(isFull, available, max) {
   return { display:"inline-block", padding:"6px 12px", borderRadius:999, fontSize:13, fontWeight:700, background:bg, color };
 }
 
-const page           = { maxWidth:1180, margin:"0 auto", padding:"0 24px 72px" };
+const wrap           = { maxWidth:1180, margin:"0 auto", padding:"32px 24px 72px" };
 const th             = { fontSize:12, fontWeight:700, color:"#486051", textTransform:"uppercase", letterSpacing:0.8 };
 const td             = { color:"#33463a", fontSize:15 };
 const pill           = { display:"inline-block", padding:"5px 10px", borderRadius:999, fontSize:12, fontWeight:700 };
-const primaryButton  = { display:"inline-block", padding:"9px 14px", background:"#d8782f", color:"white", borderRadius:10, textDecoration:"none", fontWeight:700, fontSize:13 };
-const secondaryButton= { display:"inline-block", padding:"9px 14px", background:"#e7efe9", color:"#1f3a2b", borderRadius:10, textDecoration:"none", fontWeight:700, fontSize:13 };
-const fullButton     = { display:"inline-block", padding:"9px 14px", background:"#f0f0f0", color:"#999", borderRadius:10, fontWeight:700, fontSize:13, cursor:"not-allowed" };
-const termsSection   = { marginTop:56, background:"white", borderRadius:18, padding:"36px 32px", boxShadow:"0 4px 18px rgba(0,0,0,0.06)" };
+const metaChip       = { display:"inline-block", background:"#eef3ef", color:"#2d5c3e", padding:"5px 10px", borderRadius:999, fontSize:13, fontWeight:600 };
+const primaryButton  = { display:"inline-block", padding:"11px 14px", background:"#d8782f", color:"white", borderRadius:10, textDecoration:"none", fontWeight:700, fontSize:14 };
+const secondaryButton= { display:"inline-block", padding:"11px 14px", background:"#e7efe9", color:"#1f3a2b", borderRadius:10, textDecoration:"none", fontWeight:700, fontSize:14 };
+const fullButton     = { display:"inline-block", padding:"11px 14px", background:"#f0f0f0", color:"#999", borderRadius:10, fontWeight:700, fontSize:14, cursor:"not-allowed" };
+const mobileCard     = { background:"white", borderRadius:16, padding:"20px 18px", boxShadow:"0 4px 14px rgba(0,0,0,0.07)", marginBottom:12 };
+const termsSection   = { background:"white", borderRadius:18, padding:"36px 32px", boxShadow:"0 4px 18px rgba(0,0,0,0.06)" };
 const termsTitle     = { color:"#1f3a2b", fontSize:26, fontWeight:800, margin:"0 0 24px" };
 const termsGrid      = { display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(240px, 1fr))", gap:24 };
 const termsBlock     = { borderLeft:"3px solid #d8782f", paddingLeft:16 };
