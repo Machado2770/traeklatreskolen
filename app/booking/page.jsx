@@ -71,8 +71,8 @@ export default function BookingPage() {
         <div style={pageHeader}>
           <h1 style={h1}>Kursustilmelding</h1>
           <p style={lead}>
-            Udfyld formularen herunder. Betaling sker via bankoverførsel efter
-            modtagelse af bekræftelse.
+            Udfyld formularen herunder. Du modtager en faktura pr. e-mail
+            efter tilmelding.
           </p>
         </div>
 
@@ -84,7 +84,7 @@ export default function BookingPage() {
             bekræftelse på din plads. Pladsen er reserveret, når betalingen er modtaget.
           </p>
           <p style={{ margin: 0, color: "#4b6355", fontSize: 14 }}>
-            Brug dit navn og kursusnavn som reference ved betaling.
+            Fakturaen sendes til den e-mailadresse du opgiver i formularen.
           </p>
         </div>
 
