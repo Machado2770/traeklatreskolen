@@ -58,7 +58,7 @@ export default function Home() {
     <main>
 
       {/* HERO */}
-      <section style={{ position: "relative", minHeight: "90vh" }} className="hero-section">
+      <section className="page-hero home-hero" style={{ position: "relative" }}>
         <Image
           src="/images/hero-forest.jpg"
           alt="Skov"
@@ -67,11 +67,11 @@ export default function Home() {
           style={{ objectFit: "cover", objectPosition: "center" }}
           sizes="100vw"
         />
-        <div style={heroOverlay} className="hero-overlay">
-          <div style={heroInner}>
-            <p style={eyebrow}>Træklatring · Faglighed · Natur</p>
-            <h1 style={heroTitle}>Træklatreskolen</h1>
-            <p style={heroLead}>
+        <div className="page-hero-overlay" style={{ position: "relative", zIndex: 1 }}>
+          <div className="page-hero-inner">
+            <p className="page-hero-eyebrow">Træklatring · Faglighed · Natur</p>
+            <h1 className="page-hero-title">Træklatreskolen</h1>
+            <p className="page-hero-text" style={{ maxWidth: 640 }}>
               Kurser og oplevelser i levende træer for dig, der vil lære,
               udfordre dig selv og opleve skoven fra nye højder.
             </p>
@@ -222,46 +222,11 @@ export default function Home() {
 
 /* ── STYLES ─────────────────────────────────────────── */
 
-const heroOverlay = {
-  position: "absolute",
-  inset: 0,
-  background: "rgba(16,32,24,0.54)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  padding: "40px 24px",
-  zIndex: 1,
-};
-const heroInner = {
-  maxWidth: 880,
-  textAlign: "center",
-  color: "white",
-};
-const eyebrow = {
-  fontSize: 13,
-  letterSpacing: 3,
-  textTransform: "uppercase",
-  marginBottom: 20,
-  opacity: 0.85,
-};
-const heroTitle = {
-  fontSize: "clamp(48px, 8vw, 88px)",
-  fontWeight: 800,
-  margin: "0 0 24px",
-  lineHeight: 1.05,
-};
-const heroLead = {
-  fontSize: 21,
-  lineHeight: 1.7,
-  maxWidth: 720,
-  margin: "0 auto 34px",
-  opacity: 0.93,
-};
 const heroButtons = {
   display: "flex",
-  justifyContent: "center",
   gap: 14,
   flexWrap: "wrap",
+  marginTop: 28,
 };
 const primaryBtn = {
   background: "#d8782f",
