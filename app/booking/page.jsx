@@ -78,12 +78,14 @@ export default function BookingPage() {
 
         {/* Betalingsinfo */}
         <div style={infoBox}>
-          <div style={infoTitle}>Bankoverførsel</div>
-          <div style={infoGrid}>
-            <span style={infoLabel}>Reg.nr.</span><span>1234</span>
-            <span style={infoLabel}>Konto</span><span>567890</span>
-            <span style={infoLabel}>Reference</span><span>Navn + kursus</span>
-          </div>
+          <div style={infoTitle}>Sådan foregår det</div>
+          <p style={{ margin: "0 0 8px", color: "#33463a", fontSize: 15, lineHeight: 1.7 }}>
+            Når du sender tilmeldingen, modtager du en <strong>faktura pr. e-mail</strong> som
+            bekræftelse på din plads. Pladsen er reserveret, når betalingen er modtaget.
+          </p>
+          <p style={{ margin: 0, color: "#4b6355", fontSize: 14 }}>
+            Brug dit navn og kursusnavn som reference ved betaling.
+          </p>
         </div>
 
         {/* Kursus-info boks — vises kun når man kommer fra kalender */}
