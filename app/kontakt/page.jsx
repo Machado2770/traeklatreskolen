@@ -43,6 +43,15 @@ export default function KontaktPage() {
             <div style={value}>Vi bestræber os på at svare hurtigst muligt</div>
           </div>
 
+          <div style={infoBlock}>
+            <div style={label}>Om os</div>
+            <div style={value}>
+              <a href="/om-os" style={{ color: "#1f2f25", textDecoration: "none", borderBottom: "1px solid #3d7a57" }}>
+                Læs om underviserne bag Træklatreskolen →
+              </a>
+            </div>
+          </div>
+
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 24 }}>
             <a href="/booking" style={primaryBtn}>Gå til tilmelding</a>
             <a href="/kursuskalender" style={secondaryBtn}>Se kursuskalender</a>
