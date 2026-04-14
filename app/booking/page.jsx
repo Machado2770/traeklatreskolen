@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 
 const courseOptions = [
   "Begynder i træklatring",
+  "Brush-up i træklatring",
   "Træklatreinstruktør",
   "Avanceret træklatring",
   "Eksamen til træklatreinstruktør",
-  "Brush-up i træklatring",
+  "Førstehjælpskursus",
   "Oplevelsestur i trækronerne",
   "Overnatning i trækronerne",
   "Den vilde klatretur",
-  "Andet / ikke sikker",
 ];
 
 export default function BookingPage() {
