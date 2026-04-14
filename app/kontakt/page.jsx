@@ -52,10 +52,6 @@ export default function KontaktPage() {
             </div>
           </div>
 
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 24 }}>
-            <a href="/booking" style={primaryBtn}>Gå til tilmelding</a>
-            <a href="/kursuskalender" style={secondaryBtn}>Se kursuskalender</a>
-          </div>
         </div>
 
         <div style={card}>
@@ -71,6 +67,10 @@ export default function KontaktPage() {
           <div style={noteBox}>
             <strong>Tip:</strong> Hvis du allerede ved, hvad du vil deltage i,
             kan du gå direkte til kursuskalenderen eller til booking.
+          </div>
+
+          <div style={{ marginTop: 24 }}>
+            <a href="/kursuskalender" style={primaryBtn}>Kursuskalender</a>
           </div>
         </div>
       </section>
