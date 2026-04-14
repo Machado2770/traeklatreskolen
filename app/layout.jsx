@@ -114,7 +114,6 @@ function Footer() {
           <div style={footerList}>
             <a href="/kursuskalender" style={footerLink}>Se kursuskalender</a>
             <a href="/booking" style={footerLink}>Tilmeld kursus</a>
-            <a href="/admin" style={footerLink}>Admin</a>
           </div>
         </div>
       </div>
@@ -123,12 +122,25 @@ function Footer() {
         style={{
           borderTop: "1px solid rgba(255,255,255,0.12)",
           padding: "14px 24px",
-          textAlign: "center",
-          fontSize: 13,
-          opacity: 0.8,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: 12,
+          maxWidth: 1180,
+          margin: "0 auto",
         }}
       >
-        © Træklatreskolen · Natur · Faglighed · Oplevelser
+        <span style={{ fontSize: 13, opacity: 0.8 }}>
+          © Træklatreskolen · Natur · Faglighed · Oplevelser
+        </span>
+        <a href="/admin" style={adminFooterBtn}>
+          <svg width="15" height="15" viewBox="0 0 20 20" fill="none" style={{ flexShrink: 0 }}>
+            <circle cx="10" cy="7" r="3.5" stroke="currentColor" strokeWidth="1.7"/>
+            <path d="M3 17c0-3.9 3.1-7 7-7s7 3.1 7 7" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/>
+          </svg>
+          Admin
+        </a>
       </div>
     </footer>
   );
@@ -155,4 +167,18 @@ const footerText = {
   margin: "0 0 8px",
   opacity: 0.88,
   lineHeight: 1.6,
+};
+
+const adminFooterBtn = {
+  display: "inline-flex",
+  alignItems: "center",
+  gap: 7,
+  padding: "8px 16px",
+  background: "#d8782f",
+  color: "white",
+  borderRadius: 10,
+  textDecoration: "none",
+  fontWeight: 700,
+  fontSize: 13,
+  letterSpacing: "0.2px",
 };
