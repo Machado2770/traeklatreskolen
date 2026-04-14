@@ -114,6 +114,7 @@ function Footer() {
           <div style={footerList}>
             <a href="/kursuskalender" style={footerLink}>Se kursuskalender</a>
             <a href="/booking" style={footerLink}>Tilmeld kursus</a>
+            <a href="/admin" style={footerLink}>Admin</a>
           </div>
         </div>
       </div>
