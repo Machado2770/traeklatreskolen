@@ -19,24 +19,28 @@ export default async function KurserPage() {
   const courses = await getCourses();
   return (
     <main>
-      <section className="page-hero" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1800&q=80')" }}>
+      <section
+        className="page-hero"
+        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1800&q=80')" }}
+      >
         <div className="page-hero-overlay">
           <div className="page-hero-inner">
             <p className="page-hero-eyebrow">Kurser</p>
             <h1 className="page-hero-title">Kurser i træklatring</h1>
             <p className="page-hero-text">
-              Her finder du alle kurser i Træklatreskolen — fra begynderniveau
-              til brush-up, instruktørforløb, avanceret træklatring og eksamen.
+              Fra begynderniveau til brush-up, instruktørforløb, avanceret træklatring og eksamen.
             </p>
           </div>
         </div>
       </section>
 
       <section style={section}>
-        <div style={grid}>
-          {courses.map((item) => (
-            <CourseCard key={item.slug} item={item} />
-          ))}
+        <div style={container}>
+          <div style={grid}>
+            {courses.map((item) => (
+              <CourseCard key={item.slug} item={item} />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -47,21 +51,23 @@ export default async function KurserPage() {
 
 function CourseCard({ item }) {
   return (
-    <div style={card}>
-      <div style={imageWrap}>
-        <Image
-          src={item.image}
-          alt={item.title}
-          fill
-          style={{ objectFit: "cover" }}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
-      </div>
+    <div style={card} className="feature-card">
+      <a href={`/kurser/${item.slug}`} style={imageLink}>
+        <div style={imageWrap}>
+          <Image
+            src={item.image}
+            alt={item.title}
+            fill
+            style={{ objectFit: "cover" }}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        </div>
+      </a>
 
       <div style={cardBody}>
         <div style={tagRow}>
           <span style={priceTag}>{item.price}</span>
-          <span style={levelTag}>{item.level}</span>
+          {item.level && <span style={levelTag}>{item.level}</span>}
           {item.duration && <span style={durationTag}>⏱ {item.duration}</span>}
         </div>
 
@@ -81,57 +87,20 @@ function CourseCard({ item }) {
   );
 }
 
-const hero = {
-  minHeight: 320,
-  backgroundImage:
-    "url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1800&q=80')",
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-};
-
-const heroOverlay = {
-  minHeight: 320,
-  background: "linear-gradient(rgba(18,33,26,0.62), rgba(18,33,26,0.62))",
-  display: "flex",
-  alignItems: "center",
-};
-
-const heroInner = {
-  maxWidth: 1180,
-  margin: "0 auto",
-  padding: "56px 24px",
-  color: "white",
-};
-
-const eyebrow = {
-  textTransform: "uppercase",
-  letterSpacing: 1.8,
-  fontSize: 13,
-  marginBottom: 12,
-};
-
-const heroTitle = {
-  fontSize: "clamp(38px, 6vw, 64px)",
-  margin: "0 0 14px",
-};
-
-const heroText = {
-  maxWidth: 760,
-  fontSize: 18,
-  lineHeight: 1.8,
-  margin: 0,
-};
-
 const section = {
+  background: "#eef3ef",
+  padding: "72px 24px 88px",
+};
+
+const container = {
   maxWidth: 1180,
   margin: "0 auto",
-  padding: "48px 24px 72px",
 };
 
 const grid = {
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-  gap: 24,
+  gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+  gap: 28,
 };
 
 const card = {
@@ -139,28 +108,38 @@ const card = {
   borderRadius: 18,
   overflow: "hidden",
   boxShadow: "0 8px 30px rgba(0,0,0,0.08)",
+  display: "flex",
+  flexDirection: "column",
+};
+
+const imageLink = {
+  display: "block",
+  flexShrink: 0,
 };
 
 const imageWrap = {
   position: "relative",
-  height: 240,
+  height: 230,
   overflow: "hidden",
 };
 
 const cardBody = {
-  padding: 20,
+  padding: "20px 22px 24px",
+  display: "flex",
+  flexDirection: "column",
+  flex: 1,
 };
 
 const tagRow = {
   display: "flex",
   gap: 8,
   flexWrap: "wrap",
-  marginBottom: 10,
+  marginBottom: 12,
 };
 
 const priceTag = {
   display: "inline-block",
-  padding: "6px 10px",
+  padding: "5px 10px",
   borderRadius: 999,
   background: "#f5e5d8",
   color: "#a3521d",
@@ -170,7 +149,7 @@ const priceTag = {
 
 const levelTag = {
   display: "inline-block",
-  padding: "6px 10px",
+  padding: "5px 10px",
   borderRadius: 999,
   background: "#e7efe9",
   color: "#1f3a2b",
@@ -180,7 +159,7 @@ const levelTag = {
 
 const durationTag = {
   display: "inline-block",
-  padding: "6px 10px",
+  padding: "5px 10px",
   borderRadius: 999,
   background: "#eae8f5",
   color: "#3d3580",
@@ -191,42 +170,46 @@ const durationTag = {
 const cardTitle = {
   margin: "0 0 8px",
   color: "#1f3a2b",
-  fontSize: 22,
+  fontSize: 21,
   fontWeight: 700,
 };
 
 const cardText = {
-  margin: 0,
+  margin: "0 0 auto",
   color: "#4b6355",
   lineHeight: 1.7,
-  minHeight: 48,
   fontSize: 15,
+  paddingBottom: 20,
 };
 
 const actionRow = {
   display: "flex",
   gap: 10,
-  flexWrap: "wrap",
-  marginTop: 18,
+  marginTop: "auto",
 };
 
 const primaryButton = {
+  flex: 1,
   display: "inline-block",
-  padding: "12px 16px",
+  padding: "12px 10px",
   background: "#d8782f",
   color: "white",
   borderRadius: 10,
   textDecoration: "none",
   fontWeight: 700,
+  fontSize: 14,
+  textAlign: "center",
 };
 
 const secondaryButton = {
+  flex: 1,
   display: "inline-block",
-  padding: "12px 16px",
+  padding: "12px 10px",
   background: "#e7efe9",
   color: "#1f3a2b",
   borderRadius: 10,
   textDecoration: "none",
   fontWeight: 700,
+  fontSize: 14,
+  textAlign: "center",
 };
-
