@@ -1,5 +1,7 @@
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import bcrypt from "bcryptjs";
 
@@ -14,6 +16,11 @@ export async function GET() {
 }
 
 export async function POST(request) {
+  const session = await getServerSession(authOptions);
+  if (session?.user?.role !== "super") {
+    return Response.json({ error: "Kun super-admin kan oprette brugere." }, { status: 403 });
+  }
+
   const body = await request.json();
   if (!body.email || !body.password || !body.name) {
     return Response.json({ error: "Navn, email og adgangskode er påkrævet" }, { status: 400 });
