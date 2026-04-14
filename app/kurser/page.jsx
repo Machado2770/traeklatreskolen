@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 export const metadata = {
   title: "Kurser i træklatring",
   description:
-    "Se alle kurser hos Træklatreskolen — begynderkursus, brush-up, træklatreinstruktør, avanceret træklatring og eksamen. Kurser efter Klatresamrådets normer.",
+    "Se alle kurser hos Træklatreskolen — begynderkursus, brush-up, træklatreinstruktør, avanceret træklatring og eksamen. Kurser efter Dansk Træklatreforenings normer.",
   openGraph: {
     title: "Kurser i træklatring | Træklatreskolen",
     description: "Professionelle træklatrekurser for alle niveauer i hele Danmark.",

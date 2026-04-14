@@ -133,7 +133,7 @@ export default function Home() {
                 </svg>
               ),
               title: "Sikkerhed i centrum",
-              text: "Erhvervsforsikring og Klatresamrådets normer — altid og uden undtagelse",
+              text: "Erhvervsforsikring og Dansk Træklatreforenings normer — altid og uden undtagelse",
             },
           ].map((p) => (
             <div key={p.title} style={pillarItem}>
@@ -237,7 +237,7 @@ export default function Home() {
             <p style={safetyText}>
               Der er stor fokus på sikkerheden, når der udføres undervisning og
               oplevelser med Træklatreskolen. Vi arbejder ud fra faste principper
-              og Klatresamrådets normer — sikkerhed er et fast element ved ethvert
+              og Dansk Træklatreforenings normer — sikkerhed er et fast element ved ethvert
               arrangement.
             </p>
             <p style={{ ...safetyText, marginTop: 16 }}>
@@ -247,7 +247,7 @@ export default function Home() {
             </p>
             <ul style={safetyList}>
               <li style={safetyItem}>✓ Erhvervsforsikring dækker alle deltagere</li>
-              <li style={safetyItem}>✓ Klatresamrådets normer følges til punkt og prikke</li>
+              <li style={safetyItem}>✓ Dansk Træklatreforenings normer følges til punkt og prikke</li>
               <li style={safetyItem}>✓ Faste sikkerhedsprincipper ved hvert arrangement</li>
               <li style={safetyItem}>✓ Aktiviteter tilpasset årstid og vejr</li>
             </ul>
