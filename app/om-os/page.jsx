@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export const metadata = {
   title: "Om os | Træklatreskolen",
   description:
@@ -8,6 +10,27 @@ export const metadata = {
     url: "/om-os",
   },
 };
+
+const instructors = [
+  {
+    name: "Martin",
+    role: "Træklatreinstruktør & stifter",
+    image: "https://ighjiiafidndwvaowmdc.supabase.co/storage/v1/object/public/site-images/1776198006583-Martin.jpg",
+    bio: [
+      "Martin er manden bag Træklatreskolen og har mange års erfaring med træklatring i Danmark. Han brænder for at give andre en tryg og lærerig oplevelse i trækronerne — uanset om det er første gang i et træ eller et kursus på højt niveau.",
+      "Med uddannelse som træklatreinstruktør efter Dansk Træklatreforenings normer og en dyb respekt for sikkerhed og naturen som læringsrum, er Martin garant for at alle aktiviteter gennemføres fagligt og forsvarligt.",
+    ],
+  },
+  {
+    name: "Lykke Theill-Larsen",
+    role: "Træklatreinstruktør",
+    image: null, // Billede tilføjes
+    bio: [
+      "Lykke er uddannet træklatreinstruktør og en vigtig del af holdet bag Træklatreskolen. Hun har en særlig evne til at skabe trygge rammer for deltagerne — særligt for dem der møder træklatring for første gang.",
+      "Lykkes tilgang kombinerer faglig sikkerhed med omsorg for den enkelte deltager, og hun bidrager til at Træklatreskolen kan tilbyde oplevelser og kurser af høj kvalitet for både grupper og enkeltpersoner.",
+    ],
+  },
+];
 
 export default function OmOsPage() {
   return (
@@ -21,44 +44,99 @@ export default function OmOsPage() {
             <p className="page-hero-eyebrow">Om os</p>
             <h1 className="page-hero-title">Folkene bag Træklatreskolen</h1>
             <p className="page-hero-text">
-              Mød underviserne bag Træklatreskolen — erfarne instruktører med
-              passion for træklatring, naturdannelse og sikkerhed.
+              Erfarne instruktører med passion for træklatring, naturdannelse og sikkerhed.
             </p>
           </div>
         </div>
       </section>
 
-      <section style={section}>
+      {/* Intro */}
+      <section style={introSection}>
+        <div style={introContainer}>
+          <div style={accent} />
+          <p style={introText}>
+            Træklatreskolen er bygget på faglig stolthed, respekt for naturen og et oprigtigt
+            ønske om at give andre en god og tryg oplevelse i trækronerne. Vi arbejder med
+            udeliv, fordi vi er overbevist om at naturen som arbejdsrum fremkalder nogle af
+            de bedste rammer for naturdannelse, udvikling og refleksion.
+          </p>
+        </div>
+      </section>
+
+      {/* Instruktører */}
+      <section style={teamSection}>
         <div style={container}>
-
-          {/* Intro */}
-          <div style={intro}>
-            <div style={accent} />
-            <p style={introText}>
-              Træklatreskolen er bygget på faglig stolthed, respekt for naturen og
-              et oprigtigt ønske om at give andre en god og tryg oplevelse i
-              trækronerne. Indholdet på denne side er under opbygning.
-            </p>
+          <div style={teamGrid}>
+            {instructors.map((person) => (
+              <div key={person.name} style={card}>
+                <div style={imageWrap}>
+                  {person.image ? (
+                    <Image
+                      src={person.image}
+                      alt={person.name}
+                      fill
+                      style={{ objectFit: "cover", objectPosition: "top" }}
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  ) : (
+                    <div style={imagePlaceholder}>
+                      <span style={placeholderIcon}>🌲</span>
+                      <span style={placeholderLabel}>Billede kommer snart</span>
+                    </div>
+                  )}
+                </div>
+                <div style={cardBody}>
+                  <div style={roleTag}>{person.role}</div>
+                  <h2 style={personName}>{person.name}</h2>
+                  {person.bio.map((para, i) => (
+                    <p key={i} style={{ ...bioText, marginTop: i === 0 ? 0 : 14 }}>{para}</p>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
+        </div>
+      </section>
 
-          {/* Placeholder — erstattes med indhold */}
-          <div style={placeholder}>
-            <p style={placeholderText}>Indhold om underviserne kommer snart.</p>
+      {/* Værdier */}
+      <section style={valuesSection}>
+        <div style={valuesContainer}>
+          <h2 style={valuesTitle}>Vores tilgang</h2>
+          <div style={valuesGrid}>
+            {[
+              {
+                title: "Sikkerhed først",
+                text: "Alle aktiviteter gennemføres efter Dansk Træklatreforenings normer. Vi har erhvervsforsikring der dækker alle deltagere.",
+              },
+              {
+                title: "Faglighed i praksis",
+                text: "Vi underviser med afsæt i mange års erfaring og løbende efteruddannelse — teori og praksis går hånd i hånd.",
+              },
+              {
+                title: "Naturen som ramme",
+                text: "Vi er overbevist om at skoven er et af de bedste læringsrum der findes. Naturen skaber nærvær og refleksion.",
+              },
+            ].map((v) => (
+              <div key={v.title} style={valueCard}>
+                <div style={valueAccent} />
+                <h3 style={valueTitle}>{v.title}</h3>
+                <p style={valueText}>{v.text}</p>
+              </div>
+            ))}
           </div>
-
         </div>
       </section>
 
       {/* CTA */}
       <section style={ctaSection}>
         <div style={ctaInner}>
-          <h2 style={ctaTitle}>Vil du vide mere?</h2>
+          <h2 style={ctaTitle}>Klar til at komme op i trækronerne?</h2>
           <p style={ctaText}>
-            Tag kontakt — vi svarer gerne på spørgsmål om kurser, oplevelser og hvem vi er.
+            Tag kontakt eller find dit næste kursus eller oplevelse i kursuskalenderen.
           </p>
           <div style={ctaButtons}>
             <a href="/kontakt" style={ctaPrimary}>Kontakt os</a>
-            <a href="/kurser" style={ctaSecondary}>Se kurser</a>
+            <a href="/kursuskalender" style={ctaSecondary}>Se kursuskalender</a>
           </div>
         </div>
       </section>
@@ -66,19 +144,17 @@ export default function OmOsPage() {
   );
 }
 
-const section = {
+/* ── STYLES ── */
+
+const introSection = {
   background: "#ffffff",
-  padding: "72px 24px 88px",
+  padding: "72px 24px 56px",
 };
 
-const container = {
-  maxWidth: 860,
+const introContainer = {
+  maxWidth: 760,
   margin: "0 auto",
-};
-
-const intro = {
   textAlign: "center",
-  marginBottom: 56,
 };
 
 const accent = {
@@ -86,7 +162,7 @@ const accent = {
   height: 3,
   background: "#d8782f",
   borderRadius: 4,
-  margin: "0 auto 20px",
+  margin: "0 auto 22px",
 };
 
 const introText = {
@@ -96,16 +172,134 @@ const introText = {
   margin: 0,
 };
 
-const placeholder = {
+const teamSection = {
   background: "#eef3ef",
-  borderRadius: 18,
-  padding: "64px 32px",
-  textAlign: "center",
+  padding: "56px 24px 88px",
 };
 
-const placeholderText = {
+const container = {
+  maxWidth: 1080,
+  margin: "0 auto",
+};
+
+const teamGrid = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
+  gap: 32,
+};
+
+const card = {
+  background: "white",
+  borderRadius: 20,
+  overflow: "hidden",
+  boxShadow: "0 8px 30px rgba(0,0,0,0.08)",
+};
+
+const imageWrap = {
+  position: "relative",
+  height: 340,
+  overflow: "hidden",
+};
+
+const imagePlaceholder = {
+  width: "100%",
+  height: "100%",
+  background: "#dce8e0",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: 10,
+};
+
+const placeholderIcon = {
+  fontSize: 48,
+};
+
+const placeholderLabel = {
+  fontSize: 14,
   color: "#4b6355",
-  fontSize: 16,
+  fontWeight: 600,
+};
+
+const cardBody = {
+  padding: "24px 28px 32px",
+};
+
+const roleTag = {
+  display: "inline-block",
+  background: "#f5e5d8",
+  color: "#a3521d",
+  fontSize: 12,
+  fontWeight: 700,
+  padding: "5px 10px",
+  borderRadius: 999,
+  marginBottom: 12,
+};
+
+const personName = {
+  fontSize: 26,
+  fontWeight: 800,
+  color: "#1f3a2b",
+  margin: "0 0 16px",
+};
+
+const bioText = {
+  fontSize: 15,
+  lineHeight: 1.75,
+  color: "#4b6355",
+  margin: 0,
+};
+
+const valuesSection = {
+  background: "#ffffff",
+  padding: "72px 24px 88px",
+};
+
+const valuesContainer = {
+  maxWidth: 1080,
+  margin: "0 auto",
+};
+
+const valuesTitle = {
+  fontSize: "clamp(24px, 3.5vw, 36px)",
+  fontWeight: 800,
+  color: "#1f3a2b",
+  textAlign: "center",
+  margin: "0 0 40px",
+};
+
+const valuesGrid = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+  gap: 28,
+};
+
+const valueCard = {
+  padding: "28px 24px",
+  background: "#f7faf8",
+  borderRadius: 16,
+};
+
+const valueAccent = {
+  width: 32,
+  height: 3,
+  background: "#d8782f",
+  borderRadius: 4,
+  marginBottom: 16,
+};
+
+const valueTitle = {
+  fontSize: 18,
+  fontWeight: 700,
+  color: "#1f3a2b",
+  margin: "0 0 10px",
+};
+
+const valueText = {
+  fontSize: 15,
+  lineHeight: 1.7,
+  color: "#4b6355",
   margin: 0,
 };
 
