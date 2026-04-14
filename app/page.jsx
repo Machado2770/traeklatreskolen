@@ -269,8 +269,8 @@ export default function Home() {
         <div style={ctaInner}>
           <h2 style={ctaTitle}>Klar til at komme op i trækronerne?</h2>
           <p style={ctaText}>
-            Meld dig til et kursus eller book en oplevelse for din gruppe,
-            skole eller institution. Vi glæder os til at tage dig med op.
+            Meld dig til et kursus eller book en oplevelse for dig eller din gruppe.
+            Vi glæder os til at tage dig med op i trækronerne.
           </p>
           <div style={ctaButtons}>
             <a href="/booking" style={ctaPrimary}>Book nu</a>
