@@ -31,6 +31,18 @@ export default async function OplevelserPage() {
         </div>
       </section>
 
+      {/* Info-boks om booking */}
+      <div style={infoBannerWrap}>
+        <div style={infoBanner}>
+          <span style={infoIcon}>ℹ️</span>
+          <div>
+            <strong>Sådan booker du en oplevelse:</strong> Oplevelserne slås op i{" "}
+            <a href="/kursuskalender" style={infoLink}>kursuskalenderen</a>, hvor du tilmelder dig enkeltvis.
+            Aktiviteterne gennemføres, når minimumantallet er nået — for oplevelsestur og overnatning er det min. 6 personer, for Den vilde klatretur min. 10 personer.
+          </div>
+        </div>
+      </div>
+
       <section style={section}>
         <div style={grid}>
           {experiences.map((item) => (
@@ -116,6 +128,37 @@ const heroText = {
   fontSize: 18,
   lineHeight: 1.8,
   margin: 0,
+};
+
+const infoBannerWrap = {
+  maxWidth: 1180,
+  margin: "0 auto",
+  padding: "24px 24px 0",
+};
+
+const infoBanner = {
+  display: "flex",
+  gap: 14,
+  alignItems: "flex-start",
+  background: "#f0f6f2",
+  border: "1px solid #c6ddd0",
+  borderRadius: 14,
+  padding: "18px 22px",
+  color: "#2d4034",
+  fontSize: 15,
+  lineHeight: 1.7,
+};
+
+const infoIcon = {
+  fontSize: 20,
+  flexShrink: 0,
+  marginTop: 1,
+};
+
+const infoLink = {
+  color: "#1f6b40",
+  fontWeight: 700,
+  textDecoration: "underline",
 };
 
 const section = {

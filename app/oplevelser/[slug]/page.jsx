@@ -42,6 +42,21 @@ export default async function OplevelseDetaljePage({ params }) {
             ))}
           </ul>
 
+          {/* Booking-info specifik for oplevelsen */}
+          {(item.slug === "traetur" || item.slug === "overnatning" || item.slug === "vild") && (
+            <div style={bookingInfo}>
+              <div style={bookingInfoTitle}>Booking og minimumantal</div>
+              <p style={bookingInfoText}>
+                {item.slug === "vild"
+                  ? "Oplevelsen gennemføres ved minimum 10 personer."
+                  : "Oplevelsen gennemføres ved minimum 6 personer."}
+                {" "}Aktiviteten slås op i{" "}
+                <a href="/kursuskalender" style={bookingInfoLink}>kursuskalenderen</a>,
+                hvor du tilmelder dig enkeltvis — aktiviteten bliver til noget, når minimumantallet er nået.
+              </p>
+            </div>
+          )}
+
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 24 }}>
             <a href={item.bookingHref} style={ctaPrimary}>Book / tilmeld</a>
             <a href="/oplevelser" style={ctaSecondary}>Tilbage til oplevelser</a>
@@ -141,4 +156,32 @@ const ctaSecondary = {
   borderRadius: 10,
   textDecoration: "none",
   fontWeight: 700,
+};
+
+const bookingInfo = {
+  marginTop: 28,
+  background: "#f0f6f2",
+  border: "1px solid #c6ddd0",
+  borderRadius: 12,
+  padding: "16px 20px",
+};
+
+const bookingInfoTitle = {
+  fontWeight: 700,
+  color: "#1f3a2b",
+  fontSize: 15,
+  marginBottom: 6,
+};
+
+const bookingInfoText = {
+  color: "#2d4034",
+  fontSize: 14,
+  lineHeight: 1.7,
+  margin: 0,
+};
+
+const bookingInfoLink = {
+  color: "#1f6b40",
+  fontWeight: 700,
+  textDecoration: "underline",
 };
