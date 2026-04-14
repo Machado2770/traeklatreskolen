@@ -96,40 +96,6 @@ const pageInner = {
   padding: "40px 24px 72px",
 };
 
-const hero = {
-  background:
-    "linear-gradient(rgba(31,58,43,0.78), rgba(31,58,43,0.68)), url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1800&q=80') center/cover",
-  minHeight: 320,
-  borderRadius: 24,
-  display: "flex",
-  alignItems: "center",
-  padding: "36px 32px",
-  color: "white",
-};
-
-const heroTextWrap = {
-  maxWidth: 760,
-};
-
-const eyebrow = {
-  textTransform: "uppercase",
-  letterSpacing: 1.5,
-  fontSize: 13,
-  opacity: 0.9,
-  marginBottom: 10,
-};
-
-const h1 = {
-  fontSize: "clamp(34px, 6vw, 58px)",
-  margin: "0 0 14px",
-};
-
-const lead = {
-  fontSize: 18,
-  lineHeight: 1.7,
-  margin: 0,
-};
-
 const grid = {
   display: "grid",
   gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
@@ -209,16 +175,6 @@ const primaryBtn = {
   padding: "14px 22px",
   background: "#d8782f",
   color: "white",
-  borderRadius: 10,
-  textDecoration: "none",
-  fontWeight: 700,
-};
-
-const secondaryBtn = {
-  display: "inline-block",
-  padding: "14px 22px",
-  background: "#e7efe9",
-  color: "#1f3a2b",
   borderRadius: 10,
   textDecoration: "none",
   fontWeight: 700,

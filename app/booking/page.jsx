@@ -245,19 +245,6 @@ const infoTitle = {
   fontSize: 15,
 };
 
-const infoGrid = {
-  display: "grid",
-  gridTemplateColumns: "auto 1fr",
-  gap: "6px 20px",
-  fontSize: 15,
-  color: "#33463a",
-};
-
-const infoLabel = {
-  fontWeight: 600,
-  color: "#4b6355",
-};
-
 const courseBox = {
   background: "#1f3a2b",
   borderRadius: 16,

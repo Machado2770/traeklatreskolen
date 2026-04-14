@@ -9,6 +9,7 @@ export default function sitemap() {
     { url: `${BASE}/oplevelser`, priority: 0.9, changeFrequency: "weekly" },
     { url: `${BASE}/kursuskalender`, priority: 0.8, changeFrequency: "daily" },
     { url: `${BASE}/kontakt`, priority: 0.7, changeFrequency: "monthly" },
+    { url: `${BASE}/om-os`,   priority: 0.7, changeFrequency: "monthly" },
     { url: `${BASE}/booking`, priority: 0.8, changeFrequency: "monthly" },
   ];
 

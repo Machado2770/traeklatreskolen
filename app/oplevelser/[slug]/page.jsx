@@ -181,7 +181,7 @@ const bookingInfoText = {
 };
 
 const bookingInfoLink = {
-  color: "#1f6b40",
+  color: "#1f3a2b",
   fontWeight: 700,
   textDecoration: "underline",
 };

@@ -97,20 +97,24 @@ function Footer() {
             <a href="/kurser" style={footerLink}>Kurser</a>
             <a href="/oplevelser" style={footerLink}>Oplevelser</a>
             <a href="/kursuskalender" style={footerLink}>Kursuskalender</a>
-          </div>
-        </div>
-
-        <div>
-          <div style={footerHeading}>Handling</div>
-          <div style={footerList}>
-            <a href="/booking" style={footerLink}>Tilmeld kursus</a>
-            <a href="/admin" style={footerLink}>Admin</a>
+            <a href="/om-os" style={footerLink}>Om os</a>
           </div>
         </div>
 
         <div>
           <div style={footerHeading}>Kontakt</div>
-          <a href="/kontakt" style={footerLink}>Træklatreskolen</a>
+          <div style={footerList}>
+            <a href="/kontakt" style={footerLink}>Kontakt os</a>
+            <a href="mailto:info@traeklatreskolen.dk" style={footerLink}>info@traeklatreskolen.dk</a>
+          </div>
+        </div>
+
+        <div>
+          <div style={footerHeading}>Tilmeld</div>
+          <div style={footerList}>
+            <a href="/kursuskalender" style={footerLink}>Se kursuskalender</a>
+            <a href="/booking" style={footerLink}>Tilmeld kursus</a>
+          </div>
         </div>
       </div>
 
