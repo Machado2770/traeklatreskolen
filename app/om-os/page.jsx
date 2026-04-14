@@ -17,8 +17,9 @@ const instructors = [
     role: "Træklatreinstruktør & stifter",
     image: "https://ighjiiafidndwvaowmdc.supabase.co/storage/v1/object/public/site-images/1776198006583-Martin.jpg",
     bio: [
-      "Martin er manden bag Træklatreskolen og har mange års erfaring med træklatring i Danmark. Han brænder for at give andre en tryg og lærerig oplevelse i trækronerne — uanset om det er første gang i et træ eller et kursus på højt niveau.",
-      "Med uddannelse som træklatreinstruktør efter Dansk Træklatreforenings normer og en dyb respekt for sikkerhed og naturen som læringsrum, er Martin garant for at alle aktiviteter gennemføres fagligt og forsvarligt.",
+      "Martin er natur- og friluftsvejleder med en passion for at bringe mennesker tættere på naturen, styrke fællesskaber og udvikle den enkeltes evner og selvtillid under kyndig vejledning. Med en master i friluftsliv og over 20 års erfaring spænder hans virke bredt — fra træklatring som vejleder og censor i Dansk Træklatreforening til uddannelse som Havkajakinstruktør II og Kanoinstruktør II.",
+      "Som sekretariatsleder i Dansk Vandrelaug og tidligere leder af Aktivt Udeliv i DGI Storkøbenhavn arbejder Martin strategisk og praktisk med friluftsliv: udvikling af faciliteter og aktiviteter, frivillighed, projektledelse og funding. Han er også stifter af CPH Outdoor, en af Danmarks største flerstrengede friluftsforeninger.",
+      "For Martin handler friluftsvejledning om mere end bare tekniske færdigheder — det er en rejse ind i naturen, hvor fællesskab og personlig udvikling får plads til at blomstre.",
     ],
   },
   {
