@@ -72,8 +72,8 @@ function CourseCard({ item }) {
           <a href={`/kurser/${item.slug}`} style={secondaryButton}>
             Læs mere
           </a>
-          <a href={item.bookingHref} style={primaryButton}>
-            Tilmeld
+          <a href="/kursuskalender" style={primaryButton}>
+            Kursuskalender
           </a>
         </div>
       </div>

@@ -110,8 +110,8 @@ export default function Home() {
                   <path d="M30 22c-1-1.5-2.5-2.5-4-2.5" stroke="#d8782f" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
                 </svg>
               ),
-              title: "For alle og enhver",
-              text: "Børn, voksne, skoler og institutioner — vi tilpasser til din gruppe",
+              title: "For grupper og enkeltpersoner",
+              text: "Voksne og grupper (firmaer) — vi tilpasser aktiviteten til din gruppe",
             },
             {
               icon: (

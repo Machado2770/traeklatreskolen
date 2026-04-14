@@ -81,6 +81,11 @@ export default async function KursuskalenderPage() {
               Her finder du kommende kurser og oplevelser. Tilmeld dig direkte —
               du modtager en bekræftelse med faktura.
             </p>
+            <p className="page-hero-text" style={{ marginTop: "14px", fontSize: "15px", opacity: 0.88 }}>
+              Finder du ikke dit kursus eller oplevelse i kursuskalenderen, så kontakt Træklatreskolen på{" "}
+              <a href="mailto:info@traeklatreskolen.dk" style={{ color: "inherit", textDecoration: "underline" }}>info@traeklatreskolen.dk</a>{" "}
+              med din forespørgsel.
+            </p>
           </div>
         </div>
       </section>
