@@ -321,7 +321,7 @@ const secondaryBtn = {
 const pillarBand = {
   background: "#162c1e",
   borderTop: "1px solid rgba(255,255,255,0.06)",
-  padding: "36px 24px",
+  padding: "22px 24px",
 };
 const pillarInner = {
   maxWidth: 1100,
