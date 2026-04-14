@@ -12,6 +12,7 @@ export default function KurserAdminPage() {
   const [msg,      setMsg]     = useState("");
   const [images,   setImages]  = useState([]);
   const [seeding,  setSeeding] = useState(false);
+  const [updating, setUpdating] = useState(false);
 
   async function load() {
     setLoading(true);
@@ -62,6 +63,17 @@ export default function KurserAdminPage() {
     load();
   }
 
+  async function updateTexts() {
+    if (!confirm("Opdater beskrivelser og bullet-punkter på alle kurser og oplevelser med de nyeste standardtekster? Priser, billeder og publiceringstatus bevares.")) return;
+    setUpdating(true);
+    const res  = await fetch("/api/seed-courses?force=true", { method:"POST" });
+    const json = await res.json();
+    setUpdating(false);
+    if (!res.ok) { flash("Fejl: " + (json.error || "Ukendt fejl")); return; }
+    flash(json.message || `${json.updated} kurser opdateret ✓`);
+    load();
+  }
+
   async function save() {
     if (!form.title) { flash("Titel er påkrævet."); return; }
     const slug = form.slug || form.title.toLowerCase().replace(/\s+/g,"-").replace(/[æ]/g,"ae").replace(/[ø]/g,"oe").replace(/[å]/g,"aa").replace(/[^a-z0-9-]/g,"");
@@ -99,9 +111,14 @@ export default function KurserAdminPage() {
           <h1 style={h1}>Kurser & tekst</h1>
           <p style={sub}>Rediger kursusbeskrivelser, priser og billeder. Ændringer vises øjeblikkeligt på hjemmesiden.</p>
         </div>
-        <button onClick={seedStandard} disabled={seeding} style={btn("#1f3a2b")}>
-          {seeding ? "Indlæser…" : "Indlæs standardkurser"}
-        </button>
+        <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
+          <button onClick={updateTexts} disabled={updating} style={btn("#3d7a57")}>
+            {updating ? "Opdaterer…" : "Opdater tekster fra standard"}
+          </button>
+          <button onClick={seedStandard} disabled={seeding} style={btn("#1f3a2b")}>
+            {seeding ? "Indlæser…" : "Indlæs standardkurser"}
+          </button>
+        </div>
       </div>
 
       {/* Formular */}

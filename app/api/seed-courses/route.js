@@ -37,10 +37,21 @@ const ALL = [
   })),
 ];
 
-export async function POST() {
+export async function POST(request) {
+  const { searchParams } = new URL(request.url);
+  const force = searchParams.get("force") === "true";
   const supabase = getSupabaseAdmin();
 
-  // Hent eksisterende slugs
+  if (force) {
+    // Opdater alle eksisterende kurser med tekster fra siteData
+    const { error } = await supabase
+      .from("courses_cms")
+      .upsert(ALL, { onConflict: "slug", ignoreDuplicates: false });
+    if (error) return Response.json({ error: error.message }, { status: 500 });
+    return Response.json({ ok: true, updated: ALL.length, message: `${ALL.length} kurser/oplevelser opdateret.` });
+  }
+
+  // Standard: indsæt kun nye (eksisterende overskrives ikke)
   const { data: existing } = await supabase
     .from("courses_cms")
     .select("slug");
