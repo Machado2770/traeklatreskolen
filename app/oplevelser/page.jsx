@@ -37,15 +37,15 @@ export default async function OplevelserPage() {
       <section style={section}>
         <div style={container}>
 
-          {/* Info-boks om booking */}
-          <div style={infoBanner}>
-            <span style={infoIcon}>ℹ️</span>
-            <div>
-              <strong>Sådan booker du en oplevelse:</strong> Oplevelserne slås op i{" "}
+          {/* Booking-intro */}
+          <div style={bookingIntro}>
+            <div style={bookingAccent} />
+            <p style={bookingText}>
+              <strong>Sådan booker du:</strong> Oplevelserne slås op i{" "}
               <a href="/kursuskalender" style={infoLink}>kursuskalenderen</a>, hvor du tilmelder dig enkeltvis.
               Aktiviteterne gennemføres, når minimumantallet er nået — for oplevelsestur og overnatning
-              er det min. 6 personer, for Den vilde klatretur min. 10 personer.
-            </div>
+              min. 6 personer, for Den vilde klatretur min. 10 personer.
+            </p>
           </div>
 
           <div style={grid}>
@@ -121,28 +121,29 @@ const container = {
   margin: "0 auto",
 };
 
-const infoBanner = {
-  display: "flex",
-  gap: 14,
-  alignItems: "flex-start",
-  background: "#f0f6f2",
-  border: "1px solid #c6ddd0",
-  borderRadius: 14,
-  padding: "18px 22px",
-  color: "#2d4034",
-  fontSize: 15,
-  lineHeight: 1.7,
-  marginBottom: 40,
+const bookingIntro = {
+  textAlign: "center",
+  maxWidth: 680,
+  margin: "0 auto 52px",
 };
 
-const infoIcon = {
-  fontSize: 20,
-  flexShrink: 0,
-  marginTop: 1,
+const bookingAccent = {
+  width: 40,
+  height: 3,
+  background: "#d8782f",
+  borderRadius: 4,
+  margin: "0 auto 18px",
+};
+
+const bookingText = {
+  fontSize: 16,
+  lineHeight: 1.75,
+  color: "#4b6355",
+  margin: 0,
 };
 
 const infoLink = {
-  color: "#1f6b40",
+  color: "#1f3a2b",
   fontWeight: 700,
   textDecoration: "underline",
 };
