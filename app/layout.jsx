@@ -88,6 +88,15 @@ function Footer() {
           <p style={footerText}>
             Kurser, faglighed og eventyrlige oplevelser i træernes verden.
           </p>
+          <div style={{ marginTop: 16 }}>
+            <a href="/admin" style={adminFooterBtn}>
+              <svg width="15" height="15" viewBox="0 0 20 20" fill="none" style={{ flexShrink: 0 }}>
+                <circle cx="10" cy="7" r="3.5" stroke="currentColor" strokeWidth="1.7"/>
+                <path d="M3 17c0-3.9 3.1-7 7-7s7 3.1 7 7" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/>
+              </svg>
+              Admin login
+            </a>
+          </div>
         </div>
 
         <div>
@@ -117,16 +126,6 @@ function Footer() {
           </div>
         </div>
 
-        <div>
-          <div style={footerHeading}>Admin</div>
-          <a href="/admin" style={adminFooterBtn}>
-            <svg width="15" height="15" viewBox="0 0 20 20" fill="none" style={{ flexShrink: 0 }}>
-              <circle cx="10" cy="7" r="3.5" stroke="currentColor" strokeWidth="1.7"/>
-              <path d="M3 17c0-3.9 3.1-7 7-7s7 3.1 7 7" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/>
-            </svg>
-            Admin login
-          </a>
-        </div>
       </div>
 
       <div
