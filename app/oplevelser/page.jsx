@@ -80,8 +80,8 @@ function ExperienceCard({ item }) {
           <a href={`/oplevelser/${item.slug}`} style={secondaryButton}>
             Læs mere
           </a>
-          <a href={item.bookingHref} style={primaryButton}>
-            Book / tilmeld
+          <a href="/kursuskalender" style={primaryButton}>
+            Kursuskalender
           </a>
         </div>
       </div>

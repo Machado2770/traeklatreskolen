@@ -58,7 +58,7 @@ export default async function OplevelseDetaljePage({ params }) {
           )}
 
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 24 }}>
-            <a href={item.bookingHref} style={ctaPrimary}>Book / tilmeld</a>
+            <a href="/kursuskalender" style={ctaPrimary}>Kursuskalender</a>
             <a href="/oplevelser" style={ctaSecondary}>Tilbage til oplevelser</a>
           </div>
         </div>
