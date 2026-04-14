@@ -116,31 +116,29 @@ function Footer() {
             <a href="/booking" style={footerLink}>Tilmeld kursus</a>
           </div>
         </div>
+
+        <div>
+          <div style={footerHeading}>Admin</div>
+          <a href="/admin" style={adminFooterBtn}>
+            <svg width="15" height="15" viewBox="0 0 20 20" fill="none" style={{ flexShrink: 0 }}>
+              <circle cx="10" cy="7" r="3.5" stroke="currentColor" strokeWidth="1.7"/>
+              <path d="M3 17c0-3.9 3.1-7 7-7s7 3.1 7 7" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/>
+            </svg>
+            Admin login
+          </a>
+        </div>
       </div>
 
       <div
         style={{
           borderTop: "1px solid rgba(255,255,255,0.12)",
           padding: "14px 24px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-          gap: 12,
-          maxWidth: 1180,
-          margin: "0 auto",
+          textAlign: "center",
+          fontSize: 13,
+          opacity: 0.8,
         }}
       >
-        <span style={{ fontSize: 13, opacity: 0.8 }}>
-          © Træklatreskolen · Natur · Faglighed · Oplevelser
-        </span>
-        <a href="/admin" style={adminFooterBtn}>
-          <svg width="15" height="15" viewBox="0 0 20 20" fill="none" style={{ flexShrink: 0 }}>
-            <circle cx="10" cy="7" r="3.5" stroke="currentColor" strokeWidth="1.7"/>
-            <path d="M3 17c0-3.9 3.1-7 7-7s7 3.1 7 7" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/>
-          </svg>
-          Admin
-        </a>
+        © Træklatreskolen · Natur · Faglighed · Oplevelser
       </div>
     </footer>
   );
