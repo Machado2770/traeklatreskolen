@@ -180,7 +180,7 @@ export default function Home() {
                     src={item.image}
                     alt={item.title}
                     fill
-                    style={{ objectFit: "cover" }}
+                    style={{ objectFit: "cover", filter: item.imageFilter }}
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
                 </div>

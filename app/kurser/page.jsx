@@ -58,7 +58,7 @@ function CourseCard({ item }) {
             src={item.image}
             alt={item.title}
             fill
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "cover", filter: item.imageFilter }}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>

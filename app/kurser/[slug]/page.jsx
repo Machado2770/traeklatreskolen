@@ -69,7 +69,7 @@ export default async function KursusDetaljePage({ params }) {
             alt={item.title}
             fill
             priority
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "cover", filter: item.imageFilter }}
             sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
