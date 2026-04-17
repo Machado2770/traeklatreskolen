@@ -38,7 +38,11 @@ export default async function KursusDetaljePage({ params }) {
           </div>
 
           <h1 style={h1}>{item.title}</h1>
-          <p style={lead}>{item.description}</p>
+          {item.descriptionHtml ? (
+            <p style={lead} dangerouslySetInnerHTML={{ __html: item.descriptionHtml }} />
+          ) : (
+            <p style={lead}>{item.description}</p>
+          )}
 
           <ul style={list}>
             {(item.bullets || []).map((bullet) => (
