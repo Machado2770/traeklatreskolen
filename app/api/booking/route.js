@@ -70,10 +70,16 @@ export async function POST(request) {
     const supabase     = getSupabaseAdmin();
     const courseString = body.course ?? "";
 
+    // ── Honeypot: bots udfylder dette felt, mennesker ikke ─
+    if (body.website?.trim()) return Response.json({ ok: true }, { status: 200 });
+
     // ── Valider påkrævede felter ────────────────────────
     if (!body.name?.trim())  return Response.json({ error: "Navn er påkrævet."    }, { status: 400 });
     if (!body.email?.trim()) return Response.json({ error: "Email er påkrævet."   }, { status: 400 });
     if (!body.phone?.trim()) return Response.json({ error: "Telefon er påkrævet." }, { status: 400 });
+
+    // ── Tjek at telefon indeholder cifre ────────────────
+    if (!/\d{4}/.test(body.phone)) return Response.json({ error: "Indtast venligst et gyldigt telefonnummer." }, { status: 400 });
 
     // ── Kapacitetstjek ──────────────────────────────────
     const matchedItem    = await findCalendarItem(supabase, courseString);

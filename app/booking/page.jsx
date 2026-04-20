@@ -21,6 +21,7 @@ export default function BookingPage() {
     phone: "",
     course: courseOptions[0],
     notes: "",
+    website: "", // honeypot — must stay empty
   });
   const [courseLabel, setCourseLabel] = useState(null); // vises når man kommer fra kalender
   const [status, setStatus] = useState("");
@@ -165,6 +166,19 @@ export default function BookingPage() {
               style={inputStyle}
             />
           </Field>
+
+          {/* Honeypot — skjult for mennesker, bots udfylder det */}
+          <div style={{ position: "absolute", left: "-9999px", top: "-9999px" }} aria-hidden="true">
+            <label>
+              Hjemmeside (udfyld ikke)
+              <input
+                tabIndex={-1}
+                autoComplete="off"
+                value={form.website}
+                onChange={(e) => setForm({ ...form, website: e.target.value })}
+              />
+            </label>
+          </div>
 
           <button type="submit" style={btnStyle}>Send tilmelding</button>
 
