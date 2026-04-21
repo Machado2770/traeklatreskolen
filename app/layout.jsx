@@ -1,7 +1,10 @@
 import Image from "next/image";
+import Script from "next/script";
 import "./globals.css";
 import Providers from "./providers";
 import Header from "./components/Header";
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 export const metadata = {
   metadataBase: new URL(
@@ -31,6 +34,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="da">
+      {GA_ID && <>
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+        <Script id="ga4-init" strategy="afterInteractive">{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${GA_ID}');
+        `}</Script>
+      </>}
       <body
         style={{
           margin: 0,

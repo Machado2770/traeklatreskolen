@@ -5,13 +5,14 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const NAV = [
-  { href: "/admin",            label: "Tilmeldinger" },
-  { href: "/admin/arkiv",      label: "Arkiv" },
-  { href: "/admin/kalender",   label: "Kursuskalender" },
-  { href: "/admin/kurser",     label: "Kurser & tekst" },
-  { href: "/admin/billeder",   label: "Billeder & Videoer" },
-  { href: "/admin/brugere",    label: "Admin-brugere" },
-  { href: "/admin/vejledning", label: "📖 Vejledning" },
+  { href: "/admin",              label: "Tilmeldinger" },
+  { href: "/admin/arkiv",        label: "Arkiv" },
+  { href: "/admin/kalender",     label: "Kursuskalender" },
+  { href: "/admin/kurser",       label: "Kurser & tekst" },
+  { href: "/admin/billeder",     label: "Billeder & Videoer" },
+  { href: "/admin/brugere",      label: "Admin-brugere" },
+  { href: "/admin/statistik",    label: "Statistik" },
+  { href: "/admin/vejledning",   label: "📖 Vejledning" },
 ];
 
 export default function AdminLayout({ children }) {

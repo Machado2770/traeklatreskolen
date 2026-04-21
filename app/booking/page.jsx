@@ -62,6 +62,7 @@ export default function BookingPage() {
     }
 
     setStatus("Tilmelding modtaget! Vi sender bekræftelse pr. email.");
+    window.gtag?.("event", "generate_lead", { event_category: "booking", event_label: form.course });
     setForm({ name: "", email: "", phone: "", course: courseOptions[0], notes: "" });
     setCourseLabel(null);
   }
