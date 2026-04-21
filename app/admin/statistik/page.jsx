@@ -28,6 +28,47 @@ export default function StatistikPage() {
         <p style={sub}>Overblik over tilmeldinger og aktivitet på Træklatreskolen.</p>
       </div>
 
+      {/* ── BESØGENDE (GA4) ── */}
+      <section style={{ ...card, borderLeft: "4px solid #2a7a48", marginBottom: 20 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12 }}>
+          <div>
+            <h2 style={h2}>Besøgende på hjemmesiden</h2>
+            <p style={{ fontSize: 14, color: "#4b6355", margin: "6px 0 0", lineHeight: 1.6 }}>
+              Trafikdata, sidevisninger og besøgskilder vises i Google Analytics.<br />
+              <span style={{ color: "#7a9183", fontSize: 13 }}>Tracking aktiv siden {new Date().toLocaleDateString("da-DK", { day: "numeric", month: "long", year: "numeric" })} · Målingsid: G-VWEV05S1BB</span>
+            </p>
+          </div>
+          <a
+            href="https://analytics.google.com/analytics/web/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={ga4Btn}
+          >
+            Åbn Google Analytics →
+          </a>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12, marginTop: 18 }}>
+          {[
+            { label: "Besøgende i dag",        hint: "Realtime → Oversigt" },
+            { label: "Sider pr. besøg",         hint: "Engagement → Sider" },
+            { label: "Trafikkilder",             hint: "Erhvervelse → Oversigt" },
+            { label: "Mest besøgte sider",       hint: "Engagement → Sider og skærme" },
+          ].map(({ label, hint }) => (
+            <a
+              key={label}
+              href="https://analytics.google.com/analytics/web/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={ga4Tile}
+            >
+              <span style={{ fontWeight: 700, fontSize: 13, color: "#1f3a2b" }}>{label}</span>
+              <span style={{ fontSize: 11, color: "#7a9183", marginTop: 2 }}>{hint}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+
       {/* ── KPI-KORT ── */}
       <div style={kpiGrid}>
         <KpiCard label="Tilmeldinger i alt"  value={data.total}      color="#1f3a2b" bg="#eef3ef" />
@@ -174,3 +215,5 @@ const card   = { background: "white", borderRadius: 14, padding: 22, boxShadow: 
 const kpiGrid = { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 14, marginBottom: 20 };
 const twoCol  = { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 20 };
 const badge  = { background: "#eef3ef", color: "#4b6355", fontSize: 11, fontWeight: 600, padding: "2px 8px", borderRadius: 999, marginLeft: 6 };
+const ga4Btn = { display: "inline-block", padding: "10px 18px", background: "#1f3a2b", color: "white", borderRadius: 10, textDecoration: "none", fontWeight: 700, fontSize: 14, whiteSpace: "nowrap" };
+const ga4Tile = { display: "flex", flexDirection: "column", background: "#eef3ef", borderRadius: 10, padding: "12px 14px", textDecoration: "none", gap: 2, transition: "background 0.15s" };
