@@ -6,6 +6,10 @@ import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import bcrypt from "bcryptjs";
 
 export async function GET() {
+  const session = await getServerSession(authOptions);
+  if (session?.user?.role !== "super")
+    return Response.json({ error: "Forbidden" }, { status: 403 });
+
   const supabase = getSupabaseAdmin();
   const { data, error } = await supabase
     .from("admins")

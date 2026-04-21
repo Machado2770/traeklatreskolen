@@ -1,5 +1,7 @@
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 
 export async function GET() {
@@ -14,6 +16,9 @@ export async function GET() {
 }
 
 export async function POST(request) {
+  const session = await getServerSession(authOptions);
+  if (!session) return Response.json({ error: "Unauthorized" }, { status: 401 });
+
   const body = await request.json();
   const supabase = getSupabaseAdmin();
 

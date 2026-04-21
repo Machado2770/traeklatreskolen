@@ -1,6 +1,8 @@
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { calendarItems as siteDataItems } from "@/lib/siteData";
 import { bookingConfirmationHtml, bookingNotificationHtml } from "@/lib/emailTemplates";
@@ -78,6 +80,19 @@ export async function POST(request) {
     if (!body.email?.trim()) return Response.json({ error: "Email er påkrævet."   }, { status: 400 });
     if (!body.phone?.trim()) return Response.json({ error: "Telefon er påkrævet." }, { status: 400 });
 
+    // ── CRLF-injection beskyttelse (email header injection) ─
+    const hasCrlf = (s) => /[\r\n]/.test(s ?? "");
+    if (hasCrlf(body.name) || hasCrlf(body.email) || hasCrlf(body.phone) || hasCrlf(body.notes))
+      return Response.json({ error: "Ugyldigt tegn i input." }, { status: 400 });
+
+    // ── Email format validering ──────────────────────────
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(body.email.trim()))
+      return Response.json({ error: "Indtast venligst en gyldig e-mailadresse." }, { status: 400 });
+
+    // ── Inputlængde-begrænsning ──────────────────────────
+    if (body.name.length > 120 || body.email.length > 200 || (body.notes ?? "").length > 1000)
+      return Response.json({ error: "Et eller flere felter er for lange." }, { status: 400 });
+
     // ── Tjek at telefon indeholder cifre ────────────────
     if (!/\d{4}/.test(body.phone)) return Response.json({ error: "Indtast venligst et gyldigt telefonnummer." }, { status: 400 });
 
@@ -146,6 +161,9 @@ export async function POST(request) {
 
 export async function GET(request) {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session) return Response.json({ error: "Unauthorized" }, { status: 401 });
+
     const supabase = getSupabaseAdmin();
     const { searchParams } = new URL(request.url);
 
@@ -159,18 +177,19 @@ export async function GET(request) {
     const payment_status = searchParams.get("payment_status");
     const limit          = searchParams.get("limit");
 
+    const VALID_STATUSES = ["paid", "pending", "cancelled"];
+
     if (q)              query = query.or(`name.ilike.%${q}%,email.ilike.%${q}%`);
     if (course)         query = query.ilike("course", `%${course}%`);
-    if (payment_status) query = query.eq("payment_status", payment_status);
+    if (payment_status && VALID_STATUSES.includes(payment_status))
+                        query = query.eq("payment_status", payment_status);
 
-    const { data, error } = await query.limit(limit ? parseInt(limit) : 200);
+    const limitVal = Math.min(Math.max(parseInt(limit) || 200, 1), 1000);
+    const { data, error } = await query.limit(limitVal);
 
-    if (error) return Response.json({ source: "supabase", error: error.message }, { status: 500 });
+    if (error) return Response.json({ error: "Kunne ikke hente tilmeldinger" }, { status: 500 });
     return Response.json({ ok: true, data });
-  } catch (err) {
-    return Response.json(
-      { source: "catch", error: err instanceof Error ? err.message : String(err) },
-      { status: 500 }
-    );
+  } catch {
+    return Response.json({ error: "Serverfejl" }, { status: 500 });
   }
 }

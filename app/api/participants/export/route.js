@@ -4,6 +4,8 @@ export const runtime  = "nodejs";
 import path from "path";
 import fs from "fs";
 import ExcelJS from "exceljs";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 
 // ── Farvepalette fra hjemmesiden ─────────────────────
@@ -34,6 +36,9 @@ function hex(color) {
 }
 
 export async function GET(request) {
+  const session = await getServerSession(authOptions);
+  if (!session) return Response.json({ error: "Unauthorized" }, { status: 401 });
+
   const { searchParams } = new URL(request.url);
   const courseFilter  = searchParams.get("course")         || "";
   const statusFilter  = searchParams.get("payment_status") || "";

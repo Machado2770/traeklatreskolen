@@ -1,6 +1,13 @@
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
+
+async function requireSession() {
+  const session = await getServerSession(authOptions);
+  return session ?? null;
+}
 
 function isColumnError(error) {
   const msg = error?.message ?? "";
@@ -8,6 +15,8 @@ function isColumnError(error) {
 }
 
 export async function PUT(request, { params }) {
+  if (!await requireSession()) return Response.json({ error: "Unauthorized" }, { status: 401 });
+
   const body     = await request.json();
   const supabase = getSupabaseAdmin();
 
@@ -45,6 +54,8 @@ export async function PUT(request, { params }) {
 }
 
 export async function PATCH(request, { params }) {
+  if (!await requireSession()) return Response.json({ error: "Unauthorized" }, { status: 401 });
+
   const body     = await request.json();
   const supabase = getSupabaseAdmin();
 
@@ -65,6 +76,8 @@ export async function PATCH(request, { params }) {
 }
 
 export async function DELETE(request, { params }) {
+  if (!await requireSession()) return Response.json({ error: "Unauthorized" }, { status: 401 });
+
   const supabase = getSupabaseAdmin();
 
   const { data: course } = await supabase
