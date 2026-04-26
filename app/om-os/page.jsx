@@ -13,7 +13,7 @@ export const metadata = {
 
 const instructors = [
   {
-    name: "Martin",
+    name: "Martin Machado",
     role: "Træklatreinstruktør & stifter",
     image: "https://ighjiiafidndwvaowmdc.supabase.co/storage/v1/object/public/site-images/1776198006583-Martin.jpg",
     imagePosition: "top",
