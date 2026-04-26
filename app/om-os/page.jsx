@@ -16,7 +16,8 @@ const instructors = [
     name: "Martin",
     role: "Træklatreinstruktør & stifter",
     image: "https://ighjiiafidndwvaowmdc.supabase.co/storage/v1/object/public/site-images/1776198006583-Martin.jpg",
-    imagePosition: "top",
+    imagePosition: "center 22%",
+    imageScale: 1.8,
     bio: [
       "Martin er natur- og friluftsvejleder med en passion for at bringe mennesker tættere på naturen, styrke fællesskaber og udvikle den enkeltes evner og selvtillid under kyndig vejledning. Med en master i friluftsliv og over 20 års erfaring spænder hans virke bredt — fra træklatring som vejleder og censor i Dansk Træklatreforening til uddannelse som Havkajakinstruktør II og Kanoinstruktør II.",
       "For Martin handler friluftsvejledning om mere end bare tekniske færdigheder — det er en rejse ind i naturen, hvor fællesskab og personlig udvikling får plads til at blomstre.",
@@ -80,6 +81,8 @@ export default function OmOsPage() {
                       style={{
                         objectFit: "cover",
                         objectPosition: person.imagePosition || "center",
+                        transform: person.imageScale ? `scale(${person.imageScale})` : undefined,
+                        transformOrigin: "center 22%",
                         filter: "brightness(0.92) contrast(1.08) saturate(0.82)",
                       }}
                       sizes="(max-width: 768px) 100vw, 50vw"
