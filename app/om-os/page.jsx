@@ -16,8 +16,7 @@ const instructors = [
     name: "Martin",
     role: "Træklatreinstruktør & stifter",
     image: "https://ighjiiafidndwvaowmdc.supabase.co/storage/v1/object/public/site-images/1776198006583-Martin.jpg",
-    imagePosition: "center 22%",
-    imageScale: 1.8,
+    imagePosition: "top",
     bio: [
       "Martin er natur- og friluftsvejleder med en passion for at bringe mennesker tættere på naturen, styrke fællesskaber og udvikle den enkeltes evner og selvtillid under kyndig vejledning. Med en master i friluftsliv og over 20 års erfaring spænder hans virke bredt — fra træklatring som vejleder og censor i Dansk Træklatreforening til uddannelse som Havkajakinstruktør II og Kanoinstruktør II.",
       "For Martin handler friluftsvejledning om mere end bare tekniske færdigheder — det er en rejse ind i naturen, hvor fællesskab og personlig udvikling får plads til at blomstre.",
@@ -28,6 +27,7 @@ const instructors = [
     role: "Træklatreinstruktør",
     image: "https://ighjiiafidndwvaowmdc.supabase.co/storage/v1/object/public/site-images/1777183039684-Lykke.jpeg",
     imagePosition: "center",
+    imageFit: "contain",
     bio: [
       "Lykke er uddannet træklatreinstruktør og en vigtig del af holdet bag Træklatreskolen. Hun har en særlig evne til at skabe trygge rammer for deltagerne — særligt for dem der møder træklatring for første gang.",
       "Lykkes tilgang kombinerer faglig sikkerhed med omsorg for den enkelte deltager, og hun bidrager til at Træklatreskolen kan tilbyde oplevelser og kurser af høj kvalitet for både grupper og enkeltpersoner.",
@@ -72,17 +72,15 @@ export default function OmOsPage() {
           <div style={teamGrid}>
             {instructors.map((person) => (
               <div key={person.name} style={card}>
-                <div style={imageWrap}>
+                <div style={{ ...imageWrap, background: person.imageFit === "contain" ? "#dce8e0" : undefined }}>
                   {person.image ? (
                     <Image
                       src={person.image}
                       alt={person.name}
                       fill
                       style={{
-                        objectFit: "cover",
+                        objectFit: person.imageFit || "cover",
                         objectPosition: person.imagePosition || "center",
-                        transform: person.imageScale ? `scale(${person.imageScale})` : undefined,
-                        transformOrigin: "center 22%",
                         filter: "brightness(0.92) contrast(1.08) saturate(0.82)",
                       }}
                       sizes="(max-width: 768px) 100vw, 50vw"
