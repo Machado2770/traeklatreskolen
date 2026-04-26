@@ -7,7 +7,12 @@
       "Bash(curl:*)",
       "Bash(rm -rf .next)",
       "Bash(npm run:*)",
-      "WebFetch(domain:www.youtube.com)"
+      "WebFetch(domain:www.youtube.com)",
+      "Bash(vercel --prod)",
+      "Bash(grep -E '\\\\.jsx$')",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(git add *)"
     ]
   }
 }

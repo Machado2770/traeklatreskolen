@@ -24,7 +24,7 @@ const instructors = [
   {
     name: "Lykke Theill-Larsen",
     role: "Træklatreinstruktør",
-    image: null, // Billede tilføjes
+    image: "https://ighjiiafidndwvaowmdc.supabase.co/storage/v1/object/public/site-images/1777183039684-Lykke.jpeg",
     bio: [
       "Lykke er uddannet træklatreinstruktør og en vigtig del af holdet bag Træklatreskolen. Hun har en særlig evne til at skabe trygge rammer for deltagerne — særligt for dem der møder træklatring for første gang.",
       "Lykkes tilgang kombinerer faglig sikkerhed med omsorg for den enkelte deltager, og hun bidrager til at Træklatreskolen kan tilbyde oplevelser og kurser af høj kvalitet for både grupper og enkeltpersoner.",
@@ -75,7 +75,7 @@ export default function OmOsPage() {
                       src={person.image}
                       alt={person.name}
                       fill
-                      style={{ objectFit: "cover", objectPosition: "top" }}
+                      style={{ objectFit: "cover", objectPosition: "top", filter: "brightness(0.97) contrast(1.04) saturate(0.88)" }}
                       sizes="(max-width: 768px) 100vw, 50vw"
                     />
                   ) : (
