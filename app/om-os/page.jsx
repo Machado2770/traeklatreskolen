@@ -25,9 +25,8 @@ const instructors = [
   {
     name: "Lykke Theill-Larsen",
     role: "Træklatreinstruktør",
-    image: "https://ighjiiafidndwvaowmdc.supabase.co/storage/v1/object/public/site-images/1777183039684-Lykke.jpeg",
-    imagePosition: "center",
-    imageFit: "contain",
+    image: "https://ighjiiafidndwvaowmdc.supabase.co/storage/v1/object/public/site-images/1777220993429-Lykke.jpg",
+    imagePosition: "top",
     bio: [
       "Lykke er uddannet træklatreinstruktør og en vigtig del af holdet bag Træklatreskolen. Hun har en særlig evne til at skabe trygge rammer for deltagerne — særligt for dem der møder træklatring for første gang.",
       "Lykkes tilgang kombinerer faglig sikkerhed med omsorg for den enkelte deltager, og hun bidrager til at Træklatreskolen kan tilbyde oplevelser og kurser af høj kvalitet for både grupper og enkeltpersoner.",
