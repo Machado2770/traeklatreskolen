@@ -72,7 +72,14 @@ export default function OmOsPage() {
           <div style={teamGrid}>
             {instructors.map((person) => (
               <div key={person.name} style={card}>
-                <div style={{ ...imageWrap, background: person.imageFit === "contain" ? "#dce8e0" : undefined }}>
+                <div style={{
+                  ...imageWrap,
+                  backgroundImage: person.imageFit === "contain"
+                    ? "url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80')"
+                    : undefined,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}>
                   {person.image ? (
                     <Image
                       src={person.image}
