@@ -3,6 +3,21 @@ import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 
 export const dynamic = "force-dynamic";
 
+const MONTHS = {
+  januar: 0, februar: 1, marts: 2, april: 3, maj: 4, juni: 5,
+  juli: 6, august: 7, september: 8, oktober: 9, november: 10, december: 11,
+};
+
+function parseFirstDate(str) {
+  if (!str) return Number.POSITIVE_INFINITY;
+  const lower = str.toLowerCase();
+  const day = lower.match(/(\d+)\./);
+  const month = lower.match(/januar|februar|marts|april|maj|juni|juli|august|september|oktober|november|december/);
+  const years = lower.match(/\d{4}/g);
+  if (!day || !month || !years) return Number.POSITIVE_INFINITY;
+  return new Date(+years[years.length - 1], MONTHS[month[0]], +day[1]).getTime();
+}
+
 function normalize(item) {
   return {
     id:              item.id,
@@ -25,8 +40,7 @@ async function getCalendarItems() {
       supabase
         .from("calendar_items")
         .select("*")
-        .eq("is_published", true)
-        .order("date", { ascending: true }),
+        .eq("is_published", true),
       supabase
         .from("courses_cms")
         .select("title, price"),
@@ -43,10 +57,12 @@ async function getCalendarItems() {
       if (c.price) priceMap[c.title] = c.price;
     }
 
-    return (calRes.data || []).map(item => normalize({
-      ...item,
-      price: item.price || priceMap[item.title] || "",
-    }));
+    return (calRes.data || [])
+      .map(item => normalize({
+        ...item,
+        price: item.price || priceMap[item.title] || "",
+      }))
+      .sort((a, b) => parseFirstDate(a.date) - parseFirstDate(b.date));
   } catch (e) {
     console.error("[kursuskalender] Fetch exception:", e?.message ?? e);
     return [];
