@@ -27,9 +27,9 @@ export const metadata = {
     url: SITE_URL,
     images: [
       {
-        url: "/images/hero-forest.jpg",
-        width: 1600,
-        height: 900,
+        url: "/og/forside.png",
+        width: 1200,
+        height: 630,
         alt: "Træklatreskolen — kurser og oplevelser i trækronerne",
       },
     ],

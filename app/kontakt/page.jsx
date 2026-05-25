@@ -9,6 +9,7 @@ export const metadata = {
     title: "Kontakt | Træklatreskolen",
     description: "Spørgsmål om kurser, oplevelser eller booking? Tag fat i Træklatreskolen.",
     url: "/kontakt",
+    images: [{ url: "/og/kontakt.png", width: 1200, height: 630, alt: "Kontakt Træklatreskolen" }],
   },
 };
 

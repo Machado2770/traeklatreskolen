@@ -12,6 +12,7 @@ export const metadata = {
     title: "Oplevelser i trækronerne | Træklatreskolen",
     description: "Uforglemmelige naturoplevelser i trækronerne for voksne og grupper.",
     url: "/oplevelser",
+    images: [{ url: "/og/oplevelser.png", width: 1200, height: 630, alt: "Oplevelser i trækronerne — Træklatreskolen" }],
   },
 };
 

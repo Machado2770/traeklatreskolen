@@ -9,6 +9,7 @@ export const metadata = {
     title: "Om os | Træklatreskolen",
     description: "Mød folkene bag Træklatreskolen.",
     url: "/om-os",
+    images: [{ url: "/og/om-os.png", width: 1200, height: 630, alt: "Om Træklatreskolen" }],
   },
 };
 

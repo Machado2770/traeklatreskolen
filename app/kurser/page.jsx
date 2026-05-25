@@ -13,6 +13,7 @@ export const metadata = {
     title: "Kurser i træklatring | Træklatreskolen",
     description: "Professionelle træklatrekurser for alle niveauer i hele Danmark.",
     url: "/kurser",
+    images: [{ url: "/og/kurser.png", width: 1200, height: 630, alt: "Kurser i træklatring — Træklatreskolen" }],
   },
 };
 

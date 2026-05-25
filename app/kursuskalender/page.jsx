@@ -13,6 +13,7 @@ export const metadata = {
     title: "Kursuskalender | Træklatreskolen",
     description: "Kommende kurser og oplevelser i trækronerne — find en dato nær dig.",
     url: "/kursuskalender",
+    images: [{ url: "/og/kursuskalender.png", width: 1200, height: 630, alt: "Kursuskalender — Træklatreskolen" }],
   },
 };
 
