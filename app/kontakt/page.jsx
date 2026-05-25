@@ -1,3 +1,5 @@
+import { CONTACT_PHONE, CONTACT_PHONE_DISPLAY } from "@/lib/siteConfig";
+
 export const metadata = {
   title: "Kontakt",
   description:
@@ -41,6 +43,15 @@ export default function KontaktPage() {
             <div style={value}>
               <a href="mailto:info@traeklatreskolen.dk" style={{ color: "#1f2f25", textDecoration: "none", borderBottom: "1px solid #3d7a57" }}>
                 info@traeklatreskolen.dk
+              </a>
+            </div>
+          </div>
+
+          <div style={infoBlock}>
+            <div style={label}>Telefon</div>
+            <div style={value}>
+              <a href={`tel:${CONTACT_PHONE}`} style={{ color: "#1f2f25", textDecoration: "none", borderBottom: "1px solid #3d7a57" }}>
+                {CONTACT_PHONE_DISPLAY}
               </a>
             </div>
           </div>
