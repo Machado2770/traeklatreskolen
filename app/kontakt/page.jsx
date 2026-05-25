@@ -1,3 +1,15 @@
+export const metadata = {
+  title: "Kontakt",
+  description:
+    "Kontakt Træklatreskolen om kurser, oplevelser, booking og niveau. Skriv til info@traeklatreskolen.dk — vi hjælper dig godt på vej op i trækronerne.",
+  alternates: { canonical: "/kontakt" },
+  openGraph: {
+    title: "Kontakt | Træklatreskolen",
+    description: "Spørgsmål om kurser, oplevelser eller booking? Tag fat i Træklatreskolen.",
+    url: "/kontakt",
+  },
+};
+
 export default function KontaktPage() {
   return (
     <main>

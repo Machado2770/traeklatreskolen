@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 import Image from "next/image";
 import { getCourseBySlug, getCourses } from "@/lib/getCourses";
 import { notFound } from "next/navigation";
+import { graph, courseLd, breadcrumbLd, jsonLdScript } from "@/lib/jsonld";
 
 export async function generateMetadata({ params }) {
   const item = await getCourseBySlug(params.slug);
@@ -10,6 +11,7 @@ export async function generateMetadata({ params }) {
   return {
     title: item.title,
     description: item.description,
+    alternates: { canonical: `/kurser/${item.slug}` },
     openGraph: {
       title: `${item.title} | Træklatreskolen`,
       description: item.description,
@@ -26,8 +28,19 @@ export default async function KursusDetaljePage({ params }) {
     notFound();
   }
 
+  const path = `/kurser/${item.slug}`;
+  const jsonLd = graph(
+    courseLd(item, path),
+    breadcrumbLd([
+      { name: "Forside", path: "/" },
+      { name: "Kurser", path: "/kurser" },
+      { name: item.title, path },
+    ])
+  );
+
   return (
     <main style={page}>
+      <script {...jsonLdScript(jsonLd)} />
       {/* Use only className — CSS media query handles responsive layout */}
       <div className="detail-grid">
         <div>

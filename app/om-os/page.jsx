@@ -4,6 +4,7 @@ export const metadata = {
   title: "Om os | Træklatreskolen",
   description:
     "Mød underviserne bag Træklatreskolen — erfarne instruktører med passion for træklatring, naturdannelse og sikkerhed.",
+  alternates: { canonical: "/om-os" },
   openGraph: {
     title: "Om os | Træklatreskolen",
     description: "Mød folkene bag Træklatreskolen.",

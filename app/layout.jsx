@@ -3,29 +3,36 @@ import Script from "next/script";
 import "./globals.css";
 import Providers from "./providers";
 import Header from "./components/Header";
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from "@/lib/siteConfig";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 export const metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://traeklatreskolen.vercel.app"
-  ),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Træklatreskolen – Kurser og oplevelser i træklatring",
     template: "%s | Træklatreskolen",
   },
-  description:
-    "Træklatreskolen tilbyder professionelle kurser og oplevelser i træklatring i hele Danmark. Begynderkurser, instruktøruddannelse, overnatning i trækronerne og skovoplevelser for private, skoler og institutioner.",
+  description: SITE_DESCRIPTION,
   keywords: [
     "træklatring", "træklatreskole", "træklatrekursus", "træklatreinstruktør",
     "begynderkursus træklatring", "naturoplevelse", "skovoplevelse",
     "overnatning trækroner", "udendørs kursus Danmark",
   ],
+  alternates: { canonical: "/" },
   openGraph: {
-    siteName: "Træklatreskolen",
+    siteName: SITE_NAME,
     locale: "da_DK",
     type: "website",
-    images: [{ url: "/images/hero-forest.jpg", width: 1600, height: 900 }],
+    url: SITE_URL,
+    images: [
+      {
+        url: "/images/hero-forest.jpg",
+        width: 1600,
+        height: 900,
+        alt: "Træklatreskolen — kurser og oplevelser i trækronerne",
+      },
+    ],
   },
   twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },

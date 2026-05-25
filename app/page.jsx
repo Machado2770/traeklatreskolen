@@ -1,10 +1,19 @@
 import Image from "next/image";
 import { courses, experiences } from "@/lib/siteData";
+import {
+  graph,
+  organizationLd,
+  websiteLd,
+  localBusinessLd,
+  faqLd,
+  jsonLdScript,
+} from "@/lib/jsonld";
 
 export const metadata = {
   title: "Træklatreskolen – Kurser og oplevelser i træklatring",
   description:
     "Oplev skoven fra nye højder. Træklatreskolen tilbyder begynderkurser, instruktøruddannelse og naturoplevelser i trækronerne for private, skoler og institutioner i hele Danmark.",
+  alternates: { canonical: "/" },
   openGraph: {
     title: "Træklatreskolen – Kurser og oplevelser i træklatring",
     description:
@@ -13,37 +22,41 @@ export const metadata = {
   },
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "@id": "https://traeklatreskolen.vercel.app/#org",
-      name: "Træklatreskolen",
-      url: "https://traeklatreskolen.vercel.app",
-      logo: "https://traeklatreskolen.vercel.app/logo/logo-main.png",
-      email: "info@traeklatreskolen.dk",
-      description:
-        "Træklatreskolen tilbyder professionelle kurser og naturoplevelser i træklatring i Danmark.",
-      areaServed: "DK",
-      sameAs: [],
-    },
-    {
-      "@type": "LocalBusiness",
-      "@id": "https://traeklatreskolen.vercel.app/#business",
-      name: "Træklatreskolen",
-      description:
-        "Kurser og oplevelser i træklatring — begyndere, instruktører og oplevelsesture i trækronerne.",
-      email: "info@traeklatreskolen.dk",
-      areaServed: [
-        { "@type": "AdministrativeArea", name: "Sjælland" },
-        { "@type": "AdministrativeArea", name: "Fyn" },
-        { "@type": "AdministrativeArea", name: "Jylland" },
-      ],
-      priceRange: "500–4000 kr.",
-    },
-  ],
-};
+// Ofte stillede spørgsmål — vises på siden OG som FAQPage-schema, så Google
+// og AI-tjenester (ChatGPT, Perplexity m.fl.) kan citere svarene direkte.
+const faqs = [
+  {
+    q: "Hvad koster et træklatrekursus?",
+    a: "Begynderkursus og brush-up koster 1.900 kr., avanceret træklatring 2.900 kr. og træklatreinstruktøruddannelsen 4.400 kr. Oplevelsesture starter ved 650 kr. pr. person.",
+  },
+  {
+    q: "Skal jeg have erfaring for at deltage?",
+    a: "Nej. Begynderkurset kræver ingen forudsætninger og starter helt fra bunden med udstyr, sikkerhed og grundteknik. Brush-up, avanceret og instruktør forudsætter erfaring.",
+  },
+  {
+    q: "Hvor afholdes kurserne?",
+    a: "Træklatreskolen afholder kurser og oplevelser i hele Danmark — på Sjælland, Fyn og i Jylland. Se aktuelle datoer og steder i kursuskalenderen.",
+  },
+  {
+    q: "Er træklatring sikkert?",
+    a: "Ja. Al klatring foregår med professionelt sikkerhedsudstyr og efter Dansk Træklatreforenings normer, og aktiviteterne er erhvervsforsikrede. Sikkerhed gennemgås altid grundigt inden klatring.",
+  },
+  {
+    q: "Hvor lang tid varer et kursus?",
+    a: "Et begynder- eller brush-up-kursus varer 2 dage, avanceret 3 dage og instruktøruddannelsen 4 dage. Oplevelsesture varer typisk omkring 3 timer.",
+  },
+  {
+    q: "Kan I lave forløb for skoler, institutioner og firmaer?",
+    a: "Ja. Vi tilbyder oplevelsesture og teamdage for grupper, skoler og institutioner. Kontakt os på info@traeklatreskolen.dk for et tilbud.",
+  },
+];
+
+const jsonLd = graph(
+  organizationLd(),
+  websiteLd(),
+  localBusinessLd(),
+  faqLd(faqs)
+);
 
 export default function Home() {
   const featuredCourses = courses.slice(0, 3);
@@ -51,17 +64,14 @@ export default function Home() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <script {...jsonLdScript(jsonLd)} />
     <main>
 
       {/* HERO */}
       <section className="page-hero home-hero" style={{ position: "relative" }}>
         <Image
           src="/images/hero-forest.jpg"
-          alt="Skov"
+          alt="Solbeskinnet skov set nedefra mod trækronerne — Træklatreskolen"
           fill
           priority
           style={{ objectFit: "cover", objectPosition: "center" }}
@@ -260,6 +270,21 @@ export default function Home() {
               style={{ objectFit: "cover" }}
               sizes="(max-width: 768px) 100vw, 50vw"
             />
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ — ofte stillede spørgsmål (matcher FAQPage-schema) */}
+      <section style={faqSection}>
+        <div style={faqInner}>
+          <h2 style={faqHeading}>Ofte stillede spørgsmål</h2>
+          <div style={faqGrid}>
+            {faqs.map((item) => (
+              <details key={item.q} style={faqCard}>
+                <summary style={faqQuestion}>{item.q}</summary>
+                <p style={faqAnswer}>{item.a}</p>
+              </details>
+            ))}
           </div>
         </div>
       </section>
@@ -516,6 +541,45 @@ const safetyItem = {
 };
 
 /* CTA */
+const faqSection = {
+  background: "#f5f7f6",
+  padding: "72px 24px",
+};
+const faqInner = {
+  maxWidth: 820,
+  margin: "0 auto",
+};
+const faqHeading = {
+  fontSize: "clamp(24px, 4vw, 38px)",
+  fontWeight: 800,
+  color: "#1f3a2b",
+  textAlign: "center",
+  margin: "0 0 32px",
+};
+const faqGrid = {
+  display: "flex",
+  flexDirection: "column",
+  gap: 12,
+};
+const faqCard = {
+  background: "white",
+  borderRadius: 12,
+  padding: "18px 22px",
+  boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
+};
+const faqQuestion = {
+  fontWeight: 700,
+  fontSize: 17,
+  color: "#1f3a2b",
+  cursor: "pointer",
+  listStyle: "none",
+};
+const faqAnswer = {
+  margin: "12px 0 0",
+  lineHeight: 1.65,
+  color: "#3a4a40",
+};
+
 const ctaSection = {
   background: "#d8782f",
   padding: "80px 24px",

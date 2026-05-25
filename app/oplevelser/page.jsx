@@ -7,6 +7,7 @@ export const metadata = {
   title: "Oplevelser i trækronerne",
   description:
     "Book en naturoplevelse med Træklatreskolen — oplevelsestur i trækronerne, overnatning i hængekøje og den vilde klatretur. For grupper og enkeltpersoner.",
+  alternates: { canonical: "/oplevelser" },
   openGraph: {
     title: "Oplevelser i trækronerne | Træklatreskolen",
     description: "Uforglemmelige naturoplevelser i trækronerne for voksne og grupper.",

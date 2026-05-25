@@ -1,6 +1,5 @@
 import { courses, experiences } from "@/lib/siteData";
-
-const BASE = process.env.NEXT_PUBLIC_SITE_URL || "https://traeklatreskolen.vercel.app";
+import { SITE_URL as BASE } from "@/lib/siteConfig";
 
 export default function sitemap() {
   const staticPages = [

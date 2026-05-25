@@ -1,7 +1,20 @@
 import { unstable_noStore as noStore } from "next/cache";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
+import { graph, eventLd, jsonLdScript } from "@/lib/jsonld";
 
 export const dynamic = "force-dynamic";
+
+export const metadata = {
+  title: "Kursuskalender — kommende træklatrekurser og oplevelser",
+  description:
+    "Se kommende datoer for træklatrekurser og naturoplevelser i hele Danmark. Tilmeld dig direkte og få en bekræftelse med faktura.",
+  alternates: { canonical: "/kursuskalender" },
+  openGraph: {
+    title: "Kursuskalender | Træklatreskolen",
+    description: "Kommende kurser og oplevelser i trækronerne — find en dato nær dig.",
+    url: "/kursuskalender",
+  },
+};
 
 const MONTHS = {
   januar: 0, februar: 1, marts: 2, april: 3, maj: 4, juni: 5,
@@ -16,6 +29,16 @@ function parseFirstDate(str) {
   const years = lower.match(/\d{4}/g);
   if (!day || !month || !years) return Number.POSITIVE_INFINITY;
   return new Date(+years[years.length - 1], MONTHS[month[0]], +day[1]).getTime();
+}
+
+// "12. maj 2026" -> "2026-05-12" (uden tidszone-forskydning)
+function isoDate(str) {
+  const ts = parseFirstDate(str);
+  if (!isFinite(ts)) return null;
+  const d = new Date(ts);
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${d.getFullYear()}-${m}-${day}`;
 }
 
 function normalize(item) {
@@ -85,8 +108,22 @@ export default async function KursuskalenderPage() {
     }
   } catch { /* tom countMap som fallback */ }
 
+  const eventsLd = items.length
+    ? graph(
+        items.map((item) =>
+          eventLd({
+            title: item.title,
+            startDate: isoDate(item.date),
+            place: item.place,
+            href: item.href,
+          })
+        )
+      )
+    : null;
+
   return (
     <main>
+      {eventsLd && <script {...jsonLdScript(eventsLd)} />}
       {/* Hero — fuld bredde */}
       <section className="page-hero" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1800&q=80')" }}>
         <div className="page-hero-overlay">
