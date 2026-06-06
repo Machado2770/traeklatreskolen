@@ -30,7 +30,7 @@ const audience = [
 
 const included = [
   "Begynderforløb i træklatring",
-  "Instruktøruddannelse",
+  "Instruktøruddannelse i træklatring (norm i Danmark)",
   "Arbejde med faste sikkerhedsprocedurer (SOP) — nedskrevne arbejdsgange for sikker gennemførelse",
   "Risikovurderingsskabelon",
   "Praktisk træning i instruktion og gennemførelse",
