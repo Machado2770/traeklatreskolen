@@ -82,7 +82,7 @@ export default async function KurserPage() {
                   style={{ objectFit: "cover" }}
                   sizes="(max-width: 900px) 100vw, 45vw"
                 />
-                <span style={spotBadge}>Årskursus</span>
+                <span style={spotBadge}>Start i foråret hvert år</span>
               </div>
 
               <div style={spotBody}>
