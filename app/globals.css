@@ -204,6 +204,19 @@
   min-height: 420px;
 }
 
+/* ── SPOTKURSUS (Årskursus) ──────────────── */
+.spot-card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) 1.15fr;
+}
+.spot-image {
+  min-height: 100%;
+}
+@media (max-width: 900px) {
+  .spot-card { grid-template-columns: 1fr; }
+  .spot-image { min-height: 280px; }
+}
+
 /* ── DETAIL PAGES ────────────────────────── */
 .detail-grid {
   display: grid;

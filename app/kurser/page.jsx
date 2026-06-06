@@ -17,6 +17,23 @@ export const metadata = {
   },
 };
 
+const aarskursusPoints = [
+  "100 lektioner med regelmæssig selvtræning",
+  "Teoretisk højt grundlag med inddragelse af relevant friluftsteori",
+  "Mange forskellige klatreteknikker",
+  "Eksamination til træklatreinstruktør efter Dansk Træklatreforenings norm",
+  "Avanceret niveau: avancerede rebbaner, kæmpegynger, traverser, sikker opsætning og risikovurdering",
+  "Pædagogik, metodik og undervisningsdidaktik",
+  "Skoven som biotop — naturen som læringsrum",
+  "2 × friluftsture med friluftsliv som en stor del af forløbet",
+  "Løbende inddragelse af ny viden — teknikker, undervisningsmetodik og natursyn",
+  "Overnatning i trækronerne",
+  "8 timers førstehjælp inkluderet",
+  "Naturdannelse i centrum gennem hele året",
+  "Personlig vejledning og løbende feedback på din udvikling",
+  "Sikkerhed og ansvar som en gennemgående del af forløbet",
+];
+
 export default async function KurserPage() {
   const courses = await getCourses();
   return (
@@ -42,6 +59,61 @@ export default async function KurserPage() {
             {courses.map((item) => (
               <CourseCard key={item.slug} item={item} />
             ))}
+          </div>
+
+          {/* SPOTKURSUS — Årskursus */}
+          <div style={spotWrap}>
+            <div style={spotHeaderRow}>
+              <span style={spotKicker}>Spotkursus</span>
+              <h2 style={spotHeading}>Årskursus — fordybelse i træklatring</h2>
+              <p style={spotSubheading}>
+                Et helt års fordybelse for dig, der vil hele vejen rundt om
+                træklatring — fagligt, praktisk og personligt. Kører én gang
+                årligt med opstart i maj.
+              </p>
+            </div>
+
+            <div style={spotCard} className="spot-card">
+              <div style={{ position: "relative" }} className="spot-image">
+                <Image
+                  src="/images/rebklatring.jpg"
+                  alt="Årskursus i træklatring — fordybelse over et helt år"
+                  fill
+                  style={{ objectFit: "cover" }}
+                  sizes="(max-width: 900px) 100vw, 45vw"
+                />
+                <span style={spotBadge}>Årskursus</span>
+              </div>
+
+              <div style={spotBody}>
+                <div style={tagRow}>
+                  <span style={priceTag}>16.995 kr.</span>
+                  <span style={levelTag}>Avanceret niveau</span>
+                  <span style={durationTag}>⏱ 100 lektioner</span>
+                  <span style={seasonTag}>📅 1 gang årligt · start maj</span>
+                </div>
+
+                <p style={spotLead}>
+                  Årskurset er et samlet forløb, hvor du arbejder i dybden med
+                  teknik, sikkerhed, undervisning og friluftsliv — og afslutter med
+                  eksamination til træklatreinstruktør efter Dansk
+                  Træklatreforenings norm.
+                </p>
+
+                <ul style={spotList}>
+                  {aarskursusPoints.map((p) => (
+                    <li key={p} style={spotItem}>
+                      <span style={spotCheck}>✓</span>{p}
+                    </li>
+                  ))}
+                </ul>
+
+                <div style={spotActions}>
+                  <a href="/kontakt" style={primaryButton}>Skriv til os om årskurset</a>
+                  <a href="/kursuskalender" style={secondaryButton}>Se kursuskalender</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -214,4 +286,120 @@ const secondaryButton = {
   fontWeight: 700,
   fontSize: 14,
   textAlign: "center",
+};
+
+/* ── SPOTKURSUS — Årskursus ── */
+const spotWrap = {
+  marginTop: 56,
+};
+
+const spotHeaderRow = {
+  textAlign: "center",
+  maxWidth: 760,
+  margin: "0 auto 28px",
+};
+
+const spotKicker = {
+  display: "inline-block",
+  background: "#d8782f",
+  color: "white",
+  fontSize: 12,
+  fontWeight: 800,
+  letterSpacing: 1.5,
+  textTransform: "uppercase",
+  padding: "5px 12px",
+  borderRadius: 999,
+  marginBottom: 14,
+};
+
+const spotHeading = {
+  fontSize: "clamp(26px, 3.5vw, 38px)",
+  fontWeight: 800,
+  color: "#1f3a2b",
+  margin: "0 0 12px",
+  lineHeight: 1.2,
+};
+
+const spotSubheading = {
+  fontSize: 17,
+  lineHeight: 1.7,
+  color: "#4b6355",
+  margin: 0,
+};
+
+const spotCard = {
+  background: "white",
+  borderRadius: 22,
+  overflow: "hidden",
+  boxShadow: "0 16px 48px rgba(0,0,0,0.12)",
+  border: "2px solid #f0d9c4",
+};
+
+const spotBody = {
+  padding: "34px 36px 36px",
+};
+
+const spotLead = {
+  fontSize: 17,
+  lineHeight: 1.75,
+  color: "#3a4a40",
+  margin: "0 0 24px",
+};
+
+const spotList = {
+  listStyle: "none",
+  padding: 0,
+  margin: 0,
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+  gap: "12px 28px",
+};
+
+const spotItem = {
+  display: "flex",
+  alignItems: "flex-start",
+  gap: 10,
+  fontSize: 15,
+  lineHeight: 1.55,
+  color: "#33463a",
+  fontWeight: 500,
+};
+
+const spotCheck = {
+  flexShrink: 0,
+  color: "#d8782f",
+  fontWeight: 800,
+  fontSize: 16,
+};
+
+const spotActions = {
+  display: "flex",
+  gap: 12,
+  flexWrap: "wrap",
+  marginTop: 30,
+  maxWidth: 560,
+};
+
+const spotBadge = {
+  position: "absolute",
+  top: 16,
+  left: 16,
+  background: "rgba(31,58,43,0.92)",
+  color: "white",
+  fontSize: 13,
+  fontWeight: 800,
+  letterSpacing: 0.5,
+  padding: "7px 14px",
+  borderRadius: 999,
+  zIndex: 1,
+};
+
+const seasonTag = {
+  display: "inline-block",
+  padding: "5px 10px",
+  borderRadius: 999,
+  background: "#e3efe6",
+  color: "#216344",
+  fontWeight: 700,
+  fontSize: 12,
 };
