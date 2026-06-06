@@ -143,6 +143,12 @@ export default function NaturdannelsePage() {
             skoven og stedet med nye øjne.
           </p>
           <p style={{ ...bodyText, marginTop: 16 }}>
+            Når vi arbejder med træklatring, er skoven som biotop en del af selve
+            undervisningspensummet og læringen. Det giver deltagerne en konkret
+            indsigt i træerne, naturen og friluftslivet i skoven — fra det enkelte
+            træs bygning og levevilkår til samspillet i skovens økosystem.
+          </p>
+          <p style={{ ...bodyText, marginTop: 16 }}>
             Vi arbejder med respekt for træerne, skoven og de spor, vi efterlader.
             Det betyder, at vi både taler om teknik, sikkerhed og natursyn — og om
             hvordan vi kan færdes ansvarligt i naturen.
