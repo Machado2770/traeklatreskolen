@@ -5,9 +5,10 @@ import Image from "next/image";
 
 const NAV = [
   { href: "/",               label: "Forside" },
+  { href: "/organisationer", label: "Organisationer" },
   { href: "/kurser",         label: "Kurser" },
   { href: "/oplevelser",     label: "Oplevelser" },
-  { href: "/kursuskalender", label: "Kursuskalender" },
+  { href: "/#sikkerhed",     label: "Sikkerhed" },
   { href: "/kontakt",        label: "Kontakt" },
 ];
 

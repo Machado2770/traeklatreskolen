@@ -239,7 +239,7 @@ export default function Home() {
       </section>
 
       {/* SIKKERHED — mørk grøn split */}
-      <section style={safetySection}>
+      <section id="sikkerhed" style={{ ...safetySection, scrollMarginTop: 80 }}>
         <div style={safetyGrid} className="safety-grid">
           <div style={safetyContent} className="safety-content">
             <p style={safetyEyebrow}>Sikkerhed · Forsikring · Normer</p>

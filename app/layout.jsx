@@ -3,6 +3,7 @@ import Script from "next/script";
 import "./globals.css";
 import Providers from "./providers";
 import Header from "./components/Header";
+import NewsPopup from "./components/NewsPopup";
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from "@/lib/siteConfig";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
@@ -62,6 +63,7 @@ export default function RootLayout({ children }) {
           <Header />
           {children}
           <Footer />
+          <NewsPopup />
         </Providers>
 
       </body>
