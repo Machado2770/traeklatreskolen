@@ -35,7 +35,7 @@ const included = [
   "Risikovurderingsskabelon",
   "Praktisk træning i instruktion og gennemførelse",
   "Eksamen/godkendelse",
-  "60 minutters online opfølgning efter forløbet",
+  "60 minutters opfølgning efter forløbet",
 ];
 
 const results = [
