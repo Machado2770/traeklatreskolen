@@ -256,6 +256,44 @@ export default function Home() {
         </div>
       </section>
 
+      {/* NATURDANNELSE — lys grøn split */}
+      <section style={learnSection}>
+        <div className="safety-grid">
+          <div style={{ position: "relative" }} className="safety-image">
+            <Image
+              src="/images/gallery-side-1.jpg"
+              alt="Deltagere på vej op i trækronerne — naturen som læringsrum"
+              fill
+              style={{ objectFit: "cover" }}
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          </div>
+          <div style={learnContent} className="safety-content">
+            <p style={learnEyebrow}>Naturdannelse · Oplevelse · Refleksion</p>
+            <h2 style={learnTitle}>Naturen som læringsrum</h2>
+            <p style={learnText}>
+              Træklatring handler ikke kun om at komme op i et træ. Når vi bevæger
+              os op i trækronerne, ændrer perspektivet sig — skoven bliver ikke
+              længere bare noget, vi går igennem, men et rum, vi er en del af.
+            </p>
+            <p style={{ ...learnText, marginTop: 16 }}>
+              Naturdannelse handler om at udvikle en dybere forståelse for naturen
+              — ikke kun gennem viden, men gennem erfaring. Det er i samspillet
+              mellem oplevelse, faglighed og refleksion, at læringen opstår.
+            </p>
+            <ul style={learnList}>
+              <li style={learnItem}>✓ Mod, ansvar og personlig dømmekraft</li>
+              <li style={learnItem}>✓ Tillid til sig selv og hinanden</li>
+              <li style={learnItem}>✓ Respekt for træerne og skoven som biotop</li>
+              <li style={learnItem}>✓ Fællesskab, nærvær og naturglæde</li>
+            </ul>
+            <div style={{ marginTop: 28 }}>
+              <a href="/naturdannelse" style={learnBtn}>Læs om naturdannelse →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* SIKKERHED — mørk grøn split */}
       <section id="sikkerhed" style={{ ...safetySection, scrollMarginTop: 80 }}>
         <div style={safetyGrid} className="safety-grid">
@@ -519,6 +557,59 @@ const seeAllBtn = {
   border: "2px solid #1f3a2b",
   borderRadius: 10,
   padding: "10px 22px",
+};
+
+/* Naturdannelse split */
+const learnSection = {
+  background: "#eef3ef",
+  padding: "0",
+  overflow: "hidden",
+};
+const learnContent = {};
+const learnEyebrow = {
+  fontSize: 12,
+  letterSpacing: 3,
+  textTransform: "uppercase",
+  color: "#d8782f",
+  marginBottom: 16,
+  fontWeight: 600,
+};
+const learnTitle = {
+  fontSize: "clamp(26px, 3vw, 38px)",
+  fontWeight: 800,
+  color: "#1f3a2b",
+  margin: "0 0 20px",
+  lineHeight: 1.2,
+};
+const learnText = {
+  fontSize: 17,
+  lineHeight: 1.75,
+  color: "#4b6355",
+  margin: 0,
+};
+const learnList = {
+  listStyle: "none",
+  padding: 0,
+  margin: "28px 0 0",
+  display: "flex",
+  flexDirection: "column",
+  gap: 10,
+};
+const learnItem = {
+  fontSize: 15,
+  color: "#33463a",
+  fontWeight: 600,
+};
+const learnBtn = {
+  display: "inline-block",
+  background: "#d8782f",
+  color: "white",
+  textDecoration: "none",
+  padding: "13px 26px",
+  borderRadius: 12,
+  fontWeight: 700,
+  fontSize: 16,
+  boxShadow: "0 4px 18px rgba(216,120,47,0.35)",
 };
 
 /* Safety */
