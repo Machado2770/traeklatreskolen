@@ -110,7 +110,7 @@ function Footer() {
             Kurser, faglighed og eventyrlige oplevelser i træernes verden.
           </p>
           <a href="/shop" style={shopFooterLink}>
-            🧗 Køb det grej som Træklatreskolen selv bruger →
+            Køb det grej som Træklatreskolen selv bruger →
           </a>
           <div style={{ marginTop: 16 }}>
             <a href="/admin" style={adminFooterBtn}>

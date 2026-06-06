@@ -40,7 +40,7 @@ export default async function ProductPage({ params }) {
               <Image src={p.image} alt={p.name} fill style={{ objectFit: "contain", padding: 18 }}
                 sizes="(max-width: 900px) 100vw, 50vw" priority />
             ) : (
-              <div style={imgPlaceholder}>{p.category?.startsWith("Bål") ? "🔥" : p.category?.startsWith("Telte") ? "⛺" : "🧗"}</div>
+              <div style={imgPlaceholder}>Foto på vej</div>
             )}
           </div>
 
@@ -96,7 +96,8 @@ const imageWrap = {
 };
 const imgPlaceholder = {
   width: "100%", height: "100%", display: "flex", alignItems: "center",
-  justifyContent: "center", fontSize: 72,
+  justifyContent: "center", fontSize: 18, fontWeight: 700, color: "#b9a98c",
+  background: "#faf3e8",
 };
 const info = {};
 const catTag = {

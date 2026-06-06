@@ -184,6 +184,48 @@
   padding: 88px 24px;
 }
 
+/* ── SHOP ────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Kategori-chips: fyldes med varm orange ved hover */
+.shop-chip {
+  transition: background 0.18s ease, color 0.18s ease,
+              transform 0.18s ease, box-shadow 0.18s ease;
+}
+.shop-chip:hover {
+  background: #d8782f !important;
+  color: white !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(216, 120, 47, 0.35) !important;
+}
+.shop-chip:hover .shop-chip-count {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* Produktkort: løft + varm skygge + billedzoom */
+.shop-card {
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+.shop-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(140, 90, 30, 0.20) !important;
+}
+.shop-card-img img {
+  transition: transform 0.35s ease;
+}
+.shop-card:hover .shop-card-img img {
+  transform: scale(1.07);
+}
+.shop-cta-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+.shop-card:hover .shop-cta-arrow {
+  transform: translateX(5px);
+}
+
 /* ── SAFETY SPLIT ────────────────────────── */
 .safety-grid {
   max-width: 1180px;
