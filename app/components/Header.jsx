@@ -31,6 +31,7 @@ export default function Header() {
         {/* Desktop nav */}
         <nav className="main-nav">
           {NAV.map(l => <a key={l.href} href={l.href} style={navLink}>{l.label}</a>)}
+          <a href="/kursuskalender" style={ctaLink}>Kursuskalender</a>
           <a href="/booking" style={ctaLink}>Tilmelding</a>
         </nav>
 
@@ -55,6 +56,9 @@ export default function Header() {
               {l.label}
             </a>
           ))}
+          <a href="/kursuskalender" className="mobile-nav-cta" onClick={() => setOpen(false)}>
+            Kursuskalender
+          </a>
           <a href="/booking" className="mobile-nav-cta" onClick={() => setOpen(false)}>
             Tilmelding
           </a>
