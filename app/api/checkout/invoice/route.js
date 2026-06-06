@@ -76,9 +76,17 @@ export async function POST(req) {
     const product = bySlug.get(String(item.slug));
     const qty = Math.max(1, Math.min(99, parseInt(item.qty, 10) || 1));
     if (!product) continue;
+    // Størrelse accepteres kun, hvis den findes i varens sizes-liste.
+    const size =
+      Array.isArray(product.sizes) && product.sizes.includes(item.size) ? item.size : null;
     const total = product.price * qty;
     subtotal += total;
-    items.push({ name: product.name, qty, price: product.price, total });
+    items.push({
+      name: size ? `${product.name} — str. ${size}` : product.name,
+      qty,
+      price: product.price,
+      total,
+    });
   }
   if (items.length === 0)
     return NextResponse.json({ error: "Ingen gyldige varer i kurven." }, { status: 400 });

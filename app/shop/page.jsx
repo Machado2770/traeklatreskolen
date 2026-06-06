@@ -114,7 +114,7 @@ export default async function ShopPage() {
                   <h2 style={catTitle}>{g.category}</h2>
                   <div style={grid}>
                     {g.items.map((p) => (
-                      <a key={p.slug} href={`/shop/${p.slug}`} style={card} className="shop-card">
+                      <a key={p.slug} id={p.slug} href={`/shop/${p.slug}`} style={card} className="shop-card">
                         <div style={imageWrap} className="shop-card-img">
                           {p.image ? (
                             <Image src={p.image} alt={p.name} fill style={{ objectFit: "contain" }}
@@ -218,6 +218,7 @@ const card = {
   overflow: "hidden",
   boxShadow: "0 8px 30px rgba(140, 90, 30, 0.10)",
   textDecoration: "none",
+  scrollMarginTop: 100, // anker-landing fra "Tilbage til shoppen"
 };
 const imageWrap = {
   position: "relative",

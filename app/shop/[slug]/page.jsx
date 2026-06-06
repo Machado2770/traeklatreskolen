@@ -32,7 +32,7 @@ export default async function ProductPage({ params }) {
   return (
     <main>
       <div style={pageInner}>
-        <a href="/shop" style={back}>← Tilbage til shop</a>
+        <a href={`/shop#${p.slug}`} style={back}>← Tilbage til shoppen</a>
 
         <div style={grid} className="shop-detail-grid">
           <div style={imageWrap}>

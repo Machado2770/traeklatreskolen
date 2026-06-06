@@ -45,6 +45,9 @@ export async function POST(req) {
     const product = bySlug.get(String(item.slug));
     const qty = Math.max(1, Math.min(99, parseInt(item.qty, 10) || 1));
     if (!product) continue;
+    // Størrelse accepteres kun, hvis den findes i varens sizes-liste.
+    const size =
+      Array.isArray(product.sizes) && product.sizes.includes(item.size) ? item.size : null;
     subtotal += product.price * qty;
     line_items.push({
       quantity: qty,
@@ -52,7 +55,7 @@ export async function POST(req) {
         currency: "dkk",
         unit_amount: Math.round(product.price * 100), // øre
         product_data: {
-          name: product.name,
+          name: size ? `${product.name} — str. ${size}` : product.name,
           images: product.image?.startsWith("http") ? [product.image] : undefined,
         },
       },

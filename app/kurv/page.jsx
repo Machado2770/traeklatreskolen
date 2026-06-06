@@ -31,7 +31,7 @@ export default function KurvPage() {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items: items.map((i) => ({ slug: i.slug, qty: i.qty })) }),
+        body: JSON.stringify({ items: items.map((i) => ({ slug: i.slug, qty: i.qty, size: i.size })) }),
       });
       const data = await res.json();
       if (!res.ok || !data.url) throw new Error(data.error || "Kunne ikke starte betaling.");
@@ -56,7 +56,7 @@ export default function KurvPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...form,
-          items: items.map((i) => ({ slug: i.slug, qty: i.qty })),
+          items: items.map((i) => ({ slug: i.slug, qty: i.qty, size: i.size })),
         }),
       });
       const data = await res.json();
@@ -95,21 +95,23 @@ export default function KurvPage() {
           <div style={layout} className="cart-layout">
             <div style={itemsCol}>
               {items.map((i) => (
-                <div key={i.slug} style={row}>
+                <div key={i.key} style={row}>
                   <div style={thumb}>
                     {i.image && <Image src={i.image} alt={i.name} fill style={{ objectFit: "contain" }} sizes="90px" />}
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <a href={`/shop/${i.slug}`} style={itemName}>{i.name}</a>
-                    <div style={itemPrice}>{formatPrice(i.price)}</div>
+                    <div style={itemPrice}>
+                      {i.size ? `Str. ${i.size} · ` : ""}{formatPrice(i.price)}
+                    </div>
                   </div>
                   <div style={qtyRow}>
-                    <button style={qtyBtn} onClick={() => setQty(i.slug, i.qty - 1)} aria-label="Færre">−</button>
+                    <button style={qtyBtn} onClick={() => setQty(i.key, i.qty - 1)} aria-label="Færre">−</button>
                     <span style={qtyVal}>{i.qty}</span>
-                    <button style={qtyBtn} onClick={() => setQty(i.slug, i.qty + 1)} aria-label="Flere">+</button>
+                    <button style={qtyBtn} onClick={() => setQty(i.key, i.qty + 1)} aria-label="Flere">+</button>
                   </div>
                   <div style={lineTotal}>{formatPrice(i.price * i.qty)}</div>
-                  <button style={removeBtn} onClick={() => remove(i.slug)} aria-label="Fjern">×</button>
+                  <button style={removeBtn} onClick={() => remove(i.key)} aria-label="Fjern">×</button>
                 </div>
               ))}
             </div>

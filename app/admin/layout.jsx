@@ -12,6 +12,7 @@ const NAV = [
   { href: "/admin/billeder",     label: "Billeder & Videoer" },
   { href: "/admin/brugere",      label: "Admin-brugere" },
   { href: "/admin/statistik",    label: "Statistik" },
+  { href: "/admin/arbejdstoej",  label: "Arbejdstøj" },
   { href: "/admin/vejledning",   label: "📖 Vejledning" },
 ];
 

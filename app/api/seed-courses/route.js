@@ -1,6 +1,8 @@
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { courses, experiences } from "@/lib/siteData";
 
@@ -38,6 +40,10 @@ const ALL = [
 ];
 
 export async function POST(request) {
+  // Kun for indloggede admins — seed kan ellers overskrive kursustekster.
+  const session = await getServerSession(authOptions);
+  if (!session) return Response.json({ error: "Unauthorized" }, { status: 401 });
+
   const { searchParams } = new URL(request.url);
   const force = searchParams.get("force") === "true";
   const supabase = getSupabaseAdmin();

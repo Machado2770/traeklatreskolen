@@ -1,10 +1,16 @@
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { calendarItems } from "@/lib/siteData";
 
 export async function POST() {
+  // Kun for indloggede admins — seed kan ellers nulstille kalenderen.
+  const session = await getServerSession(authOptions);
+  if (!session) return Response.json({ error: "Unauthorized" }, { status: 401 });
+
   const supabase = getSupabaseAdmin();
 
   // Hent eksisterende begivenheder for at undgå dubletter (match på title+date+place)

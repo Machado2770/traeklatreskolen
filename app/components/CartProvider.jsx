@@ -5,15 +5,24 @@ import { createContext, useContext, useEffect, useState } from "react";
 const STORAGE_KEY = "traeklatreskolen-cart-v1";
 const CartContext = createContext(null);
 
+// Kurv-nøgle: samme vare i to størrelser er to linjer i kurven.
+function itemKey(slug, size) {
+  return size ? `${slug}__${size}` : slug;
+}
+
 export function CartProvider({ children }) {
-  const [items, setItems] = useState([]);   // [{ slug, name, price, image, qty }]
+  const [items, setItems] = useState([]);   // [{ key, slug, size, name, price, image, qty }]
   const [loaded, setLoaded] = useState(false);
 
   // Indlæs fra localStorage ved mount
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (raw) setItems(JSON.parse(raw));
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        // Bagudkompatibel: gamle kurve har ingen key/size
+        setItems(parsed.map((i) => ({ ...i, key: i.key ?? itemKey(i.slug, i.size) })));
+      }
     } catch {
       // ignorér
     }
@@ -30,18 +39,19 @@ export function CartProvider({ children }) {
     }
   }, [items, loaded]);
 
-  function add(product, qty = 1) {
+  function add(product, qty = 1, size = null) {
+    const key = itemKey(product.slug, size);
     setItems((prev) => {
-      const found = prev.find((i) => i.slug === product.slug);
+      const found = prev.find((i) => i.key === key);
       if (found) {
-        return prev.map((i) =>
-          i.slug === product.slug ? { ...i, qty: i.qty + qty } : i
-        );
+        return prev.map((i) => (i.key === key ? { ...i, qty: i.qty + qty } : i));
       }
       return [
         ...prev,
         {
+          key,
           slug: product.slug,
+          size,
           name: product.name,
           price: product.price,
           image: product.image,
@@ -51,16 +61,16 @@ export function CartProvider({ children }) {
     });
   }
 
-  function setQty(slug, qty) {
+  function setQty(key, qty) {
     setItems((prev) =>
       qty <= 0
-        ? prev.filter((i) => i.slug !== slug)
-        : prev.map((i) => (i.slug === slug ? { ...i, qty } : i))
+        ? prev.filter((i) => i.key !== key)
+        : prev.map((i) => (i.key === key ? { ...i, qty } : i))
     );
   }
 
-  function remove(slug) {
-    setItems((prev) => prev.filter((i) => i.slug !== slug));
+  function remove(key) {
+    setItems((prev) => prev.filter((i) => i.key !== key));
   }
 
   function clear() {
