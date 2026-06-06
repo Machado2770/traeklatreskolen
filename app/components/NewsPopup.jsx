@@ -42,12 +42,15 @@ export default function NewsPopup() {
         <div style={body}>
           <p style={text}>Vil I uddanne egne medarbejdere i sikker træklatring?</p>
           <p style={text}>
-            Træklatreskolen åbner nu for 2 pilotforløb for skoler,
-            institutioner, naturskoler og friluftsorganisationer.
+            Træklatreskolen åbner nu for nogle få pilotforløb for skoler,
+            institutioner, naturskoler og friluftsorganisationer, der vil opbygge
+            egne kompetencer i træklatring.
           </p>
           <p style={text}>
-            Forløbet er for op til 6 medarbejdere og kombinerer
-            instruktøruddannelse, SOP, risikovurdering og praktisk træning.
+            Forløbet er for op til 6 medarbejdere og samler instruktøruddannelse,
+            sikkerhedsprocedurer (SOP), risikovurdering og praktisk træning i én
+            samlet pakke — så I selv kan gennemføre træklatring trygt og fagligt
+            stærkt bagefter.
           </p>
         </div>
 
