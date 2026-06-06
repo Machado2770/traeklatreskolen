@@ -261,8 +261,8 @@ export default function Home() {
         <div className="safety-grid">
           <div style={{ position: "relative" }} className="safety-image">
             <Image
-              src="/images/gallery-side-1.jpg"
-              alt="Deltagere på vej op i trækronerne — naturen som læringsrum"
+              src="/images/rebklatring.jpg"
+              alt="Klatrer på vej ned fra trækronerne i efterårsskov — naturen som læringsrum"
               fill
               style={{ objectFit: "cover" }}
               sizes="(max-width: 768px) 100vw, 50vw"
