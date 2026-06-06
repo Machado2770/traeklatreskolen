@@ -82,7 +82,7 @@ export default function OrganisationerPage() {
             træklatring.
           </p>
           <div style={{ marginTop: 28 }}>
-            <a href={MEETING_LINK} style={heroBtn}>Book 20 minutters afklaringsmøde</a>
+            <a href={MEETING_LINK} style={heroBtn}>Book et kort afklaringsmøde</a>
           </div>
         </section>
 
@@ -167,7 +167,7 @@ export default function OrganisationerPage() {
           <h2 style={h2}>Næste skridt</h2>
           <div style={accent} />
           <p style={lead}>
-            Book et kort afklaringsmøde på 20 minutter. Her finder vi ud af:
+            Book et kort afklaringsmøde. Her finder vi ud af:
           </p>
           <ul style={checkList}>
             {nextSteps.map((s) => (
@@ -175,7 +175,7 @@ export default function OrganisationerPage() {
             ))}
           </ul>
           <div style={{ marginTop: 28 }}>
-            <a href={MEETING_LINK} style={primaryBtn}>Book 20 minutters afklaringsmøde</a>
+            <a href={MEETING_LINK} style={primaryBtn}>Book et kort afklaringsmøde</a>
           </div>
         </section>
 
