@@ -4,6 +4,7 @@ import "./globals.css";
 import Providers from "./providers";
 import Header from "./components/Header";
 import NewsPopup from "./components/NewsPopup";
+import FloatingCart from "./components/FloatingCart";
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from "@/lib/siteConfig";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
@@ -64,6 +65,7 @@ export default function RootLayout({ children }) {
           {children}
           <Footer />
           <NewsPopup />
+          <FloatingCart />
         </Providers>
 
       </body>
@@ -110,7 +112,13 @@ function Footer() {
             Kurser, faglighed og eventyrlige oplevelser i træernes verden.
           </p>
           <a href="/shop" style={shopFooterLink}>
-            Køb det grej som Træklatreskolen selv bruger →
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
+              <path d="M3 4h2l2.4 12.2a1.5 1.5 0 001.5 1.2h8.6a1.5 1.5 0 001.5-1.2L21 8H6"
+                stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              <circle cx="10" cy="20.5" r="1.4" fill="currentColor"/>
+              <circle cx="18" cy="20.5" r="1.4" fill="currentColor"/>
+            </svg>
+            Shop — køb det grej vi selv bruger
           </a>
           <div style={{ marginTop: 16 }}>
             <a href="/admin" style={adminFooterBtn}>
@@ -191,13 +199,19 @@ const footerText = {
 };
 
 const shopFooterLink = {
-  display: "inline-block",
-  marginTop: 8,
-  color: "#f0b483",
+  display: "inline-flex",
+  alignItems: "center",
+  gap: 8,
+  marginTop: 10,
+  padding: "10px 18px",
+  background: "#d8782f",
+  color: "white",
+  borderRadius: 10,
   textDecoration: "none",
   fontWeight: 700,
   fontSize: 14,
-  lineHeight: 1.5,
+  lineHeight: 1.4,
+  boxShadow: "0 4px 14px rgba(216,120,47,0.35)",
 };
 
 const adminFooterBtn = {
@@ -205,8 +219,9 @@ const adminFooterBtn = {
   alignItems: "center",
   gap: 7,
   padding: "8px 16px",
-  background: "#d8782f",
-  color: "white",
+  background: "transparent",
+  color: "rgba(255,255,255,0.75)",
+  border: "1px solid rgba(255,255,255,0.3)",
   borderRadius: 10,
   textDecoration: "none",
   fontWeight: 700,
