@@ -37,7 +37,7 @@ export default async function ProductPage({ params }) {
         <div style={grid} className="shop-detail-grid">
           <div style={imageWrap}>
             {p.image ? (
-              <Image src={p.image} alt={p.name} fill style={{ objectFit: "cover" }}
+              <Image src={p.image} alt={p.name} fill style={{ objectFit: "contain", padding: 18 }}
                 sizes="(max-width: 900px) 100vw, 50vw" priority />
             ) : (
               <div style={imgPlaceholder}>🧗</div>
@@ -90,7 +90,7 @@ const imageWrap = {
   aspectRatio: "1 / 1",
   borderRadius: 20,
   overflow: "hidden",
-  background: "#dce8e0",
+  background: "white",
   boxShadow: "0 8px 30px rgba(0,0,0,0.08)",
 };
 const imgPlaceholder = {
