@@ -40,7 +40,7 @@ export default async function ProductPage({ params }) {
               <Image src={p.image} alt={p.name} fill style={{ objectFit: "contain", padding: 18 }}
                 sizes="(max-width: 900px) 100vw, 50vw" priority />
             ) : (
-              <div style={imgPlaceholder}>🧗</div>
+              <div style={imgPlaceholder}>{p.category?.startsWith("Bål") ? "🔥" : p.category?.startsWith("Telte") ? "⛺" : "🧗"}</div>
             )}
           </div>
 
@@ -73,7 +73,8 @@ export default async function ProductPage({ params }) {
 
             <p style={shippingNote}>
               Fragt {formatPrice(SHIPPING.flatRate)} — fri fragt over {formatPrice(SHIPPING.freeOver)}.
-              Betaling sker sikkert med kort via Stripe.
+              Betaling sker sikkert med kort via Stripe — eller på fremsendt faktura
+              (også elektronisk via EAN), som vælges i kurven.
             </p>
           </div>
         </div>

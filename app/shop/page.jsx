@@ -19,6 +19,13 @@ export const metadata = {
   },
 };
 
+// Pladsholder-ikon for varer uden billede, valgt efter kategori.
+function placeholderIcon(category) {
+  if (category?.startsWith("Bål")) return "🔥";
+  if (category?.startsWith("Telte")) return "⛺";
+  return "🧗";
+}
+
 // Anker-id ud fra kategorinavn ("Reb & liner" -> "reb-liner").
 function catId(category) {
   return category
@@ -65,7 +72,8 @@ export default async function ShopPage() {
             Alt udstyr i shoppen er udstyr, vi selv bruger i undervisningen. Det betyder, at hver
             eneste vare er valgt, fordi den har bevist sit værd i trækronerne — uge efter uge, hold
             efter hold. Og det betyder, at du ikke handler alene: med købet følger kvalificeret
-            vejledning, og vi uddanner dig gerne i brugen af udstyret.
+            vejledning, og vi uddanner dig gerne i brugen af udstyret. Organisationer, skoler og
+            foreninger kan betale på fremsendt faktura — også elektronisk (EAN).
           </p>
           <div style={conceptPoints}>
             <div style={point}>
@@ -120,7 +128,7 @@ export default async function ShopPage() {
                             <Image src={p.image} alt={p.name} fill style={{ objectFit: "contain" }}
                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
                           ) : (
-                            <div style={imgPlaceholder}>🧗</div>
+                            <div style={imgPlaceholder}>{placeholderIcon(p.category)}</div>
                           )}
                         </div>
                         <div style={body}>
