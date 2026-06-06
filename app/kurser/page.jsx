@@ -95,20 +95,16 @@ export default async function KurserPage() {
 
                 <p style={spotLead}>
                   Forestil dig et helt år i trækronerne — fra forårets lysegrønne
-                  spring over lune sommeraftener højt over skovbunden til
-                  vinterklatring i klar frostluft. Årskurset er vores mest
-                  ambitiøse forløb: 100 lektioner med fordybelse i teknik,
-                  sikkerhed, undervisning og friluftsliv, friluftsture,
-                  overnatning i trækronerne — og et fællesskab af mennesker, der
+                  spring til vinterklatring i klar frostluft. Årskurset er vores
+                  mest ambitiøse forløb: 100 lektioner med fordybelse i teknik,
+                  sikkerhed, undervisning og friluftsliv — og et fællesskab, der
                   deler din passion for skoven.
                 </p>
                 <p style={spotLead}>
-                  Undervejs i forløbet uddannes og eksamineres du som
-                  træklatreinstruktør efter Dansk Træklatreforenings norm — og så
-                  fortsætter rejsen: Resten af året omsætter du instruktørrollen
-                  til praksis med avancerede teknikker, rebbaner og naturdannelse,
-                  så du står på den anden side med både bevis, rutine og sikker
-                  hånd.
+                  Undervejs uddannes og eksamineres du som træklatreinstruktør
+                  efter Dansk Træklatreforenings norm — og resten af året omsætter
+                  du rollen til praksis, så du slutter med både bevis, rutine og
+                  sikker hånd.
                 </p>
 
                 <ul style={spotList}>
@@ -357,13 +353,14 @@ const spotLead = {
   margin: "0 0 24px",
 };
 
+// Kolonne-layout i stedet for grid: punkterne flyder ned i kolonnerne med
+// fast, ens afstand — også når et punkt fylder to linjer.
 const spotList = {
   listStyle: "none",
   padding: 0,
   margin: 0,
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-  gap: "12px 28px",
+  columns: "260px 2",
+  columnGap: 28,
 };
 
 const spotItem = {
@@ -371,9 +368,11 @@ const spotItem = {
   alignItems: "flex-start",
   gap: 10,
   fontSize: 15,
-  lineHeight: 1.55,
+  lineHeight: 1.5,
   color: "#33463a",
   fontWeight: 500,
+  breakInside: "avoid",
+  marginBottom: 8,
 };
 
 const spotCheck = {
