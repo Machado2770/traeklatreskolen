@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useCart } from "@/app/components/CartProvider";
-import { formatPrice } from "@/app/components/AddToCart";
+import { formatPrice } from "@/lib/format";
 import { SHIPPING } from "@/lib/shopData";
 
 export default function KurvPage() {

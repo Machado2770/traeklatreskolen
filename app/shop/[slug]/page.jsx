@@ -2,7 +2,8 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getProductBySlug } from "@/lib/getProducts";
 import { SHIPPING } from "@/lib/shopData";
-import AddToCart, { formatPrice } from "@/app/components/AddToCart";
+import { formatPrice } from "@/lib/format";
+import AddToCart from "@/app/components/AddToCart";
 
 export const dynamic = "force-dynamic";
 

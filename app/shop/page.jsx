@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { getProducts } from "@/lib/getProducts";
-import { formatPrice } from "@/app/components/AddToCart";
+import { formatPrice } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 

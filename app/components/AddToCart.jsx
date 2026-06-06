@@ -3,15 +3,6 @@
 import { useState } from "react";
 import { useCart } from "./CartProvider";
 
-export function formatPrice(kr) {
-  return new Intl.NumberFormat("da-DK", {
-    style: "currency",
-    currency: "DKK",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(kr);
-}
-
 export default function AddToCart({ product, withQty = false }) {
   const { add } = useCart();
   const [qty, setQty] = useState(1);
