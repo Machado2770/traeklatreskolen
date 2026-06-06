@@ -217,6 +217,14 @@
   .spot-image { min-height: 280px; }
 }
 
+/* ── SHOP PRODUKTSIDE ────────────────────── */
+@media (max-width: 760px) {
+  .shop-detail-grid { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 820px) {
+  .cart-layout { grid-template-columns: 1fr !important; }
+}
+
 /* ── DETAIL PAGES ────────────────────────── */
 .detail-grid {
   display: grid;
