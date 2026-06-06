@@ -3,7 +3,7 @@ import { CONTACT_EMAIL } from "@/lib/siteConfig";
 export const metadata = {
   title: "Sikker Træklatring for Organisationer",
   description:
-    "Organisationsforløb i sikker træklatring for skoler, institutioner, naturskoler, ungdomsskoler, højskoler og friluftsorganisationer. Instruktøruddannelse, SOP, risikovurdering og praktisk træning — opbyg egne kompetencer i træklatring.",
+    "Organisationsforløb i sikker træklatring for skoler, institutioner, naturskoler, ungdomsskoler, højskoler og friluftsorganisationer. Instruktøruddannelse, faste sikkerhedsprocedurer (SOP), risikovurdering og praktisk træning — opbyg egne kompetencer i træklatring.",
   alternates: { canonical: "/organisationer" },
   openGraph: {
     title: "Sikker Træklatring for Organisationer | Træklatreskolen",
@@ -31,7 +31,7 @@ const audience = [
 const included = [
   "Begynderforløb i træklatring",
   "Instruktøruddannelse",
-  "Arbejde med sikkerhedsprocedurer/SOP",
+  "Arbejde med faste sikkerhedsprocedurer (SOP) — nedskrevne arbejdsgange for sikker gennemførelse",
   "Risikovurderingsskabelon",
   "Praktisk træning i instruktion og gennemførelse",
   "Eksamen/godkendelse",

@@ -48,9 +48,10 @@ export default function NewsPopup() {
           </p>
           <p style={text}>
             Forløbet er for op til 6 medarbejdere og samler instruktøruddannelse,
-            sikkerhedsprocedurer (SOP), risikovurdering og praktisk træning i én
-            samlet pakke — så I selv kan gennemføre træklatring trygt og fagligt
-            stærkt bagefter.
+            faste sikkerhedsprocedurer (SOP – nedskrevne arbejdsgange for sikker
+            gennemførelse), risikovurdering og praktisk træning i én samlet pakke
+            — så I selv kan gennemføre træklatring trygt og fagligt stærkt
+            bagefter.
           </p>
         </div>
 
