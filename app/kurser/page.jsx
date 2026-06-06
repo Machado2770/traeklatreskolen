@@ -69,7 +69,7 @@ export default async function KurserPage() {
               <p style={spotSubheading}>
                 Et helt års fordybelse for dig, der vil hele vejen rundt om
                 træklatring — fagligt, praktisk og personligt. Kører én gang
-                årligt med opstart i maj.
+                årligt med opstart i foråret.
               </p>
             </div>
 
@@ -90,7 +90,7 @@ export default async function KurserPage() {
                   <span style={priceTag}>16.995 kr.</span>
                   <span style={levelTag}>Avanceret niveau</span>
                   <span style={durationTag}>⏱ 100 lektioner</span>
-                  <span style={seasonTag}>📅 1 gang årligt · start maj</span>
+                  <span style={seasonTag}>📅 Start i foråret</span>
                 </div>
 
                 <p style={spotLead}>
