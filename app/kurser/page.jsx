@@ -64,7 +64,7 @@ export default async function KurserPage() {
           {/* SPOTKURSUS — Årskursus */}
           <div style={spotWrap}>
             <div style={spotHeaderRow}>
-              <span style={spotKicker}>Spotkursus</span>
+              <span style={spotKicker}>Årskursus</span>
               <h2 style={spotHeading}>Årskursus — fordybelse i træklatring</h2>
               <p style={spotSubheading}>
                 Et helt års fordybelse for dig, der vil hele vejen rundt om
