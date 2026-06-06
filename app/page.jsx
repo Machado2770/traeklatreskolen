@@ -109,6 +109,8 @@ export default function Home() {
               ),
               title: "Op i trækronerne",
               text: "Opdag skoven fra nye højder — en oplevelse ud over det sædvanlige",
+              href: "/oplevelser",
+              linkLabel: "Se oplevelser →",
             },
             {
               icon: (
@@ -122,6 +124,8 @@ export default function Home() {
               ),
               title: "For grupper og enkeltpersoner",
               text: "Voksne og grupper (firmaer) — vi tilpasser aktiviteten til din gruppe",
+              href: "/organisationer",
+              linkLabel: "For organisationer →",
             },
             {
               icon: (
@@ -134,6 +138,7 @@ export default function Home() {
               title: "Naturen som læringsrum",
               text: "Naturdannelse og refleksion i de bedste omgivelser — skoven",
               href: "/naturdannelse",
+              linkLabel: "Læs om naturdannelse →",
             },
             {
               icon: (
@@ -145,6 +150,8 @@ export default function Home() {
               ),
               title: "Sikkerhed i centrum",
               text: "Erhvervsforsikring og Dansk Træklatreforenings normer — altid og uden undtagelse",
+              href: "/#sikkerhed",
+              linkLabel: "Læs om sikkerhed →",
             },
           ].map((p) => {
             const inner = (
@@ -153,7 +160,7 @@ export default function Home() {
                 <div style={pillarText}>
                   <strong style={pillarTitle}>{p.title}</strong>
                   <span style={pillarSub}>{p.text}</span>
-                  {p.href && <span style={pillarLink}>Læs om naturdannelse →</span>}
+                  {p.href && <span style={pillarLink}>{p.linkLabel}</span>}
                 </div>
               </>
             );
