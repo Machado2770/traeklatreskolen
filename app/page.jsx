@@ -133,6 +133,7 @@ export default function Home() {
               ),
               title: "Naturen som læringsrum",
               text: "Naturdannelse og refleksion i de bedste omgivelser — skoven",
+              href: "/naturdannelse",
             },
             {
               icon: (
@@ -145,15 +146,25 @@ export default function Home() {
               title: "Sikkerhed i centrum",
               text: "Erhvervsforsikring og Dansk Træklatreforenings normer — altid og uden undtagelse",
             },
-          ].map((p) => (
-            <div key={p.title} style={pillarItem}>
-              <div style={pillarIcon}>{p.icon}</div>
-              <div style={pillarText}>
-                <strong style={pillarTitle}>{p.title}</strong>
-                <span style={pillarSub}>{p.text}</span>
-              </div>
-            </div>
-          ))}
+          ].map((p) => {
+            const inner = (
+              <>
+                <div style={pillarIcon}>{p.icon}</div>
+                <div style={pillarText}>
+                  <strong style={pillarTitle}>{p.title}</strong>
+                  <span style={pillarSub}>{p.text}</span>
+                  {p.href && <span style={pillarLink}>Læs om naturdannelse →</span>}
+                </div>
+              </>
+            );
+            return p.href ? (
+              <a key={p.title} href={p.href} style={{ ...pillarItem, textDecoration: "none" }} className="pillar-link">
+                {inner}
+              </a>
+            ) : (
+              <div key={p.title} style={pillarItem}>{inner}</div>
+            );
+          })}
         </div>
       </section>
 
@@ -387,6 +398,12 @@ const pillarSub = {
   fontSize: 13,
   color: "rgba(255,255,255,0.52)",
   lineHeight: 1.55,
+};
+const pillarLink = {
+  marginTop: 6,
+  fontSize: 13,
+  fontWeight: 700,
+  color: "#e89456",
 };
 
 /* Intro */
