@@ -21,7 +21,7 @@ const aarskursusPoints = [
   "100 lektioner med regelmæssig selvtræning",
   "Teoretisk højt grundlag med inddragelse af relevant friluftsteori",
   "Mange forskellige klatreteknikker",
-  "Eksamination til træklatreinstruktør efter Dansk Træklatreforenings norm",
+  "Træklatreinstruktør-uddannelse undervejs i forløbet — eksamination efter Dansk Træklatreforenings norm",
   "Avanceret niveau: avancerede rebbaner, kæmpegynger, traverser, sikker opsætning og risikovurdering",
   "Pædagogik, metodik og undervisningsdidaktik",
   "Skoven som biotop — naturen som læringsrum",
@@ -94,10 +94,21 @@ export default async function KurserPage() {
                 </div>
 
                 <p style={spotLead}>
-                  Årskurset er et samlet forløb, hvor du arbejder i dybden med
-                  teknik, sikkerhed, undervisning og friluftsliv — og afslutter med
-                  eksamination til træklatreinstruktør efter Dansk
-                  Træklatreforenings norm.
+                  Forestil dig et helt år i trækronerne — fra forårets lysegrønne
+                  spring over lune sommeraftener højt over skovbunden til
+                  vinterklatring i klar frostluft. Årskurset er vores mest
+                  ambitiøse forløb: 100 lektioner med fordybelse i teknik,
+                  sikkerhed, undervisning og friluftsliv, friluftsture,
+                  overnatning i trækronerne — og et fællesskab af mennesker, der
+                  deler din passion for skoven.
+                </p>
+                <p style={spotLead}>
+                  Undervejs i forløbet uddannes og eksamineres du som
+                  træklatreinstruktør efter Dansk Træklatreforenings norm — og så
+                  fortsætter rejsen: Resten af året omsætter du instruktørrollen
+                  til praksis med avancerede teknikker, rebbaner og naturdannelse,
+                  så du står på den anden side med både bevis, rutine og sikker
+                  hånd.
                 </p>
 
                 <ul style={spotList}>
