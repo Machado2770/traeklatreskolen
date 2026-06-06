@@ -20,8 +20,8 @@ const instructors = [
     image: "https://ighjiiafidndwvaowmdc.supabase.co/storage/v1/object/public/site-images/1776198006583-Martin.jpg",
     imagePosition: "top",
     bio: [
-      "Martin er natur- og friluftsvejleder med en passion for at bringe mennesker tættere på naturen, styrke fællesskaber og udvikle den enkeltes evner og selvtillid under kyndig vejledning. Med en master i friluftsliv og over 20 års erfaring spænder hans virke bredt — fra træklatring som vejleder og censor i Dansk Træklatreforening til uddannelse som Havkajakinstruktør II og Kanoinstruktør II.",
-      "For Martin handler friluftsvejledning om mere end bare tekniske færdigheder — det er en rejse ind i naturen, hvor fællesskab og personlig udvikling får plads til at blomstre.",
+      "Martin Machado er natur- og friluftsvejleder, træklatreinstruktør og stifter af Træklatreskolen. Med en master i friluftsliv og mere end 20 års erfaring arbejder han i krydsfeltet mellem træklatring, naturdannelse, sikkerhed og fællesskab.",
+      "For Martin er træklatring ikke kun en aktivitet, men et læringsrum. Når mennesker bevæger sig op i trækronerne, bliver mod, ansvar, tillid og dømmekraft konkret. Det er her, Træklatreskolen har sit særlige afsæt: stærke oplevelser, høj faglighed og naturen som ramme for udvikling.",
     ],
   },
   {
