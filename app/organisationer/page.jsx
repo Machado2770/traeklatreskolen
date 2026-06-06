@@ -63,24 +63,28 @@ export default function OrganisationerPage() {
           <div className="page-hero-inner">
             <p className="page-hero-eyebrow">For organisationer</p>
             <h1 className="page-hero-title">Sikker Træklatring for Organisationer</h1>
-            <p className="page-hero-text" style={{ maxWidth: 680 }}>
+            <p className="page-hero-text">
               Vil I kunne tilbyde træklatring med egne medarbejdere — sikkert,
               dokumenteret og fagligt stærkt?
             </p>
-            <p className="page-hero-text" style={{ maxWidth: 680, marginTop: 14 }}>
-              Træklatreskolen tilbyder et samlet organisationsforløb for skoler,
-              institutioner, naturskoler, ungdomsskoler, højskoler og
-              friluftsorganisationer, der vil opbygge egne kompetencer i
-              træklatring.
-            </p>
-            <div style={{ marginTop: 32 }}>
-              <a href={MEETING_LINK} style={heroBtn}>Book 20 minutters afklaringsmøde</a>
-            </div>
           </div>
         </div>
       </section>
 
       <div style={pageInner}>
+
+        {/* INTRO */}
+        <section style={section}>
+          <p style={{ ...lead, fontSize: 19 }}>
+            Træklatreskolen tilbyder et samlet organisationsforløb for skoler,
+            institutioner, naturskoler, ungdomsskoler, højskoler og
+            friluftsorganisationer, der vil opbygge egne kompetencer i
+            træklatring.
+          </p>
+          <div style={{ marginTop: 28 }}>
+            <a href={MEETING_LINK} style={heroBtn}>Book 20 minutters afklaringsmøde</a>
+          </div>
+        </section>
 
         {/* SEKTION 1 — Hvem er forløbet for? */}
         <section style={section}>
