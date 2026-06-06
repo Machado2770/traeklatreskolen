@@ -9,7 +9,6 @@ const NAV = [
   { href: "/organisationer", label: "Organisationer" },
   { href: "/kurser",         label: "Kurser" },
   { href: "/oplevelser",     label: "Oplevelser" },
-  { href: "/shop",           label: "Shop" },
   { href: "/kontakt",        label: "Kontakt" },
 ];
 
@@ -49,6 +48,7 @@ export default function Header() {
         <nav className="main-nav">
           {NAV.map(l => <a key={l.href} href={l.href} style={navLink}>{l.label}</a>)}
           <a href="/kursuskalender" style={ctaLink}>Kursuskalender</a>
+          <a href="/shop" style={navLink}>Shop</a>
           <CartIcon />
         </nav>
 
@@ -75,6 +75,9 @@ export default function Header() {
           ))}
           <a href="/kursuskalender" className="mobile-nav-cta" onClick={() => setOpen(false)}>
             Kursuskalender
+          </a>
+          <a href="/shop" className="mobile-nav-link" onClick={() => setOpen(false)}>
+            Shop
           </a>
           <a href="/kurv" className="mobile-nav-link" onClick={() => setOpen(false)}>
             Kurv
