@@ -5,6 +5,11 @@ import { authOptions } from "@/lib/authOptions";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 
 export async function GET() {
+  // Kun for indloggede admins — offentlig visning bruger /api/public-calendar,
+  // som filtrerer på is_published. Her returneres alt, inkl. upubliceret.
+  const session = await getServerSession(authOptions);
+  if (!session) return Response.json({ error: "Unauthorized" }, { status: 401 });
+
   const supabase = getSupabaseAdmin();
   const { data, error } = await supabase
     .from("calendar_items")

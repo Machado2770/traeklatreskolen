@@ -24,7 +24,7 @@ const ITEMS = [
     name: "Vest med logo",
     image: "/images/shop/vest-logo.jpg",
     note:
-      "Sort vest med fleece — varm krop og frie arme til rebarbejde. Sælges også i shoppen under \"Jakker & veste\".",
+      "Sort vest med fleece — varm krop og frie arme til rebarbejde.",
     detail: "Træklatreskolens logo i hvidt på brystet. Størrelser efter behov (S–XXL).",
   },
 ];
@@ -34,8 +34,8 @@ export default function ArbejdstoejPage() {
     <div>
       <h1 style={h1}>Arbejdstøj</h1>
       <p style={intro}>
-        Intern oversigt over Træklatreskolens arbejdstøj med logo — til instruktører og hjælpere.
-        Jakkerne sælges ikke i shoppen; vesten gør (under &quot;Jakker &amp; veste&quot;).
+        Intern oversigt over Træklatreskolens medarbejdertøj med logo — til instruktører og
+        hjælpere. Plaggene sælges ikke i shoppen.
       </p>
 
       <div style={grid}>

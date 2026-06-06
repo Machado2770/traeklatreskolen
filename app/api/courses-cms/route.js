@@ -10,6 +10,11 @@ function isColumnError(error) {
 }
 
 export async function GET() {
+  // Kun for indloggede admins — offentlige sider henter kurser server-side
+  // via lib/getCourses. Her returneres alt, inkl. upublicerede kurser.
+  const session = await getServerSession(authOptions);
+  if (!session) return Response.json({ error: "Unauthorized" }, { status: 401 });
+
   const supabase = getSupabaseAdmin();
   const { data, error } = await supabase
     .from("courses_cms")

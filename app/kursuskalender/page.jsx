@@ -1,6 +1,7 @@
 import { unstable_noStore as noStore } from "next/cache";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { graph, eventLd, jsonLdScript } from "@/lib/jsonld";
+import { isUpcoming } from "@/lib/calendarDates";
 
 export const dynamic = "force-dynamic";
 
@@ -82,6 +83,9 @@ async function getCalendarItems() {
     }
 
     return (calRes.data || [])
+      // Afholdte arrangementer skjules automatisk (synlige til og med sidste dag).
+      // De slettes ikke — i admin-arkivet ligger deltagerlisterne fortsat.
+      .filter((item) => isUpcoming(item.date))
       .map(item => normalize({
         ...item,
         price: item.price || priceMap[item.title] || "",

@@ -2,6 +2,7 @@ export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
+import { isUpcoming } from "@/lib/calendarDates";
 
 export async function GET() {
   const supabase = getSupabaseAdmin();
@@ -25,11 +26,14 @@ export async function GET() {
     if (c.price) priceMap[c.title] = c.price;
   }
 
-  // Brug price fra calendar_items, ellers fald tilbage på courses_cms
-  const data = (calRes.data || []).map(item => ({
-    ...item,
-    price: item.price || priceMap[item.title] || "",
-  }));
+  // Brug price fra calendar_items, ellers fald tilbage på courses_cms.
+  // Afholdte arrangementer skjules (synlige til og med sidste dag).
+  const data = (calRes.data || [])
+    .filter((item) => isUpcoming(item.date))
+    .map(item => ({
+      ...item,
+      price: item.price || priceMap[item.title] || "",
+    }));
 
   return Response.json(
     { ok: true, data },

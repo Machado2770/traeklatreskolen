@@ -11,8 +11,9 @@ const q = (s) => (s == null ? "null" : `'${String(s).replace(/'/g, "''")}'`);
 
 // Varer der er taget ud af shoppen igen — slettes fra Supabase ved seed.
 const RETIRED_SLUGS = [
-  "softshell-jakke-logo", // internt arbejdstøj — se /admin/arbejdstoej
-  "skaljakke-logo",       // internt arbejdstøj — se /admin/arbejdstoej
+  "softshell-jakke-logo", // internt medarbejdertøj — se /admin/arbejdstoej
+  "skaljakke-logo",       // internt medarbejdertøj — se /admin/arbejdstoej
+  "vest-logo",            // internt medarbejdertøj — se /admin/arbejdstoej
 ];
 
 const rows = products
