@@ -148,8 +148,12 @@ export default function OrganisationerPage() {
               <div style={pilotFactValue}>Op til 6 medarbejdere</div>
             </div>
             <div style={pilotFact}>
-              <div style={pilotFactLabel}>Pris</div>
-              <div style={pilotFactValue}>49.500 kr. ekskl. moms</div>
+              <div style={pilotFactLabel}>Pilotpris</div>
+              <div style={pilotFactValue}>Fra 44.000 kr. ekskl. moms</div>
+            </div>
+            <div style={pilotFact}>
+              <div style={pilotFactLabel}>Normalpris</div>
+              <div style={pilotFactValue}>Fra 48.000 kr. ekskl. moms</div>
             </div>
           </div>
           <p style={{ ...lead, color: "rgba(255,255,255,0.7)", fontSize: 15, marginTop: 22 }}>
