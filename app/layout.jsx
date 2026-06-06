@@ -109,6 +109,9 @@ function Footer() {
           <p style={footerText}>
             Kurser, faglighed og eventyrlige oplevelser i træernes verden.
           </p>
+          <a href="/shop" style={shopFooterLink}>
+            🧗 Køb det grej som Træklatreskolen selv bruger →
+          </a>
           <div style={{ marginTop: 16 }}>
             <a href="/admin" style={adminFooterBtn}>
               <svg width="15" height="15" viewBox="0 0 20 20" fill="none" style={{ flexShrink: 0 }}>
@@ -126,7 +129,6 @@ function Footer() {
             <a href="/" style={footerLink}>Forside</a>
             <a href="/kurser" style={footerLink}>Kurser</a>
             <a href="/oplevelser" style={footerLink}>Oplevelser</a>
-            <a href="/shop" style={footerLink}>Shop</a>
             <a href="/kursuskalender" style={footerLink}>Kursuskalender</a>
             <a href="/om-os" style={footerLink}>Om os</a>
           </div>
@@ -186,6 +188,16 @@ const footerText = {
   margin: "0 0 8px",
   opacity: 0.88,
   lineHeight: 1.6,
+};
+
+const shopFooterLink = {
+  display: "inline-block",
+  marginTop: 8,
+  color: "#f0b483",
+  textDecoration: "none",
+  fontWeight: 700,
+  fontSize: 14,
+  lineHeight: 1.5,
 };
 
 const adminFooterBtn = {
