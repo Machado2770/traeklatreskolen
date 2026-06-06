@@ -2,6 +2,7 @@ import Image from "next/image";
 import { getProducts } from "@/lib/getProducts";
 import { CATEGORIES } from "@/lib/shopData";
 import { formatPrice } from "@/lib/format";
+import QuickAdd from "@/app/components/QuickAdd";
 
 export const dynamic = "force-dynamic";
 
@@ -114,7 +115,9 @@ export default async function ShopPage() {
                   <h2 style={catTitle}>{g.category}</h2>
                   <div style={grid}>
                     {g.items.map((p) => (
-                      <a key={p.slug} id={p.slug} href={`/shop/${p.slug}`} style={card} className="shop-card">
+                      <div key={p.slug} id={p.slug} style={card} className="shop-card">
+                        {/* Ét stort link over hele kortet — hurtig-køb ligger ovenpå (zIndex) */}
+                        <a href={`/shop/${p.slug}`} style={stretchedLink} aria-label={p.name}></a>
                         <div style={imageWrap} className="shop-card-img">
                           {p.image ? (
                             <Image src={p.image} alt={p.name} fill style={{ objectFit: "contain" }}
@@ -132,8 +135,12 @@ export default async function ShopPage() {
                               Se vare <span className="shop-cta-arrow">→</span>
                             </span>
                           </div>
+                          <QuickAdd product={{
+                            slug: p.slug, name: p.name, price: p.price,
+                            image: p.image, sizes: p.sizes ?? [],
+                          }} />
                         </div>
-                      </a>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -211,6 +218,7 @@ const grid = {
   gap: 28,
 };
 const card = {
+  position: "relative",
   display: "flex",
   flexDirection: "column",
   background: "white",
@@ -220,6 +228,7 @@ const card = {
   textDecoration: "none",
   scrollMarginTop: 100, // anker-landing fra "Tilbage til shoppen"
 };
+const stretchedLink = { position: "absolute", inset: 0, zIndex: 1 };
 const imageWrap = {
   position: "relative",
   height: 210,
