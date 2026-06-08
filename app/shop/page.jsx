@@ -16,7 +16,7 @@ export const metadata = {
     description:
       "Udstyr vi selv underviser med — kvalificeret udstyr og vejledning følger med købet.",
     url: "/shop",
-    images: [{ url: "/og/forside.png", width: 1200, height: 630, alt: "Shop — Træklatreskolen" }],
+    images: [{ url: "/og/shop.png", width: 1200, height: 630, alt: "Shop — Træklatreskolen" }],
   },
 };
 

@@ -8,7 +8,7 @@ export const metadata = {
     description:
       "Træklatring som læringsrum — oplevelse, faglighed og refleksion. Naturdannelse for børn, unge, voksne, fagpersoner og organisationer.",
     url: "/naturdannelse",
-    images: [{ url: "/og/forside.png", width: 1200, height: 630, alt: "Naturdannelse — Træklatreskolen" }],
+    images: [{ url: "/og/naturdannelse.png", width: 1200, height: 630, alt: "Naturdannelse — Træklatreskolen" }],
   },
 };
 
