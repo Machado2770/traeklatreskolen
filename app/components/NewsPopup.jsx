@@ -32,8 +32,8 @@ export default function NewsPopup() {
   if (!show) return null;
 
   return (
-    <div style={overlay} onClick={close} role="dialog" aria-modal="true" aria-label="Nyhed">
-      <div style={modal} onClick={(e) => e.stopPropagation()}>
+    <div style={wrap}>
+      <div style={modal} role="dialog" aria-label="Nyhed">
         <button onClick={close} style={closeBtn} aria-label="Luk">×</button>
 
         <p style={badge}>Nyt</p>
@@ -72,27 +72,27 @@ export default function NewsPopup() {
   );
 }
 
-const overlay = {
+// Diskret hjørne-toast nederst til højre — dækker ikke siden, og resten
+// af siden forbliver klikbar (pointerEvents: none på wrapperen).
+const wrap = {
   position: "fixed",
-  inset: 0,
-  background: "rgba(15,26,20,0.55)",
-  backdropFilter: "blur(3px)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  padding: 20,
+  right: 20,
+  bottom: 20,
   zIndex: 100,
+  width: 340,
+  maxWidth: "calc(100vw - 32px)",
+  pointerEvents: "none",
   animation: "newspop-fade 0.25s ease",
 };
 
 const modal = {
   position: "relative",
+  pointerEvents: "auto",
   background: "white",
-  borderRadius: 22,
-  maxWidth: 460,
+  borderRadius: 18,
   width: "100%",
-  padding: "36px 32px 32px",
-  boxShadow: "0 24px 70px rgba(0,0,0,0.35)",
+  padding: "22px 22px 22px",
+  boxShadow: "0 16px 48px rgba(0,0,0,0.26)",
   animation: "newspop-in 0.32s cubic-bezier(0.16,1,0.3,1)",
   borderTop: "5px solid #d8782f",
 };
@@ -126,24 +126,24 @@ const badge = {
 };
 
 const title = {
-  fontSize: 26,
+  fontSize: 20,
   fontWeight: 800,
   color: "#1f3a2b",
-  margin: "0 0 16px",
-  lineHeight: 1.2,
+  margin: "0 0 12px",
+  lineHeight: 1.25,
 };
 
 const body = {
   display: "flex",
   flexDirection: "column",
-  gap: 12,
-  marginBottom: 26,
+  gap: 9,
+  marginBottom: 18,
 };
 
 const text = {
   margin: 0,
-  fontSize: 15.5,
-  lineHeight: 1.65,
+  fontSize: 14,
+  lineHeight: 1.6,
   color: "#4b6355",
 };
 
@@ -152,9 +152,9 @@ const cta = {
   background: "#d8782f",
   color: "white",
   textDecoration: "none",
-  padding: "14px 28px",
-  borderRadius: 12,
+  padding: "11px 22px",
+  borderRadius: 10,
   fontWeight: 700,
-  fontSize: 16,
-  boxShadow: "0 4px 18px rgba(216,120,47,0.4)",
+  fontSize: 14.5,
+  boxShadow: "0 4px 16px rgba(216,120,47,0.35)",
 };

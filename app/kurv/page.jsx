@@ -92,6 +92,27 @@ export default function KurvPage() {
             <a href="/shop" style={primaryBtn}>Gå til shop</a>
           </div>
         ) : (
+          <>
+            {subtotal >= SHIPPING.freeOver ? (
+              <div style={freeBarDone}>
+                <span style={freeBarIcon}>🎉</span>
+                <span>Du har fri fragt!</span>
+              </div>
+            ) : (
+              <div style={freeBarBox}>
+                <p style={freeBarText}>
+                  Du mangler <strong>{formatPrice(SHIPPING.freeOver - subtotal)}</strong> til fri fragt
+                </p>
+                <div style={freeBarTrack}>
+                  <div
+                    style={{
+                      ...freeBarFill,
+                      width: `${Math.min(100, Math.round((subtotal / SHIPPING.freeOver) * 100))}%`,
+                    }}
+                  />
+                </div>
+              </div>
+            )}
           <div style={layout} className="cart-layout">
             <div style={itemsCol}>
               {items.map((i) => (
@@ -123,11 +144,6 @@ export default function KurvPage() {
                 <span>Fragt</span>
                 <span>{shipping === 0 ? "Gratis" : formatPrice(shipping)}</span>
               </div>
-              {shipping > 0 && (
-                <p style={freeHint}>
-                  Køb for {formatPrice(SHIPPING.freeOver - subtotal)} mere og få fri fragt.
-                </p>
-              )}
               <div style={totalRow}><span>Total</span><span>{formatPrice(total)}</span></div>
 
               {error && <p style={errorBox}>{error}</p>}
@@ -195,6 +211,7 @@ export default function KurvPage() {
               <a href="/shop" style={continueLink}>← Fortsæt med at handle</a>
             </aside>
           </div>
+          </>
         )}
       </div>
     </main>
@@ -229,7 +246,12 @@ const removeBtn = { border: "none", background: "transparent", color: "#a3521d",
 
 const summary = { background: "white", borderRadius: 18, padding: 24, boxShadow: "0 8px 28px rgba(0,0,0,0.08)" };
 const sumRow = { display: "flex", justifyContent: "space-between", margin: "12px 0", color: "#33463a" };
-const freeHint = { fontSize: 13, color: "#216344", background: "#e3efe6", borderRadius: 10, padding: "8px 12px", margin: "8px 0" };
+const freeBarBox = { background: "white", borderRadius: 16, padding: "16px 20px", marginBottom: 20, boxShadow: "0 4px 18px rgba(0,0,0,0.06)" };
+const freeBarText = { margin: "0 0 10px", color: "#33463a", fontSize: 14.5, fontWeight: 600 };
+const freeBarTrack = { height: 10, borderRadius: 999, background: "#e3efe6", overflow: "hidden" };
+const freeBarFill = { height: "100%", borderRadius: 999, background: "#d8782f", transition: "width 0.3s ease" };
+const freeBarDone = { display: "flex", alignItems: "center", gap: 10, background: "#e3efe6", color: "#216344", borderRadius: 16, padding: "16px 20px", marginBottom: 20, fontWeight: 800, fontSize: 15.5 };
+const freeBarIcon = { fontSize: 20 };
 const totalRow = {
   display: "flex", justifyContent: "space-between", marginTop: 14, paddingTop: 14,
   borderTop: "1px solid #edf2ee", fontWeight: 800, fontSize: 18, color: "#1f3a2b",

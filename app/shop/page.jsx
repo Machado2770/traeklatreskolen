@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { getProducts } from "@/lib/getProducts";
-import { CATEGORIES } from "@/lib/shopData";
+import { CATEGORIES, productBadge, BADGE_COLORS } from "@/lib/shopData";
 import { formatPrice } from "@/lib/format";
 import QuickAdd from "@/app/components/QuickAdd";
 
@@ -114,10 +114,17 @@ export default async function ShopPage() {
                 <div key={g.category} id={catId(g.category)} style={catSection}>
                   <h2 style={catTitle}>{g.category}</h2>
                   <div style={grid}>
-                    {g.items.map((p) => (
+                    {g.items.map((p) => {
+                      const badge = productBadge(p);
+                      return (
                       <div key={p.slug} id={p.slug} style={card} className="shop-card">
                         {/* Ét stort link over hele kortet — hurtig-køb ligger ovenpå (zIndex) */}
                         <a href={`/shop/${p.slug}`} style={stretchedLink} aria-label={p.name}></a>
+                        {badge && (
+                          <span style={{ ...badgeStyle, background: BADGE_COLORS[badge] || "#d8782f" }}>
+                            {badge}
+                          </span>
+                        )}
                         <div style={imageWrap} className="shop-card-img">
                           {p.image ? (
                             <Image src={p.image} alt={p.name} fill style={{ objectFit: "contain" }}
@@ -141,7 +148,8 @@ export default async function ShopPage() {
                           }} />
                         </div>
                       </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               ))}
@@ -229,6 +237,21 @@ const card = {
   scrollMarginTop: 100, // anker-landing fra "Tilbage til shoppen"
 };
 const stretchedLink = { position: "absolute", inset: 0, zIndex: 1 };
+const badgeStyle = {
+  position: "absolute",
+  top: 22,
+  left: 22,
+  zIndex: 2,
+  pointerEvents: "none",
+  color: "white",
+  fontWeight: 800,
+  fontSize: 11,
+  letterSpacing: 0.4,
+  textTransform: "uppercase",
+  padding: "5px 11px",
+  borderRadius: 999,
+  boxShadow: "0 2px 8px rgba(0,0,0,0.18)",
+};
 const imageWrap = {
   position: "relative",
   height: 210,

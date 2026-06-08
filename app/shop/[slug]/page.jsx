@@ -1,8 +1,9 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getProductBySlug } from "@/lib/getProducts";
-import { SHIPPING } from "@/lib/shopData";
+import { SHIPPING, productBadge, BADGE_COLORS } from "@/lib/shopData";
 import { formatPrice } from "@/lib/format";
+import { graph, productLd, breadcrumbLd, jsonLdScript } from "@/lib/jsonld";
 import AddToCart from "@/app/components/AddToCart";
 
 export const dynamic = "force-dynamic";
@@ -28,14 +29,32 @@ export default async function ProductPage({ params }) {
   if (!p) notFound();
 
   const inStock = p.stock == null || p.stock > 0;
+  const badge = productBadge(p);
+
+  const path = `/shop/${p.slug}`;
+  const jsonLd = graph(
+    productLd(p, path),
+    breadcrumbLd([
+      { name: "Forside", path: "/" },
+      { name: "Shop", path: "/shop" },
+      ...(p.category ? [{ name: p.category, path: "/shop" }] : []),
+      { name: p.name, path },
+    ])
+  );
 
   return (
     <main>
+      <script {...jsonLdScript(jsonLd)} />
       <div style={pageInner}>
         <a href={`/shop#${p.slug}`} style={back}>← Tilbage til shoppen</a>
 
         <div style={grid} className="shop-detail-grid">
           <div style={imageWrap}>
+            {badge && (
+              <span style={{ ...detailBadge, background: BADGE_COLORS[badge] || "#d8782f" }}>
+                {badge}
+              </span>
+            )}
             {p.image ? (
               <Image src={p.image} alt={p.name} fill style={{ objectFit: "contain", padding: 18 }}
                 sizes="(max-width: 900px) 100vw, 50vw" priority />
@@ -93,6 +112,12 @@ const imageWrap = {
   overflow: "hidden",
   background: "white",
   boxShadow: "0 8px 30px rgba(0,0,0,0.08)",
+};
+const detailBadge = {
+  position: "absolute", top: 18, left: 18, zIndex: 2, pointerEvents: "none",
+  color: "white", fontWeight: 800, fontSize: 12, letterSpacing: 0.4,
+  textTransform: "uppercase", padding: "6px 13px", borderRadius: 999,
+  boxShadow: "0 2px 8px rgba(0,0,0,0.18)",
 };
 const imgPlaceholder = {
   width: "100%", height: "100%", display: "flex", alignItems: "center",
