@@ -96,8 +96,8 @@ const imageWrap = {
 };
 const imgPlaceholder = {
   width: "100%", height: "100%", display: "flex", alignItems: "center",
-  justifyContent: "center", fontSize: 18, fontWeight: 700, color: "#b9a98c",
-  background: "#faf3e8",
+  justifyContent: "center", fontSize: 18, fontWeight: 700, color: "#8aa093",
+  background: "#eef3ef",
 };
 const info = {};
 const catTag = {

@@ -154,7 +154,7 @@ export default async function ShopPage() {
 }
 
 const conceptSection = {
-  background: "linear-gradient(180deg, #ffffff 0%, #faf3e8 100%)",
+  background: "linear-gradient(180deg, #ffffff 0%, #eef3ef 100%)",
   padding: "64px 24px",
 };
 const conceptInner = { maxWidth: 960, margin: "0 auto", textAlign: "center" };
@@ -174,13 +174,13 @@ const point = {
   borderRadius: 16,
   padding: "22px 24px",
   borderTop: "4px solid #d8782f",
-  boxShadow: "0 6px 22px rgba(140, 90, 30, 0.10)",
+  boxShadow: "0 6px 22px rgba(0,0,0,0.08)",
 };
 const pointTitle = { color: "#1f3a2b", fontSize: 16.5 };
 const pointText = { color: "#4b6355", fontSize: 14.5, lineHeight: 1.65 };
 const pointLink = { color: "#c2611d", fontWeight: 700 };
 
-const section = { background: "#f7efe2", padding: "56px 24px 88px" };
+const section = { background: "#eef3ef", padding: "56px 24px 88px" };
 const container = { maxWidth: 1180, margin: "0 auto" };
 
 const catNav = {
@@ -198,7 +198,7 @@ const catChip = {
   padding: "9px 16px",
   borderRadius: 999,
   textDecoration: "none",
-  boxShadow: "0 2px 10px rgba(140, 90, 30, 0.10)",
+  boxShadow: "0 2px 10px rgba(0,0,0,0.08)",
 };
 const catChipCount = { color: "#c2611d", fontWeight: 700 };
 const catSection = { paddingTop: 36, scrollMarginTop: 90 };
@@ -224,7 +224,7 @@ const card = {
   background: "white",
   borderRadius: 18,
   overflow: "hidden",
-  boxShadow: "0 8px 30px rgba(140, 90, 30, 0.10)",
+  boxShadow: "0 8px 30px rgba(0,0,0,0.08)",
   textDecoration: "none",
   scrollMarginTop: 100, // anker-landing fra "Tilbage til shoppen"
 };
@@ -239,8 +239,8 @@ const imageWrap = {
 };
 const imgPlaceholder = {
   width: "100%", height: "100%", display: "flex", alignItems: "center",
-  justifyContent: "center", fontSize: 15, fontWeight: 700, color: "#b9a98c",
-  background: "#faf3e8", borderRadius: 12,
+  justifyContent: "center", fontSize: 15, fontWeight: 700, color: "#8aa093",
+  background: "#eef3ef", borderRadius: 12,
 };
 const body = { padding: "18px 22px 22px", display: "flex", flexDirection: "column", flex: 1 };
 const name = { margin: "0 0 8px", color: "#1f3a2b", fontSize: 18, fontWeight: 700 };
