@@ -14,6 +14,9 @@ export default function sitemap() {
     { url: `${BASE}/om-os`,   priority: 0.7, changeFrequency: "monthly" },
     { url: `${BASE}/booking`, priority: 0.8, changeFrequency: "monthly" },
     { url: `${BASE}/shop`,    priority: 0.8, changeFrequency: "weekly" },
+    { url: `${BASE}/guides`,  priority: 0.6, changeFrequency: "monthly" },
+    { url: `${BASE}/guides/kom-i-gang-med-traeklatring`,   priority: 0.7, changeFrequency: "monthly" },
+    { url: `${BASE}/guides/klatreudstyr-til-traeklatring`, priority: 0.7, changeFrequency: "monthly" },
   ];
 
   const coursePages = courses.map((c) => ({
