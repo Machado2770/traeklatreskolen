@@ -61,11 +61,38 @@ Pris: 850 kr. pr. person · Varighed: ca. 3 timer · Min. 10 deltagere
 Mere højde og fysisk udfordring — kæmpe gynge, jakobsstige og traverser. Velegnet til teamdage og firmagrupper.
 URL: https://www.traeklatreskolen.dk/oplevelser/vild
 
+## Shop
+
+Træklatreskolen sælger det klatre- og friluftsudstyr, vi selv underviser med. Kvalificeret vejledning følger med købet — du handler direkte med instruktørerne. Betaling med kort (Stripe) eller på fremsendt faktura, også elektronisk (EAN) for skoler, organisationer og foreninger. Fri fragt over 750 kr.
+URL: https://www.traeklatreskolen.dk/shop
+
+Sortimentet omfatter bl.a.:
+- Komplette klatrepakker (til 2 personer og til klubber/foreninger)
+- Dynamiske reb, prusiksnore, kasteliner og kasteposer
+- Seler, hjelme og karabiner (HMS- og skruelåskarabiner)
+- Rebbremser og sikringsudstyr (ATC, GriGri, ottetaller)
+- Slynger, stiger, tasker (Ortlieb) og opbevaring
+- Telte og lavvuer (Tentipi) samt bålgrej og lejrliv
+- T-shirts (climbers collection)
+
+## Naturdannelse
+
+Træklatring som læringsrum — oplevelse, faglighed og refleksion. Naturdannelse for børn, unge, voksne, fagpersoner og organisationer, hvor naturen bliver et sted, vi lærer, mærker og udvikler os. Udbytte bl.a.: mod og handlekraft, respekt for naturen, tillid til sig selv og andre, forståelse for sikkerhed og ansvar, fællesskab og samarbejde.
+URL: https://www.traeklatreskolen.dk/naturdannelse
+
+## For organisationer
+
+Træklatreskolen tilbyder forløb for skoler, institutioner, naturskoler og friluftsorganisationer, der vil opbygge egne kompetencer i sikker træklatring. Et forløb er for op til 6 medarbejdere og samler instruktøruddannelse, faste sikkerhedsprocedurer (SOP — nedskrevne arbejdsgange), risikovurdering og praktisk træning i én samlet pakke, så organisationen selv kan gennemføre træklatring trygt og fagligt stærkt bagefter.
+URL: https://www.traeklatreskolen.dk/organisationer
+
 ## Vigtige sider
 
 - Kursuskalender med datoer: https://www.traeklatreskolen.dk/kursuskalender
 - Alle kurser: https://www.traeklatreskolen.dk/kurser
 - Alle oplevelser: https://www.traeklatreskolen.dk/oplevelser
+- Shop (udstyr): https://www.traeklatreskolen.dk/shop
+- Naturdannelse: https://www.traeklatreskolen.dk/naturdannelse
+- For organisationer: https://www.traeklatreskolen.dk/organisationer
 - Om os: https://www.traeklatreskolen.dk/om-os
 - Kontakt: https://www.traeklatreskolen.dk/kontakt
 
