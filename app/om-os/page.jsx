@@ -20,7 +20,7 @@ const instructors = [
     image: "/images/team/lykke.jpg",
     imagePosition: "center",
     bio: [
-      "Lykke er uddannet træklatreinstruktør og en vigtig del af holdet bag Træklatreskolen. Hun har en særlig evne til at skabe trygge rammer for deltagerne — særligt for dem der møder træklatring for første gang.",
+      "Lykke er uddannet træklatrevejleder og en vigtig del af holdet bag Træklatreskolen. Hun har en særlig evne til at skabe trygge rammer for deltagerne — særligt for dem der møder træklatring for første gang.",
       "Lykkes tilgang kombinerer faglig sikkerhed med omsorg for den enkelte deltager, og hun bidrager til at Træklatreskolen kan tilbyde oplevelser og kurser af høj kvalitet for både grupper og enkeltpersoner.",
     ],
   },
@@ -30,7 +30,7 @@ const instructors = [
     image: "/images/team/kasper.jpg",
     imagePosition: "center",
     bio: [
-      "Kasper er uddannet træklatreinstruktør og en del af teamet bag Træklatreskolen. Med en uddannelse som coach og mere end 20 års erfaring fra ledelse arbejder han i krydsfeltet mellem mennesker, ledelse og udvikling. Til daglig arbejder han med coaching og ledelsesudvikling, hvor naturen er rammen.",
+      "Kasper er uddannet træklatrevejleder og en del af teamet bag Træklatreskolen. Med en uddannelse som coach og mere end 20 års erfaring fra ledelse arbejder han i krydsfeltet mellem mennesker, ledelse og udvikling. Til daglig arbejder han med coaching og ledelsesudvikling, hvor naturen er rammen.",
       "For Kasper er træet ikke kun en aktivitet, men et rum for refleksion, samtale og udvikling. Det er her, hans afsæt ligger: at bruge klatringen til at arbejde med tillid, mod og dømmekraft, så oplevelsen i højden også bliver til personlig og fælles udvikling. Naturen er rummet — og faglighed og sikkerhed følger altid med.",
     ],
   },
@@ -40,7 +40,7 @@ const instructors = [
     image: "/images/team/martin.jpg",
     imagePosition: "center",
     bio: [
-      "Martin Machado er natur- og friluftsvejleder, træklatreinstruktør, censor i Dansk Træklatreforening og stifter af Træklatreskolen. Med en master i friluftsliv og mere end 20 års erfaring arbejder han i krydsfeltet mellem træklatring, naturdannelse, sikkerhed og fællesskab.",
+      "Martin Machado er natur- og friluftsvejleder, træklatrevejleder, censor i Dansk Træklatreforening og stifter af Træklatreskolen. Med en master i friluftsliv og mere end 20 års erfaring arbejder han i krydsfeltet mellem træklatring, naturdannelse, sikkerhed og fællesskab.",
       "For Martin er træklatring ikke kun en aktivitet, men et læringsrum. Når mennesker bevæger sig op i trækronerne, bliver mod, ansvar, tillid og dømmekraft konkret. Det er her, Træklatreskolen har sit særlige afsæt: stærke oplevelser, høj faglighed og naturen som ramme for udvikling.",
     ],
   },
