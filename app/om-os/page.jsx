@@ -20,8 +20,8 @@ const instructors = [
     image: "/images/team/lykke.jpg",
     imagePosition: "center",
     bio: [
-      "Lykke er uddannet træklatrevejleder og en vigtig del af holdet bag Træklatreskolen. Hun har en særlig evne til at skabe trygge rammer for deltagerne — særligt for dem der møder træklatring for første gang.",
-      "Lykkes tilgang kombinerer faglig sikkerhed med omsorg for den enkelte deltager, og hun bidrager til at Træklatreskolen kan tilbyde oplevelser og kurser af høj kvalitet for både grupper og enkeltpersoner.",
+      "Lykke er uddannet træklatrevejleder og en vigtig del af holdet bag Træklatreskolen. Hun har en særlig evne til at skabe trygge rammer for deltagerne — særligt for dem der møder træklatring for første gang. Med ro, nærvær og et vågent blik for den enkelte får hun selv den mest nervøse deltager til at føle sig godt tilpas, fra fødderne forlader jorden til man står trygt højt oppe i trækronerne.",
+      "Lykkes tilgang kombinerer faglig sikkerhed med omsorg for den enkelte deltager, og hun bidrager til at Træklatreskolen kan tilbyde oplevelser og kurser af høj kvalitet for både grupper og enkeltpersoner. For Lykke handler træklatring lige så meget om fællesskab og naturoplevelse som om teknik — om at turde slippe lidt af kontrollen, mærke skoven og opdage, hvad man egentlig kan, når rammerne er trygge og støtten er der hele vejen.",
     ],
   },
   {
