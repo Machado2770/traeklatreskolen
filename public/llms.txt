@@ -15,27 +15,27 @@ Træklatreskolen ønsker at sikre gode oplevelser og aktiv læring gennem kvalif
 ## Kurser
 
 ### Begynder i træklatring
-Pris: 1.900 kr. · Varighed: 2 dage · Niveau: Begynder (ingen forudsætninger)
+Pris: 2.400 kr. · Varighed: 2 dage · Niveau: Begynder (ingen forudsætninger)
 Grundigt introduktionskursus, hvor du lærer træklatring fra bunden med fokus på udstyr, sikkerhed, teknik og naturoplevelse.
 URL: https://www.traeklatreskolen.dk/kurser/begynder
 
 ### Brush-up i træklatring
-Pris: 1.900 kr. · Varighed: 2 dage · Niveau: Erfaren
+Pris: 2.400 kr. · Varighed: 2 dage · Niveau: Erfaren
 Genopfrisk teknik, sikkerhed og gode vaner i træet. For dig med tidligere erfaring.
 URL: https://www.traeklatreskolen.dk/kurser/brush-up
 
 ### Avanceret træklatring
-Pris: 2.900 kr. · Varighed: 3 dage · Niveau: Avanceret
+Pris: 3.600 kr. · Varighed: 3 dage · Niveau: Avanceret
 Komplekse systemer, redning og faglig fordybelse — kæmpe gynge, jakobsstige, traverser og overnatning i højden. Forudsætter erfaring på instruktørniveau.
 URL: https://www.traeklatreskolen.dk/kurser/avanceret
 
 ### Træklatreinstruktør
-Pris: 4.400 kr. · Varighed: 4 dage · Niveau: Videregående
+Pris: 4.900 kr. · Varighed: 4 dage · Niveau: Videregående
 Uddannelse til at lede grupper sikkert i trækronerne. Følger Dansk Træklatreforenings normer og afsluttes med eksamen. Forudsætning: gyldigt førstehjælpsbevis ved eksamen.
 URL: https://www.traeklatreskolen.dk/kurser/instruktor
 
 ### Førstehjælpskursus
-Pris: 1.100 kr. · Varighed: 8 timer · Niveau: Alle
+Pris: 1.200 kr. · Varighed: 8 timer · Niveau: Alle
 Praktisk førstehjælp og en forudsætning for at gå til eksamen som træklatreinstruktør. Kursusbevis udstedes.
 URL: https://www.traeklatreskolen.dk/kurser/forstehjaelp
 
@@ -47,17 +47,17 @@ URL: https://www.traeklatreskolen.dk/kurser/eksamen
 ## Oplevelser
 
 ### Oplevelsestur i trækronerne
-Pris: 650 kr. pr. person · Varighed: 3 timer
+Pris: 850 kr. pr. person · Varighed: 3 timer
 Rolig og tryg tur op i trækronerne for grupper og enkeltpersoner. Udsigt, ro og naturfornemmelse.
 URL: https://www.traeklatreskolen.dk/oplevelser/traetur
 
 ### Overnatning i trækronerne
-Pris: 1.550 kr. pr. person · Varighed: Eftermiddag til morgenmad
+Pris: 1.750 kr. pr. person · Varighed: Eftermiddag til morgenmad
 Overnatning i hængekøje højt i trækronerne med bål og lejrstemning.
 URL: https://www.traeklatreskolen.dk/oplevelser/overnatning
 
 ### Den vilde klatretur
-Pris: 850 kr. pr. person · Varighed: ca. 3 timer · Min. 10 deltagere
+Pris: 1.100 kr. pr. person · Varighed: ca. 3 timer · Min. 10 deltagere
 Mere højde og fysisk udfordring — kæmpe gynge, jakobsstige og traverser. Velegnet til teamdage og firmagrupper.
 URL: https://www.traeklatreskolen.dk/oplevelser/vild
 

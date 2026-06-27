@@ -52,7 +52,7 @@ const faqs = [
   },
   {
     q: "Hvad koster det at komme i gang?",
-    a: "Et begynderkursus over 2 dage koster 1.900 kr. og inkluderer udstyr og vejledning. Det er den billigste og tryggeste måde at finde ud af, om træklatring er noget for dig.",
+    a: "Et begynderkursus over 2 dage koster 2.400 kr. og inkluderer udstyr og vejledning. Det er den billigste og tryggeste måde at finde ud af, om træklatring er noget for dig.",
   },
   {
     q: "Hvor gammel skal man være?",

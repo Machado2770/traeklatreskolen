@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { courses, experiences } from "@/lib/siteData";
+import { getCourses, getExperiences } from "@/lib/getCourses";
 import {
   graph,
   organizationLd,
@@ -7,6 +7,7 @@ import {
   localBusinessLd,
   faqLd,
   jsonLdScript,
+  parsePrice,
 } from "@/lib/jsonld";
 
 export const metadata = {
@@ -22,45 +23,56 @@ export const metadata = {
   },
 };
 
-// Ofte stillede spørgsmål — vises på siden OG som FAQPage-schema, så Google
-// og AI-tjenester (ChatGPT, Perplexity m.fl.) kan citere svarene direkte.
-const faqs = [
-  {
-    q: "Hvad koster et træklatrekursus?",
-    a: "Begynderkursus og brush-up koster 1.900 kr., avanceret træklatring 2.900 kr. og træklatreinstruktøruddannelsen 4.400 kr. Oplevelsesture starter ved 650 kr. pr. person.",
-  },
-  {
-    q: "Skal jeg have erfaring for at deltage?",
-    a: "Nej. Begynderkurset kræver ingen forudsætninger og starter helt fra bunden med udstyr, sikkerhed og grundteknik. Brush-up, avanceret og instruktør forudsætter erfaring.",
-  },
-  {
-    q: "Hvor afholdes kurserne?",
-    a: "Træklatreskolen afholder kurser og oplevelser i hele Danmark — på Sjælland, Fyn og i Jylland. Se aktuelle datoer og steder i kursuskalenderen.",
-  },
-  {
-    q: "Er træklatring sikkert?",
-    a: "Ja. Al klatring foregår med professionelt sikkerhedsudstyr og efter Dansk Træklatreforenings normer, og aktiviteterne er erhvervsforsikrede. Sikkerhed gennemgås altid grundigt inden klatring.",
-  },
-  {
-    q: "Hvor lang tid varer et kursus?",
-    a: "Et begynder- eller brush-up-kursus varer 2 dage, avanceret 3 dage og instruktøruddannelsen 4 dage. Oplevelsesture varer typisk omkring 3 timer.",
-  },
-  {
-    q: "Kan I lave forløb for skoler, institutioner og firmaer?",
-    a: "Ja. Vi tilbyder oplevelsesture og teamdage for grupper, skoler og institutioner. Kontakt os på info@traeklatreskolen.dk for et tilbud.",
-  },
-];
+export default async function Home() {
+  const allCourses = await getCourses();
+  const allExperiences = await getExperiences();
+  const featuredCourses = allCourses.slice(0, 3);
+  const featuredExperiences = allExperiences.slice(0, 3);
 
-const jsonLd = graph(
-  organizationLd(),
-  websiteLd(),
-  localBusinessLd(),
-  faqLd(faqs)
-);
+  // Priser hentes fra samme kilde som resten af sitet (Supabase via getCourses),
+  // så en prisændring i admin slår igennem her, på kursussiden og i FAQ-schema.
+  const priceOf = (slug) => allCourses.find((c) => c.slug === slug)?.price ?? "";
+  const cheapestExperience =
+    allExperiences
+      .map((e) => e.price)
+      .filter(Boolean)
+      .sort((a, b) => parsePrice(a) - parsePrice(b))[0] ?? "";
 
-export default function Home() {
-  const featuredCourses = courses.slice(0, 3);
-  const featuredExperiences = experiences.slice(0, 3);
+  // Ofte stillede spørgsmål — vises på siden OG som FAQPage-schema, så Google
+  // og AI-tjenester (ChatGPT, Perplexity m.fl.) kan citere svarene direkte.
+  const faqs = [
+    {
+      q: "Hvad koster et træklatrekursus?",
+      a: `Begynderkursus og brush-up koster ${priceOf("begynder")}, avanceret træklatring ${priceOf("avanceret")} og træklatreinstruktøruddannelsen ${priceOf("instruktor")}. Oplevelsesture starter ved ${cheapestExperience}.`,
+    },
+    {
+      q: "Skal jeg have erfaring for at deltage?",
+      a: "Nej. Begynderkurset kræver ingen forudsætninger og starter helt fra bunden med udstyr, sikkerhed og grundteknik. Brush-up, avanceret og instruktør forudsætter erfaring.",
+    },
+    {
+      q: "Hvor afholdes kurserne?",
+      a: "Træklatreskolen afholder kurser og oplevelser i hele Danmark — på Sjælland, Fyn og i Jylland. Se aktuelle datoer og steder i kursuskalenderen.",
+    },
+    {
+      q: "Er træklatring sikkert?",
+      a: "Ja. Al klatring foregår med professionelt sikkerhedsudstyr og efter Dansk Træklatreforenings normer, og aktiviteterne er erhvervsforsikrede. Sikkerhed gennemgås altid grundigt inden klatring.",
+    },
+    {
+      q: "Hvor lang tid varer et kursus?",
+      a: "Et begynder- eller brush-up-kursus varer 2 dage, avanceret 3 dage og instruktøruddannelsen 4 dage. Oplevelsesture varer typisk omkring 3 timer.",
+    },
+    {
+      q: "Kan I lave forløb for skoler, institutioner og firmaer?",
+      a: "Ja. Vi tilbyder oplevelsesture og teamdage for grupper, skoler og institutioner. Kontakt os på info@traeklatreskolen.dk for et tilbud.",
+    },
+  ];
+
+  const jsonLd = graph(
+    organizationLd(),
+    websiteLd(),
+    localBusinessLd(),
+    faqLd(faqs)
+  );
 
   return (
     <>
