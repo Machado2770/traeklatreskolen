@@ -59,7 +59,7 @@ export default async function Home() {
     },
     {
       q: "Hvor lang tid varer et kursus?",
-      a: "Et begynder- eller brush-up-kursus varer 2 dage, avanceret 3 dage og instruktøruddannelsen 4 dage. Oplevelsesture varer typisk omkring 3 timer.",
+      a: "Et begynder- eller brush-up-kursus varer 2 dage, avanceret 3 dage og instruktøruddannelsen 5 dage. Oplevelsesture varer typisk omkring 3 timer.",
     },
     {
       q: "Kan I lave forløb for skoler, institutioner og firmaer?",
