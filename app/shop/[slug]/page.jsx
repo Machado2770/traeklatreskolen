@@ -1,10 +1,8 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getProductBySlug } from "@/lib/getProducts";
-import { SHIPPING, productBadge, BADGE_COLORS } from "@/lib/shopData";
-import { formatPrice } from "@/lib/format";
+import { productBadge, BADGE_COLORS } from "@/lib/shopData";
 import { graph, productLd, breadcrumbLd, jsonLdScript } from "@/lib/jsonld";
-import AddToCart from "@/app/components/AddToCart";
 
 export const dynamic = "force-dynamic";
 
@@ -28,7 +26,6 @@ export default async function ProductPage({ params }) {
   const p = await getProductBySlug(params.slug);
   if (!p) notFound();
 
-  const inStock = p.stock == null || p.stock > 0;
   const badge = productBadge(p);
 
   const path = `/shop/${p.slug}`;
@@ -45,6 +42,9 @@ export default async function ProductPage({ params }) {
   return (
     <main>
       <script {...jsonLdScript(jsonLd)} />
+      <div style={constructionBanner}>
+        Webshop under opbygning, forventes klar i efteråret 2026
+      </div>
       <div style={pageInner}>
         <a href={`/shop#${p.slug}`} style={back}>← Tilbage til shoppen</a>
 
@@ -66,11 +66,6 @@ export default async function ProductPage({ params }) {
           <div style={info}>
             {p.category && <span style={catTag}>{p.category}</span>}
             <h1 style={title}>{p.name}</h1>
-            <p style={price}>{formatPrice(p.price)}</p>
-
-            <p style={stockLine(inStock)}>
-              {inStock ? "✓ På lager" : "Udsolgt"}
-            </p>
 
             {p.description && <p style={desc}>{p.description}</p>}
 
@@ -83,18 +78,8 @@ export default async function ProductPage({ params }) {
             )}
 
             <div style={{ marginTop: 26 }}>
-              {inStock ? (
-                <AddToCart product={p} withQty />
-              ) : (
-                <a href="/kontakt" style={notifyBtn}>Skriv til os om varen</a>
-              )}
+              <a href="/kontakt" style={notifyBtn}>Skriv til os om varen</a>
             </div>
-
-            <p style={shippingNote}>
-              Fragt {formatPrice(SHIPPING.flatRate)} — fri fragt over {formatPrice(SHIPPING.freeOver)}.
-              Betaling sker sikkert med kort via Stripe — eller på fremsendt faktura
-              (også elektronisk via EAN), som vælges i kurven.
-            </p>
           </div>
         </div>
       </div>
@@ -136,12 +121,6 @@ const catTag = {
   marginBottom: 14,
 };
 const title = { fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, color: "#1f3a2b", margin: "0 0 12px", lineHeight: 1.15 };
-const price = { fontSize: 26, fontWeight: 800, color: "#d8782f", margin: "0 0 8px" };
-const stockLine = (inStock) => ({
-  margin: "0 0 20px",
-  fontWeight: 700,
-  color: inStock ? "#216344" : "#a3521d",
-});
 const desc = { fontSize: 16, lineHeight: 1.75, color: "#4b6355", margin: "0 0 20px" };
 const bullets = { listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 10 };
 const bulletItem = { display: "flex", gap: 10, alignItems: "flex-start", fontSize: 15, color: "#33463a", fontWeight: 500 };
@@ -150,4 +129,13 @@ const notifyBtn = {
   display: "inline-block", padding: "13px 24px", background: "#e7efe9", color: "#1f3a2b",
   borderRadius: 12, textDecoration: "none", fontWeight: 700,
 };
-const shippingNote = { marginTop: 22, fontSize: 14, color: "#6c7f73", lineHeight: 1.6 };
+
+const constructionBanner = {
+  background: "#d8782f",
+  color: "white",
+  textAlign: "center",
+  fontWeight: 700,
+  fontSize: 15,
+  padding: "12px 20px",
+  letterSpacing: 0.2,
+};

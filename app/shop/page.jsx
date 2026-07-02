@@ -1,8 +1,6 @@
 import Image from "next/image";
 import { getProducts } from "@/lib/getProducts";
 import { CATEGORIES, productBadge, BADGE_COLORS } from "@/lib/shopData";
-import { formatPrice } from "@/lib/format";
-import QuickAdd from "@/app/components/QuickAdd";
 
 export const dynamic = "force-dynamic";
 
@@ -46,6 +44,10 @@ export default async function ShopPage() {
 
   return (
     <main>
+      <div style={constructionBanner}>
+        Webshop under opbygning, forventes klar i efteråret 2026
+      </div>
+
       <section className="page-hero" style={{ backgroundImage: "url('/images/hero-forest.jpg')" }}>
         <div className="page-hero-overlay">
           <div className="page-hero-inner">
@@ -137,15 +139,10 @@ export default async function ShopPage() {
                           <h3 style={name}>{p.name}</h3>
                           <p style={short}>{p.short}</p>
                           <div style={priceRow}>
-                            <span style={price}>{formatPrice(p.price)}</span>
                             <span style={cta}>
                               Se vare <span className="shop-cta-arrow">→</span>
                             </span>
                           </div>
-                          <QuickAdd product={{
-                            slug: p.slug, name: p.name, price: p.price,
-                            image: p.image, sizes: p.sizes ?? [],
-                          }} />
                         </div>
                       </div>
                       );
@@ -268,6 +265,15 @@ const imgPlaceholder = {
 const body = { padding: "18px 22px 22px", display: "flex", flexDirection: "column", flex: 1 };
 const name = { margin: "0 0 8px", color: "#1f3a2b", fontSize: 18, fontWeight: 700 };
 const short = { margin: "0 0 auto", color: "#4b6355", lineHeight: 1.55, fontSize: 14.5, paddingBottom: 16 };
-const priceRow = { display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "auto" };
-const price = { fontWeight: 800, color: "#c2611d", fontSize: 18 };
+const priceRow = { display: "flex", alignItems: "center", justifyContent: "flex-end", marginTop: "auto" };
 const cta = { color: "#d8782f", fontWeight: 700, fontSize: 13.5 };
+
+const constructionBanner = {
+  background: "#d8782f",
+  color: "white",
+  textAlign: "center",
+  fontWeight: 700,
+  fontSize: 15,
+  padding: "12px 20px",
+  letterSpacing: 0.2,
+};
