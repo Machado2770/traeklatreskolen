@@ -1,11 +1,17 @@
 import Image from "next/image";
 import Script from "next/script";
+import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
 import Header from "./components/Header";
 import NewsPopup from "./components/NewsPopup";
 import FloatingCart from "./components/FloatingCart";
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from "@/lib/siteConfig";
+
+// Egen typografi — self-hostet via next/font (ingen eksterne kald, ingen layout-hop).
+// Fraunces = karakterfuld display-serif til overskrifter. Inter = ren brødtekst.
+const heading = Fraunces({ subsets: ["latin"], variable: "--font-heading", display: "swap" });
+const body    = Inter({ subsets: ["latin"], variable: "--font-body", display: "swap" });
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
@@ -42,7 +48,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="da">
+    <html lang="da" className={`${heading.variable} ${body.variable}`}>
       {GA_ID && <>
         <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
         <Script id="ga4-init" strategy="afterInteractive">{`
@@ -55,8 +61,8 @@ export default function RootLayout({ children }) {
       <body
         style={{
           margin: 0,
-          fontFamily: "system-ui, sans-serif",
-          background: "#f5f7f6",
+          fontFamily: "var(--font-body), system-ui, sans-serif",
+          background: "#f7f4ee",
           color: "#1f2f25",
         }}
       >
@@ -133,7 +139,7 @@ function Footer() {
 
         <div>
           <div style={footerHeading}>Sider</div>
-          <div style={footerList}>
+          <div style={footerList} className="footer-links">
             <a href="/" style={footerLink}>Forside</a>
             <a href="/kurser" style={footerLink}>Kurser</a>
             <a href="/oplevelser" style={footerLink}>Oplevelser</a>
@@ -145,7 +151,7 @@ function Footer() {
 
         <div>
           <div style={footerHeading}>Kontakt</div>
-          <div style={footerList}>
+          <div style={footerList} className="footer-links">
             <a href="/kontakt" style={footerLink}>Kontakt os</a>
             <a href="mailto:info@traeklatreskolen.dk" style={footerLink}>info@traeklatreskolen.dk</a>
           </div>
@@ -153,7 +159,7 @@ function Footer() {
 
         <div>
           <div style={footerHeading}>Tilmeld</div>
-          <div style={footerList}>
+          <div style={footerList} className="footer-links">
             <a href="/kursuskalender" style={footerLink}>Se kursuskalender</a>
             <a href="/booking" style={footerLink}>Tilmeld kursus</a>
           </div>
