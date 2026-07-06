@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { getCourses } from "@/lib/getCourses";
 import VideoSection from "@/app/components/VideoSection";
+import ProofStrip from "@/app/components/ProofStrip";
 
 export const dynamic = "force-dynamic";
 
@@ -52,6 +53,8 @@ export default async function KurserPage() {
           </div>
         </div>
       </section>
+
+      <ProofStrip />
 
       <section style={section}>
         <div style={container}>
