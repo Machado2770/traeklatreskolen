@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { getCourses, getExperiences } from "@/lib/getCourses";
+import ProofStrip from "@/app/components/ProofStrip";
 import {
   graph,
   organizationLd,
@@ -186,6 +187,8 @@ export default async function Home() {
           })}
         </div>
       </section>
+
+      <ProofStrip />
 
       {/* INTRO — hvid */}
       <section style={introSection}>
