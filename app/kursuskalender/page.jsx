@@ -2,7 +2,6 @@ import { unstable_noStore as noStore } from "next/cache";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { graph, eventLd, jsonLdScript } from "@/lib/jsonld";
 import { isUpcoming } from "@/lib/calendarDates";
-import TreelineDivider from "@/app/components/TreelineDivider";
 
 export const dynamic = "force-dynamic";
 
@@ -175,8 +174,6 @@ export default async function KursuskalenderPage() {
           </div>
         </div>
       </section>
-
-      <TreelineDivider color="#eef3ef" />
 
       {/* Tidslinje */}
       <section style={timelineSection}>

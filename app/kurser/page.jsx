@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { getCourses } from "@/lib/getCourses";
 import VideoSection from "@/app/components/VideoSection";
-import TreelineDivider from "@/app/components/TreelineDivider";
 
 export const dynamic = "force-dynamic";
 
@@ -53,8 +52,6 @@ export default async function KurserPage() {
           </div>
         </div>
       </section>
-
-      <TreelineDivider color="#eef3ef" />
 
       <section style={section}>
         <div style={container}>
