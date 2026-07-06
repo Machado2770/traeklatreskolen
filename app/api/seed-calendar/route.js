@@ -34,6 +34,7 @@ export async function POST() {
       max_participants: item.maxParticipants || 8,
       price:            item.price || "",
       sort_order:       i,
+      is_published:     true,   // standardbegivenheder er offentlige med det samme
     }));
 
   if (!toInsert.length) {
