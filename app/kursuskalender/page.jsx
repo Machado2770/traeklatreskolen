@@ -251,6 +251,8 @@ function TimelineRow({ item, countMap }) {
   const isFull    = max !== null && taken >= max;
   const available = max !== null ? max - taken : null;
   const isKursus  = item.type === "Kursus";
+  const dateParts = String(item.date).split(" · ");
+  const multiDate = dateParts.length > 1;
 
   return (
     <div style={row}>
@@ -258,8 +260,22 @@ function TimelineRow({ item, countMap }) {
       <div style={card} className="cal-tl-card">
         <div style={cardHead}>
           <div>
-            <div style={dateText}>{item.date}</div>
             <div style={titleText}>{item.title}</div>
+            {multiDate ? (
+              <div style={dateBlock}>
+                <div style={dateBlockLabel}>Programdatoer</div>
+                <ul style={dateList}>
+                  {dateParts.map((p, i) => (
+                    <li key={i} style={dateLineItem}>
+                      <span style={dateMarker} aria-hidden />
+                      <span>{p}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <div style={dateSingle}>{item.date}</div>
+            )}
           </div>
           <span style={{ ...typePill, background: isKursus ? "#e7efe9" : "#f5e5d8", color: isKursus ? "#1f3a2b" : "#a3521d" }}>
             {item.type}
@@ -339,8 +355,13 @@ const dot = {
 
 const card     = { background: "white", borderRadius: 16, padding: "18px 20px", boxShadow: "0 6px 20px rgba(0,0,0,0.07)", border: "1px solid #ece6de" };
 const cardHead = { display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 };
-const dateText = { color: "#a3521d", fontWeight: 800, fontSize: 13.5, letterSpacing: 0.2, marginBottom: 4 };
 const titleText= { color: "#1f3a2b", fontWeight: 800, fontSize: 19, lineHeight: 1.25 };
+const dateSingle = { color: "#a3521d", fontWeight: 800, fontSize: 14, letterSpacing: 0.2, marginTop: 6 };
+const dateBlock     = { marginTop: 10, background: "#faf6f0", border: "1px solid #f0e2d3", borderRadius: 12, padding: "10px 14px" };
+const dateBlockLabel= { fontSize: 11, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase", color: "#a3521d", marginBottom: 7 };
+const dateList      = { listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 6 };
+const dateLineItem  = { display: "flex", alignItems: "baseline", gap: 9, color: "#33463a", fontSize: 14, fontWeight: 600, lineHeight: 1.4 };
+const dateMarker    = { width: 6, height: 6, borderRadius: 999, background: "#d8782f", flexShrink: 0, alignSelf: "center" };
 const typePill = { display: "inline-block", padding: "5px 11px", borderRadius: 999, fontSize: 12, fontWeight: 700, flexShrink: 0 };
 
 const metaRow  = { display: "flex", gap: 8, flexWrap: "wrap", margin: "13px 0 15px" };
