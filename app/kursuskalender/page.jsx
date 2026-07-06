@@ -326,7 +326,7 @@ const yearBand = {
   background: "#eef3ef",
   padding: "20px 0 12px",
 };
-const yearNum  = { fontFamily: "var(--font-heading), Georgia, serif", fontSize: "clamp(34px, 7vw, 56px)", fontWeight: 900, letterSpacing: "-1.5px", color: "#1f3a2b", lineHeight: 1 };
+const yearNum  = { fontSize: "clamp(34px, 7vw, 56px)", fontWeight: 900, letterSpacing: "-1.5px", color: "#1f3a2b", lineHeight: 1 };
 const yearMeta = { fontSize: 14, fontWeight: 700, color: "#7a9585", whiteSpace: "nowrap" };
 const yearRule = { flex: 1, height: 4, borderRadius: 4, background: "linear-gradient(90deg, #d8782f, rgba(216,120,47,0))", alignSelf: "center", marginLeft: 6 };
 
@@ -355,7 +355,7 @@ const dot = {
 
 const card     = { background: "white", borderRadius: 16, padding: "18px 20px", boxShadow: "0 6px 20px rgba(0,0,0,0.07)", border: "1px solid #ece6de" };
 const cardHead = { display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 };
-const titleText= { fontFamily: "var(--font-heading), Georgia, serif", color: "#1f3a2b", fontWeight: 800, fontSize: 20, lineHeight: 1.25 };
+const titleText= { color: "#1f3a2b", fontWeight: 800, fontSize: 19, lineHeight: 1.25 };
 const dateSingle = { color: "#a3521d", fontWeight: 800, fontSize: 14, letterSpacing: 0.2, marginTop: 6 };
 const dateBlock     = { marginTop: 10, background: "#faf6f0", border: "1px solid #f0e2d3", borderRadius: 12, padding: "10px 14px" };
 const dateBlockLabel= { fontSize: 11, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase", color: "#a3521d", marginBottom: 7 };

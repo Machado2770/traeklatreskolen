@@ -1,17 +1,11 @@
 import Image from "next/image";
 import Script from "next/script";
-import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
 import Header from "./components/Header";
 import NewsPopup from "./components/NewsPopup";
 import FloatingCart from "./components/FloatingCart";
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from "@/lib/siteConfig";
-
-// Egen typografi — self-hostet via next/font (ingen eksterne kald, ingen layout-hop).
-// Fraunces = karakterfuld display-serif til overskrifter. Inter = ren brødtekst.
-const heading = Fraunces({ subsets: ["latin"], variable: "--font-heading", display: "swap" });
-const body    = Inter({ subsets: ["latin"], variable: "--font-body", display: "swap" });
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
@@ -48,7 +42,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="da" className={`${heading.variable} ${body.variable}`}>
+    <html lang="da">
       {GA_ID && <>
         <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
         <Script id="ga4-init" strategy="afterInteractive">{`
@@ -61,7 +55,7 @@ export default function RootLayout({ children }) {
       <body
         style={{
           margin: 0,
-          fontFamily: "var(--font-body), system-ui, sans-serif",
+          fontFamily: "system-ui, sans-serif",
           background: "#f7f4ee",
           color: "#1f2f25",
         }}
