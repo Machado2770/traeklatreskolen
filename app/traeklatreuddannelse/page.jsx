@@ -34,22 +34,16 @@ const STEPS = [
     text: "Fundamentet. Du lærer udstyr, sikkerhed, knob og grundteknik fra bunden og bevæger dig trygt op i trækronerne for første gang. Ingen forudsætninger.",
   },
   {
-    slug: "brush-up",
-    step: "Trin 2",
-    title: "Brush-up",
-    text: "Har du klatret før, men trænger til at genopfriske teknik og sikkerhed? Brush-up gør dig skarp og tryg igen, inden du bygger videre på uddannelsen.",
-  },
-  {
-    slug: "avanceret",
-    step: "Trin 3",
-    title: "Avanceret træklatring",
-    text: "Videregående teknik: avancerede rebbaner, traverser, sikker opsætning og risikovurdering. Her løfter du dig fra sikker klatrer til rutineret træklatrer.",
-  },
-  {
     slug: "instruktor",
-    step: "Trin 4",
+    step: "Trin 2",
     title: "Træklatreinstruktør-uddannelse",
-    text: "Det afsluttende trin. På 5 undervisningsdage lærer du at planlægge og lede træklatring for grupper — og du eksamineres som træklatreinstruktør efter Dansk Træklatreforenings norm. Gyldigt førstehjælpsbevis kræves inden eksamen.",
+    text: "5 undervisningsdage, hvor du lærer at planlægge og lede træklatring for grupper — gruppeledelse, risikovurdering og nødprocedurer efter Dansk Træklatreforenings normer. Et gyldigt førstehjælpsbevis er en forudsætning for at gå til eksamen.",
+  },
+  {
+    slug: "eksamen",
+    step: "Trin 3",
+    title: "Eksamen til træklatreinstruktør",
+    text: "Den afsluttende prøve. Du demonstrerer dine færdigheder i praksis og teori og får det officielle instruktørbevis efter Dansk Træklatreforenings norm — retten til at føre andre sikkert op i trækronerne.",
   },
 ];
 
@@ -62,19 +56,19 @@ export default async function TraeklatreuddannelsePage() {
   const faqs = [
     {
       q: "Hvad er en træklatreuddannelse?",
-      a: "En træklatreuddannelse er et samlet forløb, hvor du trin for trin opbygger teknik, sikkerhed og erfaring i træklatring og til sidst uddannes og eksamineres som træklatreinstruktør efter Dansk Træklatreforenings norm. Hos Træklatreskolen kan du følge stigen som enkeltkurser eller tage hele forløbet samlet på årskurset.",
+      a: "En træklatreuddannelse er vejen til at blive træklatreinstruktør: du tager begynderkursus, instruktøruddannelsen og en afsluttende eksamen efter Dansk Træklatreforenings norm. Hos Træklatreskolen kan du tage de tre trin enkeltvis eller samlet i vores instruktørforløb.",
     },
     {
       q: "Hvordan bliver man træklatreinstruktør?",
-      a: `Du bliver træklatreinstruktør ved at gennemføre instruktøruddannelsen — 5 undervisningsdage (${priceOf("instruktor")}) med planlægning, ledelse, sikkerhed og risikovurdering, afsluttet med eksamen efter Dansk Træklatreforenings norm. Vi anbefaler, at du først har begynder- og gerne avanceret niveau. Gyldigt førstehjælpsbevis skal foreligge inden eksamen.`,
+      a: `Du bliver træklatreinstruktør ved at tage tre trin: begynderkursus, instruktøruddannelsen (5 undervisningsdage, ${priceOf("instruktor")}) og den afsluttende eksamen efter Dansk Træklatreforenings norm. Et gyldigt førstehjælpsbevis skal foreligge inden eksamen.`,
     },
     {
       q: "Hvor lang tid tager træklatreuddannelsen?",
-      a: "Det afhænger af vejen. Tager du kurserne enkeltvis, varer begynder og brush-up 2 dage, avanceret 3 dage og instruktørmodulet 5 dage. Vil du hele vejen rundt på én gang, er årskurset et samlet forløb på 100 lektioner over et helt år med instruktøreksamen undervejs.",
+      a: "Begynderkurset varer 2 dage, instruktøruddannelsen 5 dage og eksamen 1 dag. Tager du det hele samlet i instruktørforløbet, er det fordelt over ca. 8 mødedage hen over efteråret.",
     },
     {
       q: "Kræver træklatreuddannelsen forudsætninger?",
-      a: "Nej — begynderkurset starter helt fra bunden uden forudsætninger. De videregående trin (avanceret og instruktør) forudsætter klatreerfaring, og instruktøreksamen kræver et gyldigt førstehjælpsbevis.",
+      a: "Nej — begynderkurset starter helt fra bunden uden forudsætninger. Instruktøruddannelsen bygger videre på begynderniveauet, og for at gå til eksamen kræves et gyldigt førstehjælpsbevis.",
     },
     {
       q: "Hvor foregår uddannelsen?",
@@ -131,9 +125,9 @@ export default async function TraeklatreuddannelsePage() {
               indtil du kan tage andre med op i trækronerne — sikkert, fagligt og ansvarligt.
             </p>
             <p style={{ ...introText, marginTop: 18 }}>
-              Uddannelsen følger Dansk Træklatreforenings normer hele vejen, og det afsluttende
-              trin gør dig til eksamineret træklatreinstruktør. Du kan tage trinene enkeltvis i
-              dit eget tempo — eller hele forløbet samlet på vores årskursus.
+              Vejen går gennem tre trin — begynderkursus, instruktøruddannelse og eksamen —
+              og følger Dansk Træklatreforenings normer hele vejen. Du kan tage trinene enkeltvis
+              i dit eget tempo eller samlet i vores instruktørforløb.
             </p>
           </div>
         </section>
@@ -164,22 +158,23 @@ export default async function TraeklatreuddannelsePage() {
           </div>
         </section>
 
-        {/* ÅRSKURSUS — samlet forløb */}
+        {/* SAMLET INSTRUKTØRFORLØB */}
         <section style={sectionWhite}>
           <div style={narrow}>
-            <h2 style={h2}>Hele uddannelsen samlet — årskurset</h2>
+            <h2 style={h2}>Hele uddannelsen samlet — instruktørforløbet</h2>
             <div style={accent} />
             <p style={bodyText}>
-              Vil du hele vejen rundt på én gang, er årskurset det samlede forløb. 100 lektioner
-              over et helt år med fordybelse i teknik, sikkerhed, undervisning og friluftsliv —
-              og med instruktøruddannelse og eksamen indbygget undervejs.
+              Vil du tage begynderkursus, instruktøruddannelse og eksamen i ét sammenhængende
+              forløb, er vores samlede instruktørforløb vejen. Det bundter alle tre trin efter
+              Dansk Træklatreforenings normer — fordelt over ca. 8 mødedage hen over efteråret,
+              til en samlet pris, der er billigere end at købe modulerne hver for sig.
             </p>
             <p style={{ ...bodyText, marginTop: 16 }}>
-              Du slutter året med både bevis, rutine og sikker hånd — og et fællesskab, der deler
-              din passion for skoven.
+              Du slutter med det færdige instruktørbevis. Husk, at et gyldigt førstehjælpsbevis
+              er en forudsætning for eksamen.
             </p>
             <div style={{ marginTop: 28 }}>
-              <a href="/kurser" style={inlineBtn}>Se årskurset og alle kurser →</a>
+              <a href="/kurser/instruktorforlob" style={inlineBtn}>Se det samlede instruktørforløb →</a>
             </div>
           </div>
         </section>

@@ -55,11 +55,11 @@ export default async function Home() {
     },
     {
       q: "Hvordan bliver man træklatreinstruktør?",
-      a: `Du bliver træklatreinstruktør ved at gennemføre en træklatreuddannelse, hvor du opbygger teknik og erfaring og til sidst uddannes og eksamineres som instruktør efter Dansk Træklatreforenings norm. Hos Træklatreskolen kan du følge uddannelsesstigen fra begynderkursus over avanceret træklatring til den 5-dages træklatreinstruktør-uddannelse (${priceOf("instruktor")}), eller tage hele forløbet samlet på årskurset. Gyldigt førstehjælpsbevis skal foreligge inden eksamen.`,
+      a: `Du bliver træklatreinstruktør ved at tage tre trin: begynderkursus, den 5-dages træklatreinstruktør-uddannelse (${priceOf("instruktor")}) og en afsluttende eksamen efter Dansk Træklatreforenings norm. Du kan tage trinene enkeltvis eller samlet i vores instruktørforløb. Gyldigt førstehjælpsbevis skal foreligge inden eksamen.`,
     },
     {
       q: "Tilbyder I en samlet træklatreuddannelse?",
-      a: "Ja. Ud over de enkelte træklatrekurser tilbyder vi en samlet træklatreuddannelse — et årsforløb på 100 lektioner, hvor du kommer hele vejen rundt om træklatring fagligt, praktisk og personligt og undervejs uddannes og eksamineres som træklatreinstruktør. Læs mere på siden om træklatreuddannelse.",
+      a: "Ja. Ud over de enkelte træklatrekurser tilbyder vi et samlet instruktørforløb, hvor begynderkursus, instruktøruddannelse og eksamen er bundtet i én sammenhængende uddannelse efter Dansk Træklatreforenings normer — billigere end at købe modulerne hver for sig. Læs mere på siden om træklatreuddannelse.",
     },
     {
       q: "Er træklatring sikkert?",
