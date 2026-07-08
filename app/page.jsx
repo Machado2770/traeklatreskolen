@@ -51,7 +51,15 @@ export default async function Home() {
     },
     {
       q: "Hvor afholdes kurserne?",
-      a: "Træklatreskolen afholder kurser og oplevelser i hele Danmark — på Sjælland, Fyn og i Jylland. Se aktuelle datoer og steder i kursuskalenderen.",
+      a: "Træklatreskolen afholder træklatrekurser og oplevelser i hele Danmark — på Sjælland, Fyn og i Jylland. Se aktuelle datoer og steder i kursuskalenderen.",
+    },
+    {
+      q: "Hvordan bliver man træklatreinstruktør?",
+      a: `Du bliver træklatreinstruktør ved at gennemføre en træklatreuddannelse, hvor du opbygger teknik og erfaring og til sidst uddannes og eksamineres som instruktør efter Dansk Træklatreforenings norm. Hos Træklatreskolen kan du følge uddannelsesstigen fra begynderkursus over avanceret træklatring til den 5-dages træklatreinstruktør-uddannelse (${priceOf("instruktor")}), eller tage hele forløbet samlet på årskurset. Gyldigt førstehjælpsbevis skal foreligge inden eksamen.`,
+    },
+    {
+      q: "Tilbyder I en samlet træklatreuddannelse?",
+      a: "Ja. Ud over de enkelte træklatrekurser tilbyder vi en samlet træklatreuddannelse — et årsforløb på 100 lektioner, hvor du kommer hele vejen rundt om træklatring fagligt, praktisk og personligt og undervejs uddannes og eksamineres som træklatreinstruktør. Læs mere på siden om træklatreuddannelse.",
     },
     {
       q: "Er træklatring sikkert?",

@@ -8,6 +8,7 @@ export default function sitemap() {
     { url: `${BASE}/organisationer`, priority: 0.9, changeFrequency: "monthly" },
     { url: `${BASE}/naturdannelse`, priority: 0.7, changeFrequency: "monthly" },
     { url: `${BASE}/kurser`, priority: 0.9, changeFrequency: "weekly" },
+    { url: `${BASE}/traeklatreuddannelse`, priority: 0.9, changeFrequency: "monthly" },
     { url: `${BASE}/oplevelser`, priority: 0.9, changeFrequency: "weekly" },
     { url: `${BASE}/kursuskalender`, priority: 0.8, changeFrequency: "daily" },
     { url: `${BASE}/kontakt`, priority: 0.7, changeFrequency: "monthly" },

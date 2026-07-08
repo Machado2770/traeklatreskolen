@@ -6,15 +6,15 @@ import ProofStrip from "@/app/components/ProofStrip";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Kurser i træklatring",
+  title: "Træklatrekursus i hele Danmark",
   description:
-    "Se alle kurser hos Træklatreskolen — begynderkursus, brush-up, træklatreinstruktør, avanceret træklatring og eksamen. Kurser efter Dansk Træklatreforenings normer.",
+    "Find dit træklatrekursus hos Træklatreskolen — begynderkursus, brush-up, avanceret træklatring, træklatreinstruktør-uddannelse og eksamen. Træklatrekurser på Sjælland, Fyn og i Jylland efter Dansk Træklatreforenings normer.",
   alternates: { canonical: "/kurser" },
   openGraph: {
-    title: "Kurser i træklatring | Træklatreskolen",
-    description: "Professionelle træklatrekurser for alle niveauer i hele Danmark.",
+    title: "Træklatrekursus i hele Danmark | Træklatreskolen",
+    description: "Professionelle træklatrekurser for alle niveauer — på Sjælland, Fyn og i Jylland.",
     url: "/kurser",
-    images: [{ url: "/og/kurser.png", width: 1200, height: 630, alt: "Kurser i træklatring — Træklatreskolen" }],
+    images: [{ url: "/og/kurser.png", width: 1200, height: 630, alt: "Træklatrekursus — Træklatreskolen" }],
   },
 };
 
@@ -46,9 +46,10 @@ export default async function KurserPage() {
         <div className="page-hero-overlay">
           <div className="page-hero-inner">
             <p className="page-hero-eyebrow">Kurser</p>
-            <h1 className="page-hero-title">Kurser i træklatring</h1>
+            <h1 className="page-hero-title">Træklatrekursus i hele Danmark</h1>
             <p className="page-hero-text">
-              Fra begynderniveau til brush-up, instruktørforløb, avanceret træklatring og eksamen.
+              Fra begynderkursus til brush-up, instruktørforløb, avanceret træklatring og eksamen —
+              træklatrekurser på Sjælland, Fyn og i Jylland.
             </p>
           </div>
         </div>
@@ -72,7 +73,11 @@ export default async function KurserPage() {
               <p style={spotSubheading}>
                 Et helt års fordybelse for dig, der vil hele vejen rundt om
                 træklatring — fagligt, praktisk og personligt. Kører én gang
-                årligt med opstart i foråret.
+                årligt med opstart i foråret. Se hele vejen til at blive
+                instruktør på siden om{" "}
+                <a href="/traeklatreuddannelse" style={{ color: "#a3521d", fontWeight: 700 }}>
+                  træklatreuddannelse
+                </a>.
               </p>
             </div>
 

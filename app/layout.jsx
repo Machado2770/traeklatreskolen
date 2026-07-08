@@ -7,7 +7,11 @@ import NewsPopup from "./components/NewsPopup";
 import FloatingCart from "./components/FloatingCart";
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from "@/lib/siteConfig";
 
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+// Google Analytics 4 — målings-id er offentligt (sendes alligevel i HTML til
+// browseren), så vi har en fast default. Kan overstyres via env i Vercel.
+// Uden default'en droppede produktionen GA helt, fordi NEXT_PUBLIC_GA_ID
+// ikke var sat i Vercel (kun i lokal .env.local).
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "G-VWEV05S1BB";
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
@@ -136,6 +140,7 @@ function Footer() {
           <div style={footerList} className="footer-links">
             <a href="/" style={footerLink}>Forside</a>
             <a href="/kurser" style={footerLink}>Kurser</a>
+            <a href="/traeklatreuddannelse" style={footerLink}>Træklatreuddannelse</a>
             <a href="/oplevelser" style={footerLink}>Oplevelser</a>
             <a href="/kursuskalender" style={footerLink}>Kursuskalender</a>
             <a href="/guides" style={footerLink}>Guides</a>
