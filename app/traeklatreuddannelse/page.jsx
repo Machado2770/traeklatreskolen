@@ -45,6 +45,12 @@ const STEPS = [
     title: "Eksamen til træklatreinstruktør",
     text: "Den afsluttende prøve. Du demonstrerer dine færdigheder i praksis og teori og får det officielle instruktørbevis efter Dansk Træklatreforenings norm — retten til at føre andre sikkert op i trækronerne.",
   },
+  {
+    slug: "avanceret",
+    step: "Trin 4",
+    title: "Avanceret træklatring",
+    text: "Faglig fordybelse for dig, der allerede er instruktør eller klatrer på højt niveau. Komplekse systemer, redning og problemløsning i trækronerne — og overnatning i højden. Forudsætter erfaring svarende til instruktørniveau.",
+  },
 ];
 
 export default async function TraeklatreuddannelsePage() {
@@ -125,9 +131,10 @@ export default async function TraeklatreuddannelsePage() {
               indtil du kan tage andre med op i trækronerne — sikkert, fagligt og ansvarligt.
             </p>
             <p style={{ ...introText, marginTop: 18 }}>
-              Vejen går gennem tre trin — begynderkursus, instruktøruddannelse og eksamen —
-              og følger Dansk Træklatreforenings normer hele vejen. Du kan tage trinene enkeltvis
-              i dit eget tempo eller samlet i vores instruktørforløb.
+              Vejen til instruktør går gennem tre trin — begynderkursus, instruktøruddannelse og
+              eksamen — og følger Dansk Træklatreforenings normer hele vejen. Vil du videre, tager
+              et fjerde trin, avanceret træklatring, dig dybere ned i faget. Du kan tage trinene
+              enkeltvis i dit eget tempo eller samlet i et af vores uddannelsesforløb.
             </p>
           </div>
         </section>
@@ -158,23 +165,45 @@ export default async function TraeklatreuddannelsePage() {
           </div>
         </section>
 
-        {/* SAMLET INSTRUKTØRFORLØB */}
+        {/* UDDANNELSESFORLØB — SAMLEDE FORLØB */}
         <section style={sectionWhite}>
-          <div style={narrow}>
-            <h2 style={h2}>Hele uddannelsen samlet — instruktørforløbet</h2>
-            <div style={accent} />
-            <p style={bodyText}>
-              Vil du tage begynderkursus, instruktøruddannelse og eksamen i ét sammenhængende
-              forløb, er vores samlede instruktørforløb vejen. Det bundter alle tre trin efter
-              Dansk Træklatreforenings normer — fordelt over ca. 8 mødedage hen over efteråret,
-              til en samlet pris, der er billigere end at købe modulerne hver for sig.
+          <div style={wide}>
+            <h2 style={{ ...h2, textAlign: "center" }}>Uddannelsesforløb — tag det hele samlet</h2>
+            <div style={{ ...accent, margin: "0 auto 28px" }} />
+            <p style={{ ...bodyText, textAlign: "center", maxWidth: 680, margin: "0 auto 40px" }}>
+              Vil du tage flere trin i ét sammenhængende forløb, har vi to samlede
+              uddannelsesforløb efter Dansk Træklatreforenings normer.
             </p>
-            <p style={{ ...bodyText, marginTop: 16 }}>
-              Du slutter med det færdige instruktørbevis. Husk, at et gyldigt førstehjælpsbevis
-              er en forudsætning for eksamen.
-            </p>
-            <div style={{ marginTop: 28 }}>
-              <a href="/kurser/instruktorforlob" style={inlineBtn}>Se det samlede instruktørforløb →</a>
+            <div style={forlobGrid}>
+              {/* Samlet instruktørforløb */}
+              <div style={forlobCard}>
+                <span style={forlobKicker}>Samlet forløb</span>
+                <h3 style={forlobTitle}>Samlet instruktørforløb</h3>
+                {priceOf("instruktorforlob") && (
+                  <span style={forlobPrice}>{priceOf("instruktorforlob")}</span>
+                )}
+                <p style={forlobText}>
+                  Begynderkursus, instruktøruddannelse og eksamen i ét sammenhængende forløb —
+                  fordelt over ca. 8 mødedage hen over efteråret, til en samlet pris der er
+                  billigere end modulerne hver for sig. Du slutter med det færdige instruktørbevis.
+                  Gyldigt førstehjælpsbevis er en forudsætning for eksamen.
+                </p>
+                <a href="/kurser/instruktorforlob" style={forlobBtn}>Se det samlede forløb →</a>
+              </div>
+
+              {/* Årskursus */}
+              <div style={forlobCard}>
+                <span style={forlobKicker}>Længerevarende forløb</span>
+                <h3 style={forlobTitle}>Årskursus</h3>
+                <span style={forlobPrice}>16.995 kr.</span>
+                <p style={forlobText}>
+                  Vores mest ambitiøse forløb: et helt år i trækronerne med 100 lektioner i teknik,
+                  sikkerhed, undervisning og friluftsliv. Undervejs uddannes og eksamineres du som
+                  træklatreinstruktør efter Dansk Træklatreforenings norm — og omsætter resten af
+                  året rollen til praksis. Start i foråret, én gang årligt.
+                </p>
+                <a href="/kurser" style={forlobBtn}>Læs mere om årskurset →</a>
+              </div>
             </div>
           </div>
         </section>
@@ -259,9 +288,21 @@ const stepPrice = { fontSize: 14, fontWeight: 800, color: "#a3521d", background:
 const stepText = { fontSize: 15, lineHeight: 1.7, color: "#4b6355", margin: "10px 0 12px" };
 const stepLink = { fontSize: 14, fontWeight: 700, color: "#d8782f" };
 
-const inlineBtn = {
-  display: "inline-block", background: "#d8782f", color: "white", textDecoration: "none",
-  padding: "13px 26px", borderRadius: 12, fontWeight: 700, fontSize: 16,
+/* Uddannelsesforløb — samlede forløb */
+const forlobGrid = { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 24 };
+const forlobCard = {
+  display: "flex", flexDirection: "column",
+  background: "white", borderRadius: 18, padding: "30px 28px",
+  boxShadow: "0 8px 28px rgba(0,0,0,0.07)", border: "1px solid #ece6de",
+};
+const forlobKicker = { fontSize: 13, fontWeight: 800, letterSpacing: 0.6, textTransform: "uppercase", color: "#a3521d" };
+const forlobTitle = { fontSize: 22, fontWeight: 800, color: "#1f3a2b", margin: "8px 0 12px" };
+const forlobPrice = { fontSize: 14, fontWeight: 800, color: "#a3521d", background: "#f5e5d8", padding: "4px 12px", borderRadius: 999, alignSelf: "flex-start", marginBottom: 16 };
+const forlobText = { fontSize: 16, lineHeight: 1.7, color: "#4b6355", margin: 0, flex: 1 };
+const forlobBtn = {
+  display: "inline-block", marginTop: 22, alignSelf: "flex-start",
+  background: "#d8782f", color: "white", textDecoration: "none",
+  padding: "13px 24px", borderRadius: 12, fontWeight: 700, fontSize: 15,
   boxShadow: "0 4px 18px rgba(216,120,47,0.35)",
 };
 
