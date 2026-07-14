@@ -6,8 +6,9 @@ import Image from "next/image";
 const NAV = [
   { href: "/",               label: "Forside" },
   { href: "/organisationer", label: "Organisationer" },
-  { href: "/kurser",         label: "Kurser" },
-  { href: "/traeklatreuddannelse", label: "Uddannelse" },
+  { href: "/kurser",         label: "Kurser", children: [
+      { href: "/traeklatreuddannelse", label: "Uddannelse" },
+  ]},
   { href: "/oplevelser",     label: "Oplevelser" },
   { href: "/kontakt",        label: "Kontakt" },
 ];
@@ -31,7 +32,22 @@ export default function Header() {
 
         {/* Desktop nav */}
         <nav className="main-nav">
-          {NAV.map(l => <a key={l.href} href={l.href} style={navLink}>{l.label}</a>)}
+          {NAV.map(l => (
+            l.children ? (
+              <span key={l.href} className="nav-item">
+                <a href={l.href} style={navLink}>
+                  {l.label}<span className="nav-caret" aria-hidden="true">▾</span>
+                </a>
+                <span className="dropdown-menu">
+                  {l.children.map(c => (
+                    <a key={c.href} href={c.href} className="dropdown-link">{c.label}</a>
+                  ))}
+                </span>
+              </span>
+            ) : (
+              <a key={l.href} href={l.href} style={navLink}>{l.label}</a>
+            )
+          ))}
           <a href="/kursuskalender" style={ctaLink}>Kursuskalender</a>
         </nav>
 
@@ -52,9 +68,16 @@ export default function Header() {
       {open && (
         <nav className="mobile-nav">
           {NAV.map(l => (
-            <a key={l.href} href={l.href} className="mobile-nav-link" onClick={() => setOpen(false)}>
-              {l.label}
-            </a>
+            <div key={l.href}>
+              <a href={l.href} className="mobile-nav-link" onClick={() => setOpen(false)}>
+                {l.label}
+              </a>
+              {l.children && l.children.map(c => (
+                <a key={c.href} href={c.href} className="mobile-nav-link mobile-nav-sublink" onClick={() => setOpen(false)}>
+                  {c.label}
+                </a>
+              ))}
+            </div>
           ))}
           <a href="/kursuskalender" className="mobile-nav-cta" onClick={() => setOpen(false)}>
             Kursuskalender
