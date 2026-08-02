@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { getSource } from "@/lib/attribution";
 
 const courseOptions = [
   "Begynder i træklatring",
@@ -51,7 +52,8 @@ export default function BookingPage() {
     const response = await fetch("/api/booking", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
+      // source: hvor besøget kom fra (facebook, instagram, google, direkte …)
+      body: JSON.stringify({ ...form, source: getSource() }),
     });
 
     if (!response.ok) {

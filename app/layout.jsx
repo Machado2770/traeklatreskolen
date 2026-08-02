@@ -5,7 +5,8 @@ import Providers from "./providers";
 import Header from "./components/Header";
 import NewsPopup from "./components/NewsPopup";
 import FloatingCart from "./components/FloatingCart";
-import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from "@/lib/siteConfig";
+import SourceTracker from "./components/SourceTracker";
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, SOCIAL } from "@/lib/siteConfig";
 
 // Google Analytics 4 — målings-id er offentligt (sendes alligevel i HTML til
 // browseren), så vi har en fast default. Kan overstyres via env i Vercel.
@@ -70,6 +71,7 @@ export default function RootLayout({ children }) {
           <Footer />
           <NewsPopup />
           <FloatingCart />
+          <SourceTracker />
         </Providers>
 
       </body>
@@ -154,6 +156,26 @@ function Footer() {
             <a href="/kontakt" style={footerLink}>Kontakt os</a>
             <a href="mailto:info@traeklatreskolen.dk" style={footerLink}>info@traeklatreskolen.dk</a>
           </div>
+
+          <div style={{ ...footerHeading, marginTop: 22 }}>Følg os</div>
+          <div style={{ display: "flex", gap: 10 }}>
+            {SOCIAL.facebook && (
+              <a href={SOCIAL.facebook} target="_blank" rel="noopener noreferrer" aria-label="Træklatreskolen på Facebook" style={socialBtn}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M14.5 8.5V6.9c0-.7.2-1.1 1.2-1.1h1.6V3.1c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v1.5H8.5v3h2.6V21h3.4v-9.5h2.6l.4-3h-3z"/>
+                </svg>
+              </a>
+            )}
+            {SOCIAL.instagram && (
+              <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="Træklatreskolen på Instagram" style={socialBtn}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.9"/>
+                  <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.9"/>
+                  <circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/>
+                </svg>
+              </a>
+            )}
+          </div>
         </div>
 
         <div>
@@ -218,6 +240,19 @@ const shopFooterLink = {
   fontSize: 14,
   lineHeight: 1.4,
   boxShadow: "0 4px 14px rgba(216,120,47,0.35)",
+};
+
+const socialBtn = {
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  width: 40,
+  height: 40,
+  borderRadius: 10,
+  background: "rgba(255,255,255,0.12)",
+  border: "1px solid rgba(255,255,255,0.25)",
+  color: "white",
+  textDecoration: "none",
 };
 
 const adminFooterBtn = {

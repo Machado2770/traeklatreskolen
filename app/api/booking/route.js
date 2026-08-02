@@ -4,6 +4,7 @@ export const runtime = "nodejs";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
+import { renseKilde, manglerSourceKolonne } from "@/lib/participantSource";
 import { calendarItems as siteDataItems } from "@/lib/siteData";
 import { bookingConfirmationHtml, bookingNotificationHtml } from "@/lib/emailTemplates";
 import { Resend } from "resend";
@@ -119,17 +120,28 @@ export async function POST(request) {
     }
 
     // ── Indsæt deltager ─────────────────────────────────
-    const { data, error } = await supabase
-      .from("participants")
-      .insert([{
-        name:           body.name,
-        email:          body.email,
-        phone:          body.phone ?? "",
-        course:         courseString,
-        notes:          body.notes ?? "",
-        payment_status: "pending",
-      }])
-      .select();
+    // Kilden kommer fra browseren og vaskes derfor før den gemmes.
+    const source = renseKilde(body.source);
+
+    const row = {
+      name:           body.name,
+      email:          body.email,
+      phone:          body.phone ?? "",
+      course:         courseString,
+      notes:          body.notes ?? "",
+      payment_status: "pending",
+      ...(source ? { source } : {}),
+    };
+
+    let { data, error } = await supabase.from("participants").insert([row]).select();
+
+    // Findes source-kolonnen ikke i databasen endnu, må tilmeldingen ikke gå
+    // tabt — gem den uden kilde og lad det fremgå af loggen.
+    if (error && source && manglerSourceKolonne(error)) {
+      console.warn("[booking] participants.source mangler — kør scripts/add_participant_source.sql. Gemmer uden kilde.");
+      const { source: _dropped, ...rowUdenKilde } = row;
+      ({ data, error } = await supabase.from("participants").insert([rowUdenKilde]).select());
+    }
 
     if (error) {
       return Response.json(

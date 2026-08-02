@@ -20,6 +20,7 @@ export default function StatistikPage() {
   const maxMonthly     = Math.max(...(data.monthly     || []).map(m => m.count), 1);
   const maxTopCourse   = Math.max(...(data.topCourses  || []).map(c => c.count), 1);
   const maxPayment     = Math.max(...(data.paymentTrend|| []).map(m => m.paid + m.pending), 1);
+  const maxSource      = Math.max(...(data.sources     || []).map(s => s.count), 1);
 
   return (
     <>
@@ -83,6 +84,32 @@ export default function StatistikPage() {
 
       {/* ── 2-KOLONNE SEKTION ── */}
       <div style={twoCol}>
+
+        {/* Tilmeldinger pr. kilde */}
+        <section style={card}>
+          <h2 style={h2}>Tilmeldinger pr. kilde</h2>
+          <p style={cardSub}>Hvor kom de fra, da de fandt kurset? (ekskl. annullerede)</p>
+          {(data.sources || []).length === 0
+            ? <p style={{ color: "#aaa", fontSize: 14 }}>Ingen data endnu.</p>
+            : data.sources.map((s, i) => (
+              <div key={i} style={{ marginBottom: 10 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                  <span style={{ fontSize: 13, color: "#1f3a2b", fontWeight: 600 }}>{sourceLabel(s.name)}</span>
+                  <span style={{ fontSize: 13, color: "#4b6355", fontWeight: 700 }}>{s.count}</span>
+                </div>
+                <div style={{ height: 8, background: "#eef3ef", borderRadius: 4, overflow: "hidden" }}>
+                  <div style={{
+                    height: "100%",
+                    width: `${(s.count / maxSource) * 100}%`,
+                    background: sourceColor(s.name),
+                    borderRadius: 4,
+                    transition: "width 0.3s",
+                  }} />
+                </div>
+              </div>
+            ))
+          }
+        </section>
 
         {/* Mest populære kurser */}
         <section style={card}>
@@ -152,15 +179,30 @@ export default function StatistikPage() {
 
       </div>
 
-      {/* ── ANNONCERING PLACEHOLDER ── */}
-      <section style={{ ...card, borderLeft: "4px solid #cfd8d3", opacity: 0.7 }}>
-        <h2 style={{ ...h2, color: "#7a9183" }}>Annoncering — kommer snart</h2>
-        <p style={{ fontSize: 14, color: "#7a9183", margin: 0 }}>
-          Her vil du få overblik over Facebook- og Instagram-annoncer koblet til trafikkilder og bookingkonverteringer.
-        </p>
-      </section>
     </>
   );
+}
+
+// Kilderne gemmes i rå form ("facebook", "direkte") — her får de et pænt navn.
+function sourceLabel(name) {
+  const labels = {
+    facebook:  "Facebook",
+    instagram: "Instagram",
+    google:    "Google-søgning",
+    bing:      "Bing-søgning",
+    linkedin:  "LinkedIn",
+    youtube:   "YouTube",
+    direkte:   "Direkte / indtastet adresse",
+    ukendt:    "Ukendt (før sporing)",
+  };
+  return labels[name] || name;
+}
+
+function sourceColor(name) {
+  if (name === "facebook")  return "#1877f2";
+  if (name === "instagram") return "#c13584";
+  if (name === "ukendt")    return "#b8c5bd";
+  return "#2a7a48";
 }
 
 function KpiCard({ label, value, color, bg }) {

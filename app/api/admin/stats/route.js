@@ -4,6 +4,7 @@ export const runtime = "nodejs";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
+import { manglerSourceKolonne } from "@/lib/participantSource";
 
 export async function GET() {
   const session = await getServerSession(authOptions);
@@ -11,10 +12,21 @@ export async function GET() {
 
   const supabase = getSupabaseAdmin();
 
-  const { data: participants, error } = await supabase
+  const BASE_COLS = "id, course, payment_status, created_at";
+
+  let { data: participants, error } = await supabase
     .from("participants")
-    .select("id, course, payment_status, created_at")
+    .select(`${BASE_COLS}, source`)
     .order("created_at", { ascending: true });
+
+  // source-kolonnen findes først når scripts/add_participant_source.sql er
+  // kørt — indtil da hentes statistikken uden den i stedet for at fejle.
+  if (error && manglerSourceKolonne(error)) {
+    ({ data: participants, error } = await supabase
+      .from("participants")
+      .select(BASE_COLS)
+      .order("created_at", { ascending: true }));
+  }
 
   if (error) return Response.json({ error: error.message }, { status: 500 });
 
@@ -58,6 +70,18 @@ export async function GET() {
     .slice(0, 8)
     .map(([name, count]) => ({ name, count }));
 
+  // Tilmeldinger pr. kilde — hvor kom de fra? (annullerede tæller ikke med)
+  const sourceCount = {};
+  participants.forEach(p => {
+    if (p.payment_status === "cancelled") return;
+    const key = p.source || "ukendt";
+    sourceCount[key] = (sourceCount[key] || 0) + 1;
+  });
+  const sources = Object.entries(sourceCount)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8)
+    .map(([name, count]) => ({ name, count }));
+
   // Seneste 6 måneder — betalt vs. afventer
   const last6 = {};
   for (let i = 5; i >= 0; i--) {
@@ -78,5 +102,5 @@ export async function GET() {
   });
   const paymentTrend = Object.values(last6);
 
-  return Response.json({ total, thisMonth, paid, pending, cancelled, monthly, topCourses, paymentTrend });
+  return Response.json({ total, thisMonth, paid, pending, cancelled, monthly, topCourses, sources, paymentTrend });
 }
