@@ -149,11 +149,11 @@ export default async function TraeklatreuddannelsePage() {
             </p>
             <div style={stepList}>
               {steps.map((s) => (
-                <a key={s.slug} href={`/kurser/${s.slug}`} style={stepCard} className="feature-card">
-                  <div style={stepBadge}>{s.step}</div>
-                  <div style={stepBody}>
-                    <div style={stepHead}>
-                      <h3 style={stepTitle}>{s.title}</h3>
+                <a key={s.slug} href={`/kurser/${s.slug}`} className="feature-card edu-step">
+                  <div className="edu-step-badge">{s.step}</div>
+                  <div className="edu-step-body">
+                    <div className="edu-step-head">
+                      <h3 className="edu-step-title">{s.title}</h3>
                       {s.price && <span style={stepPrice}>{s.price}</span>}
                     </div>
                     <p style={stepText}>{s.text}</p>
@@ -271,19 +271,8 @@ const bodyText = { fontSize: 18, lineHeight: 1.8, color: "#4b6355", margin: 0 };
 
 /* Uddannelsesstige */
 const stepList = { display: "flex", flexDirection: "column", gap: 18 };
-const stepCard = {
-  display: "flex", gap: 20, alignItems: "stretch", textDecoration: "none",
-  background: "white", borderRadius: 18, overflow: "hidden",
-  boxShadow: "0 8px 28px rgba(0,0,0,0.07)", border: "1px solid #ece6de",
-};
-const stepBadge = {
-  flexShrink: 0, width: 92, background: "#1f3a2b", color: "white",
-  display: "flex", alignItems: "center", justifyContent: "center",
-  fontWeight: 800, fontSize: 15, letterSpacing: 0.3, textAlign: "center", padding: "0 8px",
-};
-const stepBody = { padding: "22px 24px", flex: 1 };
-const stepHead = { display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 12, flexWrap: "wrap" };
-const stepTitle = { fontSize: 20, fontWeight: 700, color: "#1f3a2b", margin: 0 };
+/* Kort-, badge-, body-, head- og titel-styles ligger i globals.css
+   (.edu-step*) — de skal kunne omlægges i mobil-media-query'en. */
 const stepPrice = { fontSize: 14, fontWeight: 800, color: "#a3521d", background: "#f5e5d8", padding: "4px 10px", borderRadius: 999, whiteSpace: "nowrap" };
 const stepText = { fontSize: 15, lineHeight: 1.7, color: "#4b6355", margin: "10px 0 12px" };
 const stepLink = { fontSize: 14, fontWeight: 700, color: "#d8782f" };

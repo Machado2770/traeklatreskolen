@@ -173,20 +173,19 @@
 
 /* ── FÆLLES HERO BANNER ──────────────────── */
 .page-hero {
-  height: 300px;
+  min-height: 300px;
   background-size: cover;
   background-position: center;
   display: flex;
-  align-items: center;
+  align-items: stretch;
 }
 
 .page-hero-overlay {
   width: 100%;
-  height: 100%;
   background: linear-gradient(rgba(18,33,26,0.65), rgba(18,33,26,0.60));
   display: flex;
   align-items: center;
-  padding: 0 24px;
+  padding: 24px;
 }
 
 .page-hero-inner {
@@ -452,6 +451,50 @@ html {
 .cal-desktop-table { display: block; }
 .cal-mobile-cards  { display: none; }
 
+/* ── UDDANNELSESSTIGEN (træklatreuddannelse) ── */
+.edu-step {
+  display: flex;
+  gap: 20px;
+  align-items: stretch;
+  text-decoration: none;
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.07);
+  border: 1px solid #ece6de;
+}
+.edu-step-badge {
+  flex-shrink: 0;
+  width: 92px;
+  background: #1f3a2b;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.3px;
+  text-align: center;
+  padding: 0 8px;
+}
+.edu-step-body { flex: 1; min-width: 0; padding: 22px 24px; }
+.edu-step-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.edu-step-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f3a2b;
+  margin: 0;
+  /* Lange ord som "Træklatreinstruktør-uddannelse" må gerne brydes */
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+
 /* ── MOBIL (≤768px) ──────────────────────── */
 @media (max-width: 768px) {
 
@@ -463,10 +506,10 @@ html {
   .home-hero .page-hero-title { font-size: clamp(34px, 9vw, 52px); }
   .home-hero .page-hero-text  { font-size: 16px; }
 
-  /* Fælles hero-bannere — kompakt på mobil */
-  .page-hero     { height: 200px; }
+  /* Fælles hero-bannere — kompakt på mobil, men vokser med indholdet */
+  .page-hero     { min-height: 200px; }
   .home-hero     { height: clamp(380px, 65vh, 520px); }
-  .page-hero-title { font-size: clamp(24px, 7vw, 36px); }
+  .page-hero-title { font-size: clamp(24px, 7vw, 36px); overflow-wrap: anywhere; }
   .page-hero-text  { font-size: 14px; max-width: 100%; }
 
   /* Page sections */
@@ -483,6 +526,18 @@ html {
   }
   .safety-content { padding: 52px 24px; order: 2; }
   .safety-image { min-height: 280px; order: 1; }
+
+  /* Uddannelsesstigen — badge over teksten, så titlerne får fuld bredde */
+  .edu-step { flex-direction: column; gap: 0; }
+  .edu-step-badge {
+    width: 100%;
+    justify-content: flex-start;
+    text-align: left;
+    font-size: 14px;
+    padding: 10px 18px;
+  }
+  .edu-step-body { padding: 18px 18px 20px; }
+  .edu-step-title { font-size: 18px; }
 
   /* Kursuskalender → skift til kortvisning på mobil */
   .cal-desktop-table { display: none; }
