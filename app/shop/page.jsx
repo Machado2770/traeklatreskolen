@@ -9,6 +9,8 @@ export const metadata = {
   description:
     "Køb kvalificeret klatre- og friluftsudstyr hos Træklatreskolen — reb, seler, hjelme, karabiner, klatrepakker og lavvuer. Vi bruger selv udstyret i undervisningen, og vejledning følger med.",
   alternates: { canonical: "/shop" },
+  // Ingen indeksering sålænge shoppen er under opbygning
+  robots: { index: false, follow: false },
   openGraph: {
     title: "Shop — klatre- og friluftsudstyr | Træklatreskolen",
     description:

@@ -18,55 +18,40 @@ export const metadata = {
   },
 };
 
-// Hvert punkt linker til den relevante kategori i shoppen (anker-id matcher catId).
+// Punkterne linkede tidligere til kategorierne i shoppen — links er taget ud,
+// indtil shoppen er færdig.
 const gear = [
   {
     title: "Reb",
     text: "Hjertet i systemet. Til træklatring bruges som regel et dynamisk eller semistatisk klatrereb i passende længde. Rebet bærer dig — så her går du ikke på kompromis med kvaliteten.",
-    href: "/shop#reb-liner",
-    link: "Se reb & liner",
   },
   {
     title: "Sele",
     text: "En siddesele med god polstring gør lange seancer i træet behagelige. Til børn og særlige opgaver bruges fuldkropsseler.",
-    href: "/shop#seler",
-    link: "Se seler",
   },
   {
     title: "Hjelm",
     text: "Beskytter mod nedfaldende grene og stød. En klatrehjelm er obligatorisk udstyr — også for dem på jorden.",
-    href: "/shop#hjelme",
-    link: "Se hjelme",
   },
   {
     title: "Karabiner",
     text: "Forbinder systemets dele. HMS-karabiner med skruelås er arbejdshesten; til kritiske punkter bruges automatiske twistlock-karabiner.",
-    href: "/shop#karabiner",
-    link: "Se karabiner",
   },
   {
     title: "Rebbremse & sikring",
     text: "Bruges til at klatre op, holde positionen og komme kontrolleret ned igen. ATC, GriGri og ottetaller er typiske valg.",
-    href: "/shop#rebbremser-sikring",
-    link: "Se rebbremser & sikring",
   },
   {
     title: "Slynger & prusik",
     text: "Båndslynger og prusiksnore bruges til ankre, fastgøring og friktionsknob i systemet — små dele med stor betydning.",
-    href: "/shop#slynger-stiger",
-    link: "Se slynger & stiger",
   },
   {
     title: "Kasteline & kastepose",
     text: "Sådan får du rebet op over den rigtige gren. En kastepose i enden af en tynd kasteline kastes op og trækker klatrerebet med.",
-    href: "/shop#kasteposer-kasteliner",
-    link: "Se kasteposer & kasteliner",
   },
   {
     title: "Taske & opbevaring",
     text: "En rebpose eller vandtæt pakpose holder grejet rent, tørt og klar. Den forlænger samtidig udstyrets levetid.",
-    href: "/shop#tasker-opbevaring",
-    link: "Se tasker & opbevaring",
   },
 ];
 
@@ -131,9 +116,8 @@ export default function UdstyrGuide() {
           <div style={s.narrow}>
             <p style={s.intro}>
               Det rette udstyr gør træklatring både trygt og behageligt. Her gennemgår vi det
-              grundlæggende grej, hvad hver del bruges til, og hvad du med fordel begynder med. Alt
-              udstyret kan ses i{" "}
-              <a href="/shop" style={s.inlineLink}>shoppen</a> — det samme, vi selv underviser med.
+              grundlæggende grej, hvad hver del bruges til, og hvad du med fordel begynder med. Det
+              er det samme udstyr, vi selv underviser med.
             </p>
           </div>
         </section>
@@ -148,9 +132,6 @@ export default function UdstyrGuide() {
                   <div style={s.cardAccent} />
                   <h3 style={s.cardTitle}>{g.title}</h3>
                   <p style={s.cardText}>{g.text}</p>
-                  <p style={{ margin: "12px 0 0" }}>
-                    <a href={g.href} style={s.cardLink}>{g.link} →</a>
-                  </p>
                 </div>
               ))}
             </div>
@@ -166,9 +147,6 @@ export default function UdstyrGuide() {
               Delene er afstemt efter hinanden, så du ikke selv skal regne ud, hvad der passer sammen.
               Vores klatrepakker er sammensat af de samme instruktører, der underviser på kurserne — og
               en introduktion til udstyret følger med købet.
-            </p>
-            <p style={s.bodySpace}>
-              <a href="/shop#klatrepakker" style={s.inlineLink}>Se klatrepakkerne i shoppen →</a>
             </p>
           </div>
         </section>
@@ -202,13 +180,13 @@ export default function UdstyrGuide() {
 
         <section style={s.ctaSection}>
           <div style={s.ctaInner}>
-            <h2 style={s.ctaTitle}>Find dit udstyr</h2>
+            <h2 style={s.ctaTitle}>I tvivl om udstyret?</h2>
             <p style={s.ctaText}>
-              Se det grej, vi selv klatrer med — kvalificeret vejledning følger med købet.
+              Vi hjælper gerne med at vælge det rigtige grej — skriv til os, eller kom med på et kursus.
             </p>
             <div style={s.ctaButtons}>
-              <a href="/shop" style={s.ctaPrimary}>Gå til shoppen</a>
-              <a href="/kontakt" style={s.ctaSecondary}>Få vejledning</a>
+              <a href="/kontakt" style={s.ctaPrimary}>Få vejledning</a>
+              <a href="/kurser" style={s.ctaSecondary}>Se kurser</a>
             </div>
           </div>
         </section>

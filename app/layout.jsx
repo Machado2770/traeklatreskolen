@@ -117,15 +117,7 @@ function Footer() {
           <p style={footerText}>
             Kurser, faglighed og eventyrlige oplevelser i træernes verden.
           </p>
-          <a href="/shop" style={shopFooterLink}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
-              <path d="M3 4h2l2.4 12.2a1.5 1.5 0 001.5 1.2h8.6a1.5 1.5 0 001.5-1.2L21 8H6"
-                stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-              <circle cx="10" cy="20.5" r="1.4" fill="currentColor"/>
-              <circle cx="18" cy="20.5" r="1.4" fill="currentColor"/>
-            </svg>
-            Shop — køb det grej vi selv bruger
-          </a>
+          {/* Shop-link er flyttet til admin-menuen indtil shoppen er færdig */}
           <div style={{ marginTop: 16 }}>
             <a href="/admin" style={adminFooterBtn}>
               <svg width="15" height="15" viewBox="0 0 20 20" fill="none" style={{ flexShrink: 0 }}>
@@ -224,22 +216,6 @@ const footerText = {
   margin: "0 0 8px",
   opacity: 0.88,
   lineHeight: 1.6,
-};
-
-const shopFooterLink = {
-  display: "inline-flex",
-  alignItems: "center",
-  gap: 8,
-  marginTop: 10,
-  padding: "10px 18px",
-  background: "#d8782f",
-  color: "white",
-  borderRadius: 10,
-  textDecoration: "none",
-  fontWeight: 700,
-  fontSize: 14,
-  lineHeight: 1.4,
-  boxShadow: "0 4px 14px rgba(216,120,47,0.35)",
 };
 
 const socialBtn = {

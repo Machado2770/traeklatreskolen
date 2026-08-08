@@ -175,8 +175,7 @@ export default function KomIGangGuide() {
             <p style={s.bodySpace}>
               Vi har skrevet en grundig{" "}
               <a href="/guides/klatreudstyr-til-traeklatring" style={s.inlineLink}>guide til klatreudstyr</a>,
-              og du kan se det udstyr, vi selv underviser med, i{" "}
-              <a href="/shop" style={s.inlineLink}>shoppen</a>.
+              hvor du kan se det udstyr, vi selv underviser med.
             </p>
           </div>
         </section>

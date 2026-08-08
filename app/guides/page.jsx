@@ -73,11 +73,11 @@ export default function GuidesIndex() {
           <div style={s.ctaInner}>
             <h2 style={s.ctaTitle}>Klar til at komme op i trækronerne?</h2>
             <p style={s.ctaText}>
-              Meld dig til et kursus, book en oplevelse, eller find dit udstyr i shoppen.
+              Meld dig til et kursus, eller book en oplevelse for dig og dine.
             </p>
             <div style={s.ctaButtons}>
               <a href="/kurser" style={s.ctaPrimary}>Se kurser</a>
-              <a href="/shop" style={s.ctaSecondary}>Gå til shoppen</a>
+              <a href="/oplevelser" style={s.ctaSecondary}>Se oplevelser</a>
             </div>
           </div>
         </section>

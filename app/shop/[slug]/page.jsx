@@ -13,6 +13,8 @@ export async function generateMetadata({ params }) {
     title: p.name,
     description: p.short || p.description?.slice(0, 150),
     alternates: { canonical: `/shop/${p.slug}` },
+    // Ingen indeksering sålænge shoppen er under opbygning
+    robots: { index: false, follow: false },
     openGraph: {
       title: `${p.name} | Træklatreskolen`,
       description: p.short || "",
