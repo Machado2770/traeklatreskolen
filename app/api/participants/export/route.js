@@ -36,8 +36,11 @@ function hex(color) {
 }
 
 export async function GET(request) {
+  // Masse-eksport af deltager-PII er forbeholdt super-admin (dataminimering).
   const session = await getServerSession(authOptions);
   if (!session) return Response.json({ error: "Unauthorized" }, { status: 401 });
+  if (session.user?.role !== "super")
+    return Response.json({ error: "Kun super-admin kan eksportere deltagerlister." }, { status: 403 });
 
   const { searchParams } = new URL(request.url);
   const courseFilter  = searchParams.get("course")         || "";

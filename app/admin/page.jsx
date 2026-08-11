@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useSession } from "next-auth/react";
 
 function statusColors(s) {
   if (s === "paid")      return { background: "#dff3e5", color: "#165c2c" };
@@ -20,6 +21,8 @@ function parseDanishDate(str) {
 }
 
 export default function TilmeldingPage() {
+  const { data: session } = useSession();
+  const isSuper = session?.user?.role === "super";
   const [items, setItems]       = useState([]);
   const [loading, setLoading]   = useState(true);
   const [viewMode, setViewMode] = useState("kurser");
@@ -71,6 +74,14 @@ export default function TilmeldingPage() {
     setItems(prev => prev.filter(i => i.id !== id));
   }
 
+  async function anonymizeParticipant(id, name) {
+    if (!confirm(`Anonymisér ${name}? Navn, email, telefon og bemærkninger fjernes, men tilmeldingen bevares i statistik og regnskab.`)) return;
+    await fetch(`/api/participants/${id}/anonymize`, { method: "POST" });
+    setItems(prev => prev.map(i => i.id === id
+      ? { ...i, name: "Anonymiseret", email: "", phone: "", notes: "" }
+      : i));
+  }
+
   const exportUrl = (() => {
     const p = new URLSearchParams();
     if (filters.course)         p.set("course",         filters.course);
@@ -101,9 +112,11 @@ export default function TilmeldingPage() {
           <option value="cancelled">Annulleret</option>
         </select>
         <button onClick={load} style={btn("#3d7a57")}>Opdater</button>
-        <a href={exportUrl} style={btn("#d8782f")}>
-          {filters.course ? "Eksportér filtreret" : "Eksportér alle"}
-        </a>
+        {isSuper && (
+          <a href={exportUrl} style={btn("#d8782f")}>
+            {filters.course ? "Eksportér filtreret" : "Eksportér alle"}
+          </a>
+        )}
       </div>
 
       {!loading && items.length > 0 && (
@@ -141,23 +154,25 @@ export default function TilmeldingPage() {
                 {g.cancelled>0 && <span style={chip("#fbe4e2","#9a2f27")}>✕ {g.cancelled} annulleret</span>}
               </div>
             </div>
-            <a href={`/api/participants/export?course=${encodeURIComponent(g.key)}`} style={btn("#d8782f")}>Eksportér</a>
+            {isSuper && (
+              <a href={`/api/participants/export?course=${encodeURIComponent(g.key)}`} style={btn("#d8782f")}>Eksportér</a>
+            )}
           </div>
-          <ParticipantTable rows={g.ps} onStatus={updateStatus} onDelete={deleteParticipant} showCourse={false} />
+          <ParticipantTable rows={g.ps} onStatus={updateStatus} onDelete={deleteParticipant} onAnonymize={anonymizeParticipant} showCourse={false} />
         </div>
       ))}
 
       {/* Liste */}
       {!loading && viewMode==="liste" && items.length>0 && (
         <div style={card}>
-          <ParticipantTable rows={items} onStatus={updateStatus} onDelete={deleteParticipant} showCourse={true} />
+          <ParticipantTable rows={items} onStatus={updateStatus} onDelete={deleteParticipant} onAnonymize={anonymizeParticipant} showCourse={true} />
         </div>
       )}
     </>
   );
 }
 
-function ParticipantTable({ rows, onStatus, onDelete, showCourse }) {
+function ParticipantTable({ rows, onStatus, onDelete, onAnonymize, showCourse }) {
   return (
     <div style={{ overflowX:"auto" }}>
       <table style={{ width:"100%", borderCollapse:"collapse" }}>
@@ -185,6 +200,7 @@ function ParticipantTable({ rows, onStatus, onDelete, showCourse }) {
                   <button onClick={()=>onStatus(r.id,"paid")}      style={mini("#2a7a48")}>Betalt</button>
                   <button onClick={()=>onStatus(r.id,"pending")}   style={mini("#d8782f")}>Afventer</button>
                   <button onClick={()=>onStatus(r.id,"cancelled")} style={mini("#8f2d20")}>Annullér</button>
+                  <button onClick={()=>onAnonymize(r.id, r.name)}  style={mini("#6b5b3a")}>Anonymisér</button>
                   <button onClick={()=>onDelete(r.id, r.name)}     style={mini("#4a4a4a")}>Slet</button>
                 </div>
               </td>
