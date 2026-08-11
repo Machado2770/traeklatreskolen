@@ -4,9 +4,10 @@ export const runtime = "nodejs";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
-import { renseKilde, manglerSourceKolonne } from "@/lib/participantSource";
+import { renseKilde, manglerKolonne } from "@/lib/participantSource";
 import { calendarItems as siteDataItems } from "@/lib/siteData";
 import { bookingConfirmationHtml, bookingNotificationHtml } from "@/lib/emailTemplates";
+import { rateLimit, clientIp, tooManyRequests } from "@/lib/rateLimit";
 import { Resend } from "resend";
 
 // Find kalenderitem der matcher kursusstrengen — tjekker Supabase først, derefter siteData
@@ -69,6 +70,11 @@ async function sendEmails({ name, email, phone, course, date, place, notes }) {
 
 export async function POST(request) {
   try {
+    // ── Rate limiting: bremser bot-spam mod tilmeldingsformularen ─
+    const ip = clientIp(request);
+    const rl = rateLimit(`booking:${ip}`, { limit: 5, windowMs: 60_000 });
+    if (!rl.ok) return tooManyRequests(rl.retryAfter);
+
     const body         = await request.json();
     const supabase     = getSupabaseAdmin();
     const courseString = body.course ?? "";
@@ -122,25 +128,31 @@ export async function POST(request) {
     // ── Indsæt deltager ─────────────────────────────────
     // Kilden kommer fra browseren og vaskes derfor før den gemmes.
     const source = renseKilde(body.source);
+    // Samtykke: gem tidspunktet, så det kan dokumenteres pr. tilmelding.
+    const consentAt = body.consent === true ? new Date().toISOString() : null;
 
-    const row = {
+    const baseRow = {
       name:           body.name,
       email:          body.email,
       phone:          body.phone ?? "",
       course:         courseString,
       notes:          body.notes ?? "",
       payment_status: "pending",
+    };
+
+    const row = {
+      ...baseRow,
       ...(source ? { source } : {}),
+      ...(consentAt ? { consent_at: consentAt } : {}),
     };
 
     let { data, error } = await supabase.from("participants").insert([row]).select();
 
-    // Findes source-kolonnen ikke i databasen endnu, må tilmeldingen ikke gå
-    // tabt — gem den uden kilde og lad det fremgå af loggen.
-    if (error && source && manglerSourceKolonne(error)) {
-      console.warn("[booking] participants.source mangler — kør scripts/add_participant_source.sql. Gemmer uden kilde.");
-      const { source: _dropped, ...rowUdenKilde } = row;
-      ({ data, error } = await supabase.from("participants").insert([rowUdenKilde]).select());
+    // Findes en valgfri kolonne (source/consent_at) ikke i databasen endnu, må
+    // tilmeldingen ikke gå tabt — gem uden de valgfri felter og log det.
+    if (error && (source || consentAt) && manglerKolonne(error)) {
+      console.warn("[booking] valgfri kolonne mangler — kør scripts/add_participant_source.sql + scripts/add_participant_consent.sql. Gemmer uden.");
+      ({ data, error } = await supabase.from("participants").insert([baseRow]).select());
     }
 
     if (error) {
@@ -191,7 +203,11 @@ export async function GET(request) {
 
     const VALID_STATUSES = ["paid", "pending", "cancelled"];
 
-    if (q)              query = query.or(`name.ilike.%${q}%,email.ilike.%${q}%`);
+    // Fjern tegn der har betydning i PostgREST's filter-grammatik (, ( ) . *
+    // % \) så en søgestreng ikke kan injicere ekstra filterlogik i .or().
+    const safeQ = q ? q.replace(/[,()*%\\.]/g, "").trim().slice(0, 80) : "";
+
+    if (safeQ)          query = query.or(`name.ilike.%${safeQ}%,email.ilike.%${safeQ}%`);
     if (course)         query = query.ilike("course", `%${course}%`);
     if (payment_status && VALID_STATUSES.includes(payment_status))
                         query = query.eq("payment_status", payment_status);

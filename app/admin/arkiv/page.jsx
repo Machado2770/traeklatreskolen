@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 const MONTHS = { januar:0,februar:1,marts:2,april:3,maj:4,juni:5,juli:6,august:7,september:8,oktober:9,november:10,december:11 };
 function parseDanishDate(str) {
@@ -16,6 +17,8 @@ function statusColors(s) {
 }
 
 export default function ArkivPage() {
+  const { data: session } = useSession();
+  const isSuper = session?.user?.role === "super";
   const [groups, setGroups] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -63,9 +66,11 @@ export default function ArkivPage() {
                 <span style={chip("#e9f0ff","#2a3f8a")}>{g.ps.length} deltager{g.ps.length!==1?"e":""}</span>
               </div>
             </div>
-            <a href={`/api/participants/export?course=${encodeURIComponent(g.key)}`} style={btn("#d8782f")}>
-              Eksportér deltagerliste
-            </a>
+            {isSuper && (
+              <a href={`/api/participants/export?course=${encodeURIComponent(g.key)}`} style={btn("#d8782f")}>
+                Eksportér deltagerliste
+              </a>
+            )}
           </div>
           <div style={{ overflowX:"auto" }}>
             <table style={{ width:"100%", borderCollapse:"collapse" }}>

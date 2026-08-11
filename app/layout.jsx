@@ -147,6 +147,7 @@ function Footer() {
           <div style={footerList} className="footer-links">
             <a href="/kontakt" style={footerLink}>Kontakt os</a>
             <a href="mailto:info@traeklatreskolen.dk" style={footerLink}>info@traeklatreskolen.dk</a>
+            <a href="/privatlivspolitik" style={footerLink}>Privatlivspolitik</a>
           </div>
 
           <div style={{ ...footerHeading, marginTop: 22 }}>Følg os</div>

@@ -9,12 +9,17 @@ import {
   invoiceOrderNotificationHtml,
   invoiceOrderConfirmationHtml,
 } from "@/lib/emailTemplates";
+import { rateLimit, clientIp, tooManyRequests } from "@/lib/rateLimit";
 
 // Fakturaordre fra shoppen: validér kunde + kurv, beregn autoritative priser
 // server-side (stol aldrig på klientens priser) og send ordren pr. mail —
 // notifikation til Træklatreskolen og bekræftelse til kunden.
 // Selve fakturaen (evt. elektronisk via EAN) sendes manuelt bagefter.
 export async function POST(req) {
+  // ── Rate limiting: bremser spam af fakturaordrer (udløser mails) ─
+  const rl = rateLimit(`invoice:${clientIp(req)}`, { limit: 5, windowMs: 60_000 });
+  if (!rl.ok) return tooManyRequests(rl.retryAfter);
+
   let body;
   try {
     body = await req.json();

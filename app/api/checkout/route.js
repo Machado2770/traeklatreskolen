@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { getProductsBySlugs } from "@/lib/getProducts";
 import { SHIPPING } from "@/lib/shopData";
+import { rateLimit, clientIp, tooManyRequests } from "@/lib/rateLimit";
 
 export const dynamic = "force-dynamic";
 
@@ -14,6 +15,10 @@ function baseUrl(req) {
 }
 
 export async function POST(req) {
+  // ── Rate limiting: bremser spam af Stripe-checkout-sessioner ─
+  const rl = rateLimit(`checkout:${clientIp(req)}`, { limit: 10, windowMs: 60_000 });
+  if (!rl.ok) return tooManyRequests(rl.retryAfter);
+
   const secret = process.env.STRIPE_SECRET_KEY;
   if (!secret) {
     return NextResponse.json(

@@ -11,13 +11,12 @@
     "@supabase/supabase-js": "^2.45.1",
     "bcryptjs": "^3.0.3",
     "exceljs": "^4.4.0",
-    "next": "14.2.5",
+    "next": "^14.2.35",
     "next-auth": "^4.24.7",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "resend": "^6.10.0",
-    "stripe": "^22.2.0",
-    "xlsx": "^0.18.5"
+    "stripe": "^22.2.0"
   },
   "devDependencies": {
     "satori": "^0.26.0",

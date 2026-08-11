@@ -24,6 +24,7 @@ export default function BookingPage() {
     notes: "",
     website: "", // honeypot — must stay empty
   });
+  const [consent, setConsent] = useState(false);
   const [courseLabel, setCourseLabel] = useState(null); // vises når man kommer fra kalender
   const [status, setStatus] = useState("");
 
@@ -53,7 +54,8 @@ export default function BookingPage() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       // source: hvor besøget kom fra (facebook, instagram, google, direkte …)
-      body: JSON.stringify({ ...form, source: getSource() }),
+      // consent: brugeren har accepteret privatlivspolitikken (gemmes med tidsstempel)
+      body: JSON.stringify({ ...form, source: getSource(), consent }),
     });
 
     if (!response.ok) {
@@ -65,7 +67,8 @@ export default function BookingPage() {
 
     setStatus("Tilmelding modtaget! Vi sender bekræftelse pr. email.");
     window.gtag?.("event", "generate_lead", { event_category: "booking", event_label: form.course });
-    setForm({ name: "", email: "", phone: "", course: courseOptions[0], notes: "" });
+    setForm({ name: "", email: "", phone: "", course: courseOptions[0], notes: "", website: "" });
+    setConsent(false);
     setCourseLabel(null);
   }
 
@@ -168,6 +171,10 @@ export default function BookingPage() {
               placeholder="Særlige ønsker, spørgsmål eller andet..."
               style={inputStyle}
             />
+            <p style={notesHint}>
+              Skriv venligst ikke følsomme helbredsoplysninger her. Har du særlige
+              behov, så <a href="/kontakt" style={{ color: "#a3521d", fontWeight: 600 }}>kontakt os direkte</a> — så håndterer vi det fortroligt.
+            </p>
           </Field>
 
           {/* Honeypot — skjult for mennesker, bots udfylder det */}
@@ -183,7 +190,27 @@ export default function BookingPage() {
             </label>
           </div>
 
-          <button type="submit" style={btnStyle}>Send tilmelding</button>
+          {/* Samtykke — påkrævet før tilmelding kan sendes */}
+          <label style={consentRow}>
+            <input
+              type="checkbox"
+              checked={consent}
+              onChange={(e) => setConsent(e.target.checked)}
+              required
+              style={{ marginTop: 3, width: 18, height: 18, flexShrink: 0, accentColor: "#d8782f" }}
+            />
+            <span style={{ fontSize: 14, color: "#33463a", lineHeight: 1.6 }}>
+              Jeg accepterer, at Træklatreskolen behandler mine oplysninger for at
+              gennemføre tilmeldingen, jf.{" "}
+              <a href="/privatlivspolitik" target="_blank" style={{ color: "#a3521d", fontWeight: 600 }}>
+                privatlivspolitikken
+              </a>.
+            </span>
+          </label>
+
+          <button type="submit" style={{ ...btnStyle, opacity: consent ? 1 : 0.55, cursor: consent ? "pointer" : "not-allowed" }} disabled={!consent}>
+            Send tilmelding
+          </button>
 
           {status && (
             <div style={{
@@ -326,6 +353,20 @@ const lockedField = {
   color: "#1f3a2b",
   fontWeight: 600,
   fontSize: 15,
+};
+
+const notesHint = {
+  margin: "8px 0 0",
+  fontSize: 13,
+  color: "#7a8a80",
+  lineHeight: 1.6,
+};
+
+const consentRow = {
+  display: "flex",
+  alignItems: "flex-start",
+  gap: 10,
+  marginTop: 2,
 };
 
 const btnStyle = {
