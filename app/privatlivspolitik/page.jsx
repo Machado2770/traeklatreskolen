@@ -29,16 +29,12 @@ export default function PrivatlivspolitikPage() {
             personoplysninger. Du er altid velkommen til at kontakte os:
           </p>
           <ul style={ul}>
+            <li>Træklatreskolen</li>
+            <li>Ingstrup Allé 17, 2770 Kastrup</li>
+            <li>CVR: {CVR}</li>
             <li>E-mail: <a style={a} href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></li>
             <li>Telefon: {CONTACT_PHONE_DISPLAY}</li>
-            <li>CVR: {CVR}</li>
           </ul>
-          <p style={noteP}>
-            <em>
-              (Indsæt venligst juridisk virksomhedsnavn og fysisk adresse her,
-              så oplysningspligten er fuldt opfyldt.)
-            </em>
-          </p>
         </Section>
 
         <Section title="2. Hvilke oplysninger vi indsamler">
