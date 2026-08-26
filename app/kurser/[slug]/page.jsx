@@ -63,6 +63,14 @@ export default async function KursusDetaljePage({ params }) {
                 {bullet}
               </li>
             ))}
+            <li style={listItem}>
+              Efter tilmelding modtager du mere information om kurset på mail — har du
+              spørgsmål inden da, er du altid velkommen til at skrive til{" "}
+              <a href="mailto:info@traeklatreskolen.dk" style={mailLink}>
+                info@traeklatreskolen.dk
+              </a>
+              .
+            </li>
           </ul>
 
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 24 }}>
@@ -158,6 +166,12 @@ const list = {
 
 const listItem = {
   marginBottom: 8,
+};
+
+const mailLink = {
+  color: "#a3521d",
+  fontWeight: 700,
+  textDecoration: "underline",
 };
 
 const ctaPrimary = {

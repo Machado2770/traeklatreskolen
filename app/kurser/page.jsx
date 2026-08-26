@@ -121,6 +121,17 @@ export default async function KurserPage() {
                       <span style={spotCheck}>✓</span>{p}
                     </li>
                   ))}
+                  <li style={spotItem}>
+                    <span style={spotCheck}>✓</span>
+                    <span>
+                      Efter tilmelding modtager du mere information om kurset på mail — har
+                      du spørgsmål inden da, er du altid velkommen til at skrive til{" "}
+                      <a href="mailto:info@traeklatreskolen.dk" style={mailLink}>
+                        info@traeklatreskolen.dk
+                      </a>
+                      .
+                    </span>
+                  </li>
                 </ul>
 
                 <div style={spotActions}>
@@ -162,6 +173,20 @@ function CourseCard({ item }) {
 
         <h3 style={cardTitle}>{item.title}</h3>
         <p style={cardText}>{item.short}</p>
+
+        <ul style={cardNoteList}>
+          <li style={cardNoteItem}>
+            <span style={cardNoteCheck}>✓</span>
+            <span>
+              Efter tilmelding modtager du mere information om kurset på mail — har du
+              spørgsmål inden da, så skriv til{" "}
+              <a href="mailto:info@traeklatreskolen.dk" style={mailLink}>
+                info@traeklatreskolen.dk
+              </a>
+              .
+            </span>
+          </li>
+        </ul>
 
         <div style={actionRow}>
           <a href={`/kurser/${item.slug}`} style={secondaryButton}>
@@ -264,11 +289,33 @@ const cardTitle = {
 };
 
 const cardText = {
-  margin: "0 0 auto",
+  margin: "0 0 14px",
   color: "#4b6355",
   lineHeight: 1.7,
   fontSize: 15,
-  paddingBottom: 20,
+};
+
+const cardNoteList = {
+  listStyle: "none",
+  padding: 0,
+  margin: "0 0 auto",
+  paddingBottom: 18,
+};
+
+const cardNoteItem = {
+  display: "flex",
+  alignItems: "flex-start",
+  gap: 8,
+  fontSize: 14,
+  lineHeight: 1.6,
+  color: "#4b6355",
+};
+
+const cardNoteCheck = {
+  flexShrink: 0,
+  color: "#d8782f",
+  fontWeight: 800,
+  fontSize: 15,
 };
 
 const actionRow = {
@@ -381,6 +428,12 @@ const spotItem = {
   fontWeight: 500,
   breakInside: "avoid",
   marginBottom: 8,
+};
+
+const mailLink = {
+  color: "#a3521d",
+  fontWeight: 700,
+  textDecoration: "underline",
 };
 
 const spotCheck = {
