@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 
 // Vis-én-gang-nøgle. Bump tallet hvis nyheden ændres og skal vises igen.
+// Beholdes på v1: den nye udgave er mindre påtrængende, så folk der
+// allerede har lukket den, skal ikke se den igen.
 const STORAGE_KEY = "news-popup-organisationer-v1";
 
 export default function NewsPopup() {
@@ -33,39 +35,23 @@ export default function NewsPopup() {
 
   return (
     <div style={wrap}>
-      <div style={modal} role="dialog" aria-label="Nyhed">
+      <div style={card} role="complementary" aria-label="Nyhed til organisationer">
         <button onClick={close} style={closeBtn} aria-label="Luk">×</button>
 
-        <p style={badge}>Nyt</p>
-        <h2 style={title}>Træklatring for organisationer</h2>
+        {/* Målgruppen står først og tydeligt: nyheden må ikke give indtryk
+            af, at Træklatreskolen kun er for organisationer. */}
+        <p style={eyebrow}>Til skoler og organisationer</p>
+        <p style={title}>Pilotforløb: uddan jeres egne medarbejdere</p>
 
-        <div style={body}>
-          <p style={text}>Vil I uddanne egne medarbejdere i sikker træklatring?</p>
-          <p style={text}>
-            Træklatreskolen åbner nu for nogle få pilotforløb for skoler,
-            institutioner, naturskoler og friluftsorganisationer, der vil opbygge
-            egne kompetencer i træklatring.
-          </p>
-          <p style={text}>
-            Forløbet er for op til 6 medarbejdere og samler instruktøruddannelse,
-            faste sikkerhedsprocedurer (SOP – nedskrevne arbejdsgange for sikker
-            gennemførelse), risikovurdering og praktisk træning i én samlet pakke
-            — så I selv kan gennemføre træklatring trygt og fagligt stærkt
-            bagefter.
-          </p>
-        </div>
-
-        <a href="/organisationer" style={cta} onClick={close}>Læs mere</a>
+        <a href="/organisationer" style={link} onClick={close}>
+          Læs mere →
+        </a>
       </div>
 
       <style>{`
         @keyframes newspop-in {
-          from { opacity: 0; transform: translateY(16px) scale(0.97); }
-          to   { opacity: 1; transform: translateY(0)    scale(1); }
-        }
-        @keyframes newspop-fade {
-          from { opacity: 0; }
-          to   { opacity: 1; }
+          from { opacity: 0; transform: translateY(10px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
       `}</style>
     </div>
@@ -76,85 +62,63 @@ export default function NewsPopup() {
 // af siden forbliver klikbar (pointerEvents: none på wrapperen).
 const wrap = {
   position: "fixed",
-  right: 20,
-  bottom: 20,
+  right: 18,
+  bottom: 18,
   zIndex: 100,
-  width: 340,
-  maxWidth: "calc(100vw - 32px)",
+  width: 290,
+  maxWidth: "calc(100vw - 28px)",
   pointerEvents: "none",
-  animation: "newspop-fade 0.25s ease",
 };
 
-const modal = {
+const card = {
   position: "relative",
   pointerEvents: "auto",
   background: "white",
-  borderRadius: 18,
+  borderRadius: 12,
   width: "100%",
-  padding: "22px 22px 22px",
-  boxShadow: "0 16px 48px rgba(0,0,0,0.26)",
-  animation: "newspop-in 0.32s cubic-bezier(0.16,1,0.3,1)",
-  borderTop: "5px solid #d8782f",
+  padding: "13px 34px 13px 15px",
+  border: "1px solid #dfe7e1",
+  borderLeft: "3px solid #d8782f",
+  boxShadow: "0 6px 20px rgba(31,58,43,0.13)",
+  animation: "newspop-in 0.3s ease",
 };
 
 const closeBtn = {
   position: "absolute",
-  top: 12,
-  right: 14,
-  width: 36,
-  height: 36,
+  top: 6,
+  right: 6,
+  width: 24,
+  height: 24,
   border: "none",
-  background: "#f0f4f1",
-  borderRadius: 10,
-  fontSize: 24,
+  background: "transparent",
+  borderRadius: 6,
+  fontSize: 18,
   lineHeight: 1,
-  color: "#4b6355",
+  color: "#8fa397",
   cursor: "pointer",
 };
 
-const badge = {
-  display: "inline-block",
-  background: "#d8782f",
-  color: "white",
-  fontSize: 12,
+const eyebrow = {
+  margin: "0 0 3px",
+  fontSize: 10.5,
   fontWeight: 800,
-  letterSpacing: 1.5,
+  letterSpacing: 1.1,
   textTransform: "uppercase",
-  padding: "5px 12px",
-  borderRadius: 999,
-  margin: "0 0 14px",
+  color: "#a3521d",
 };
 
 const title = {
-  fontSize: 20,
-  fontWeight: 800,
-  color: "#1f3a2b",
-  margin: "0 0 12px",
-  lineHeight: 1.25,
-};
-
-const body = {
-  display: "flex",
-  flexDirection: "column",
-  gap: 9,
-  marginBottom: 18,
-};
-
-const text = {
-  margin: 0,
+  margin: "0 0 6px",
   fontSize: 14,
-  lineHeight: 1.6,
-  color: "#4b6355",
+  fontWeight: 700,
+  lineHeight: 1.4,
+  color: "#1f3a2b",
 };
 
-const cta = {
+const link = {
   display: "inline-block",
-  background: "#d8782f",
-  color: "white",
+  color: "#3d7a57",
   textDecoration: "none",
-  padding: "11px 22px",
-  borderRadius: 10,
   fontWeight: 700,
-  fontSize: 14.5,
-  boxShadow: "0 4px 16px rgba(216,120,47,0.35)",
+  fontSize: 13,
 };
