@@ -222,8 +222,8 @@ export default function NaturdannelsePage() {
           </p>
           <p style={closingPunch}>
             Vi klatrer ikke bare i træer.<br />
-            Vi bruger trækronerne som et sted, hvor mennesker kan lære, mærke og
-            udvikle sig.
+            Trækronerne som et sted, hvor mennesker kan lære, mærke og udvikle sig
+            i samspil med naturen
           </p>
         </div>
       </section>
