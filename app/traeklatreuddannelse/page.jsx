@@ -70,7 +70,7 @@ export default async function TraeklatreuddannelsePage() {
     },
     {
       q: "Hvor lang tid tager træklatreuddannelsen?",
-      a: "Begynderkurset varer 2 dage, instruktøruddannelsen 5 dage og eksamen 1 dag. Tager du det hele samlet i instruktørforløbet, er det fordelt over ca. 8 mødedage hen over efteråret.",
+      a: "Begynderkurset varer 2 dage, instruktøruddannelsen 5 dage og eksamen 1 dag. Tager du det hele samlet i instruktørforløbet, er det fordelt over ca. 8 mødedage.",
     },
     {
       q: "Kræver træklatreuddannelsen forudsætninger?",
@@ -184,7 +184,7 @@ export default async function TraeklatreuddannelsePage() {
                 )}
                 <p style={forlobText}>
                   Begynderkursus, instruktøruddannelse og eksamen i ét sammenhængende forløb —
-                  fordelt over ca. 8 mødedage hen over efteråret, til en samlet pris der er
+                  fordelt over ca. 8 mødedage, til en samlet pris der er
                   billigere end modulerne hver for sig. Du slutter med det færdige instruktørbevis.
                   Gyldigt førstehjælpsbevis er en forudsætning for eksamen.
                 </p>
