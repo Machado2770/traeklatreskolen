@@ -8,7 +8,7 @@ export const metadata = {
   openGraph: {
     title: "Sikker Træklatring for Organisationer | Træklatreskolen",
     description:
-      "Samlet organisationsforløb i træklatring — instruktøruddannelse, sikkerhedsprocedurer, risikovurdering og praktisk træning. Pilotforløb for op til 6 medarbejdere i 2026.",
+      "Samlet organisationsforløb i træklatring — instruktøruddannelse, sikkerhedsprocedurer, risikovurdering og praktisk træning. Pilotforløb for op til 6 medarbejdere i 2026 og 2027.",
     url: "/organisationer",
     images: [{ url: "/og/forside.png", width: 1200, height: 630, alt: "Sikker træklatring for organisationer — Træklatreskolen" }],
   },
@@ -136,10 +136,10 @@ export default function OrganisationerPage() {
 
         {/* SEKTION 4 — Pilotforløb */}
         <section style={pilotBand}>
-          <p style={pilotEyebrow}>Pilotforløb 2026</p>
+          <p style={pilotEyebrow}>Pilotforløb 2026 og 2027</p>
           <h2 style={{ ...h2, color: "white", marginTop: 0 }}>Et begrænset antal pladser</h2>
           <p style={{ ...lead, color: "rgba(255,255,255,0.85)" }}>
-            I 2026 åbner Træklatreskolen for et begrænset antal pilotforløb for
+            I 2026 og 2027 åbner Træklatreskolen for et begrænset antal pilotforløb for
             organisationer.
           </p>
           <div style={pilotFacts}>
@@ -149,11 +149,11 @@ export default function OrganisationerPage() {
             </div>
             <div style={pilotFact}>
               <div style={pilotFactLabel}>Pilotpris</div>
-              <div style={pilotFactValue}>Fra 44.000 kr. ekskl. moms</div>
+              <div style={pilotFactValue}>45.000 kr. ekskl. moms</div>
             </div>
             <div style={pilotFact}>
               <div style={pilotFactLabel}>Normalpris</div>
-              <div style={pilotFactValue}>Fra 48.000 kr. ekskl. moms</div>
+              <div style={pilotFactValue}>51.000 kr. ekskl. moms</div>
             </div>
           </div>
           <p style={{ ...lead, color: "rgba(255,255,255,0.7)", fontSize: 15, marginTop: 22 }}>

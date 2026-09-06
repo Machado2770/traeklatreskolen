@@ -195,7 +195,7 @@ export default async function TraeklatreuddannelsePage() {
               <div style={forlobCard}>
                 <span style={forlobKicker}>Længerevarende forløb</span>
                 <h3 style={forlobTitle}>Årskursus</h3>
-                <span style={forlobPrice}>16.995 kr.</span>
+                <span style={forlobPrice}>18.695 kr.</span>
                 <p style={forlobText}>
                   Vores mest ambitiøse forløb: et helt år i trækronerne med 100 lektioner i teknik,
                   sikkerhed, undervisning og friluftsliv. Undervejs uddannes og eksamineres du som

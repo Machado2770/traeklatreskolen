@@ -95,7 +95,7 @@ export default async function KurserPage() {
 
               <div style={spotBody}>
                 <div style={tagRow}>
-                  <span style={priceTag}>16.995 kr.</span>
+                  <span style={priceTag}>18.695 kr.</span>
                   <span style={levelTag}>Avanceret niveau</span>
                   <span style={durationTag}>⏱ 100 lektioner</span>
                   <span style={seasonTag}>📅 Start i foråret</span>
