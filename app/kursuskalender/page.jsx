@@ -287,7 +287,7 @@ function TimelineRow({ item, countMap }) {
           {item.price && <span style={priceChip}>{item.price}</span>}
           {max !== null && (
             <span style={spotsStyle(isFull, available, max)}>
-              {isFull ? "Fuldt booket" : `${available}/${max} pladser`}
+              {spotsLabel(isFull, available, max)}
             </span>
           )}
         </div>
@@ -301,6 +301,15 @@ function TimelineRow({ item, countMap }) {
       </div>
     </div>
   );
+}
+
+// Teksten skal kunne læses uden regnestykke: "10/10 pladser" blev forstået som
+// 10 booket ud af 10. Derfor skrives det ledige antal ud i klartekst.
+function spotsLabel(isFull, available, max) {
+  if (isFull) return "Fuldt booket";
+  if (available === 1) return "Sidste ledige plads";
+  if (available <= Math.ceil(max * 0.25)) return `Kun ${available} ledige pladser tilbage`;
+  return `${available} ledige pladser`;
 }
 
 function spotsStyle(isFull, available, max) {
