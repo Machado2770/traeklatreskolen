@@ -5,6 +5,24 @@ import { getExperienceBySlug } from "@/lib/getCourses";
 import { notFound } from "next/navigation";
 import { graph, experienceLd, breadcrumbLd, jsonLdScript } from "@/lib/jsonld";
 
+// Et punkt der slutter på ":" bruges som overskrift for de efterfølgende punkter.
+// Så kan praktisk info (udstyr, pakkeliste) grupperes direkte fra CMS-feltet
+// "Bullet-punkter" uden nye kolonner i databasen.
+function groupBullets(bullets) {
+  const groups = [];
+  for (const raw of bullets || []) {
+    const text = String(raw).trim();
+    if (!text) continue;
+    if (text.endsWith(":")) {
+      groups.push({ heading: text.slice(0, -1), items: [] });
+      continue;
+    }
+    if (!groups.length) groups.push({ heading: null, items: [] });
+    groups[groups.length - 1].items.push(text);
+  }
+  return groups;
+}
+
 export async function generateMetadata({ params }) {
   const item = await getExperienceBySlug(params.slug);
   if (!item) return {};
@@ -49,11 +67,16 @@ export default async function OplevelseDetaljePage({ params }) {
           <h1 style={h1}>{item.title}</h1>
           <p style={lead}>{item.description}</p>
 
-          <ul style={list}>
-            {(item.bullets || []).map((bullet) => (
-              <li key={bullet} style={listItem}>{bullet}</li>
-            ))}
-          </ul>
+          {groupBullets(item.bullets).map((group, i) => (
+            <section key={group.heading ?? `punkter-${i}`}>
+              {group.heading && <h2 style={groupTitle}>{group.heading}</h2>}
+              <ul style={group.heading ? listUnderTitle : list}>
+                {group.items.map((bullet) => (
+                  <li key={bullet} style={listItem}>{bullet}</li>
+                ))}
+              </ul>
+            </section>
+          ))}
 
           {/* Booking-info specifik for oplevelsen */}
           {(item.slug === "traetur" || item.slug === "overnatning" || item.slug === "vild") && (
@@ -145,6 +168,20 @@ const list = {
   paddingLeft: 18,
   color: "#2d4034",
   lineHeight: 1.8,
+};
+
+const listUnderTitle = {
+  marginTop: 0,
+  paddingLeft: 18,
+  color: "#2d4034",
+  lineHeight: 1.8,
+};
+
+const groupTitle = {
+  color: "#1f3a2b",
+  fontSize: 18,
+  fontWeight: 700,
+  margin: "28px 0 8px",
 };
 
 const listItem = {
