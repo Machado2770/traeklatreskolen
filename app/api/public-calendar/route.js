@@ -1,10 +1,14 @@
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
+import { unstable_noStore as noStore } from "next/cache";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { isUpcoming } from "@/lib/calendarDates";
 
 export async function GET() {
+  // Uden noStore() cacher Next Supabase-kaldet, og en prisrettelse i admin
+  // slår aldrig igennem her — samme mønster som getCourses og kursuskalenderen.
+  noStore();
   const supabase = getSupabaseAdmin();
 
   const [calRes, cmsRes] = await Promise.all([
