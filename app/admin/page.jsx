@@ -75,10 +75,10 @@ export default function TilmeldingPage() {
   }
 
   async function anonymizeParticipant(id, name) {
-    if (!confirm(`Anonymisér ${name}? Navn, email, telefon og bemærkninger fjernes, men tilmeldingen bevares i statistik og regnskab.`)) return;
+    if (!confirm(`Anonymisér ${name}? Navn, email, telefon, adresse og bemærkninger fjernes, men tilmeldingen bevares i statistik og regnskab.`)) return;
     await fetch(`/api/participants/${id}/anonymize`, { method: "POST" });
     setItems(prev => prev.map(i => i.id === id
-      ? { ...i, name: "Anonymiseret", email: "", phone: "", notes: "" }
+      ? { ...i, name: "Anonymiseret", email: "", phone: "", address: "", notes: "" }
       : i));
   }
 
@@ -178,7 +178,7 @@ function ParticipantTable({ rows, onStatus, onDelete, onAnonymize, showCourse })
       <table style={{ width:"100%", borderCollapse:"collapse" }}>
         <thead>
           <tr style={{ background:"#eef3ef" }}>
-            {["Navn","Email","Telefon", ...(showCourse?["Kursus"]:[]), "Status","Bemærkninger","Oprettet","Handling"].map(l=>(
+            {["Navn","Email","Telefon","Adresse", ...(showCourse?["Kursus"]:[]), "Status","Bemærkninger","Oprettet","Handling"].map(l=>(
               <th key={l} style={th}>{l}</th>
             ))}
           </tr>
@@ -189,6 +189,7 @@ function ParticipantTable({ rows, onStatus, onDelete, onAnonymize, showCourse })
               <td style={td}>{r.name}</td>
               <td style={td}>{r.email}</td>
               <td style={td}>{r.phone||"—"}</td>
+              <td style={td}>{r.address||"—"}</td>
               {showCourse && <td style={td}>{r.course}</td>}
               <td style={td}><span style={{...pill,...statusColors(r.payment_status)}}>{statusLabel(r.payment_status)}</span></td>
               <td style={{...td, maxWidth:220, color: r.notes ? "#1f3a2b" : "#aaa", fontStyle: r.notes ? "normal" : "italic"}}>

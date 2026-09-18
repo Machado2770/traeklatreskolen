@@ -43,6 +43,7 @@ export default function PrivatlivspolitikPage() {
             <li>Navn</li>
             <li>E-mailadresse</li>
             <li>Telefonnummer</li>
+            <li>Adresse</li>
             <li>Hvilket kursus/oplevelse du tilmelder dig (samt dato og sted)</li>
             <li>Eventuelle bemærkninger, du selv skriver i formularen</li>
             <li>En marketing-kilde (fx “facebook” eller “google”) — uden cookies eller ID’er, der kan følge dig på tværs af hjemmesider</li>

@@ -77,6 +77,7 @@ export async function GET(request) {
     { key: "name",    width: 26 },
     { key: "email",   width: 30 },
     { key: "phone",   width: 16 },
+    { key: "address", width: 32 },
     { key: "course",  width: 34 },
     { key: "meta",    width: 28 },
     { key: "status",  width: 16 },
@@ -94,16 +95,16 @@ export async function GET(request) {
     });
   }
 
-  // Titel i kolonne D–I, række 1
-  ws.mergeCells("D1:I1");
+  // Titel i kolonne D–J, række 1
+  ws.mergeCells("D1:J1");
   const titleCell = ws.getCell("D1");
   const titleSuffix = courseFilter ? ` · ${courseFilter.split(" – ")[0]}` : "";
   titleCell.value = `Træklatreskolen – Deltagerliste${titleSuffix}`;
   titleCell.font = { bold: true, size: 16, color: hex(C.darkGreen) };
   titleCell.alignment = { vertical: "middle" };
 
-  // Dato i kolonne D–I, række 2
-  ws.mergeCells("D2:I2");
+  // Dato i kolonne D–J, række 2
+  ws.mergeCells("D2:J2");
   const dateCell = ws.getCell("D2");
   dateCell.value = `Eksporteret: ${new Date().toLocaleDateString("da-DK", { day: "2-digit", month: "long", year: "numeric" })}`;
   dateCell.font = { size: 11, color: hex(C.midGreen) };
@@ -115,7 +116,7 @@ export async function GET(request) {
   ws.getRow(3).height = 10;
 
   // ── Kolonneoverskrifter (række 4) ────────────────────
-  const HEADERS = ["Nr.", "Oprettet", "Navn", "Email", "Telefon",
+  const HEADERS = ["Nr.", "Oprettet", "Navn", "Email", "Telefon", "Adresse",
                    "Kursus / oplevelse", "Dato · Sted", "Status", "Bemærkninger"];
 
   const headerRow = ws.getRow(4);
@@ -159,6 +160,7 @@ export async function GET(request) {
       row.name ?? "",
       row.email ?? "",
       row.phone || "—",
+      row.address || "—",
       courseName,
       courseMeta || "—",
       STATUS_LABEL[row.payment_status] ?? row.payment_status ?? "—",
@@ -169,13 +171,13 @@ export async function GET(request) {
       const cell = exRow.getCell(colIdx + 1);
       cell.value = val;
       cell.font = { size: 10, color: hex(C.darkGreen) };
-      cell.alignment = { vertical: "middle", wrapText: colIdx === 8 };
+      cell.alignment = { vertical: "middle", wrapText: colIdx === 9 };
       cell.border = {
         bottom: { style: "thin", color: hex(C.border) },
       };
 
       // Statuskolonne farves individuelt
-      if (colIdx === 7) {
+      if (colIdx === 8) {
         const st = row.payment_status;
         const bg   = st === "paid" ? C.paid      : st === "cancelled" ? C.cancelled  : C.pending;
         const fg   = st === "paid" ? C.paidText  : st === "cancelled" ? C.cancelledText : C.pendingText;
@@ -195,7 +197,7 @@ export async function GET(request) {
   const totalPending = data.filter((r) => r.payment_status === "pending").length;
 
   const summaryCell = summaryRow.getCell(1);
-  ws.mergeCells(5 + data.length + 1, 1, 5 + data.length + 1, 9);
+  ws.mergeCells(5 + data.length + 1, 1, 5 + data.length + 1, 10);
   summaryCell.value =
     `Total: ${data.length} deltagere  ·  Betalt: ${totalPaid}  ·  Afventer: ${totalPending}`;
   summaryCell.font = { bold: true, size: 10, color: hex(C.white) };

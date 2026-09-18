@@ -43,7 +43,7 @@ function parseCourseString(courseString) {
 }
 
 // Send bekræftelsesmail til deltager + notifikation til Træklatreskolen
-async function sendEmails({ name, email, phone, course, date, place, notes }) {
+async function sendEmails({ name, email, phone, address, course, date, place, notes }) {
   if (!process.env.RESEND_API_KEY) return;
   try {
     const resend = new Resend(process.env.RESEND_API_KEY);
@@ -60,7 +60,7 @@ async function sendEmails({ name, email, phone, course, date, place, notes }) {
         from:    "Træklatreskolen <info@traeklatreskolen.dk>",
         to:      "info@traeklatreskolen.dk",
         subject: `Ny tilmelding: ${name} – ${course}`,
-        html:    bookingNotificationHtml({ name, email, phone, course, date, place, notes }),
+        html:    bookingNotificationHtml({ name, email, phone, address, course, date, place, notes }),
       }),
     ]);
   } catch (err) {
@@ -86,10 +86,11 @@ export async function POST(request) {
     if (!body.name?.trim())  return Response.json({ error: "Navn er påkrævet."    }, { status: 400 });
     if (!body.email?.trim()) return Response.json({ error: "Email er påkrævet."   }, { status: 400 });
     if (!body.phone?.trim()) return Response.json({ error: "Telefon er påkrævet." }, { status: 400 });
+    if (!body.address?.trim()) return Response.json({ error: "Adresse er påkrævet." }, { status: 400 });
 
     // ── CRLF-injection beskyttelse (email header injection) ─
     const hasCrlf = (s) => /[\r\n]/.test(s ?? "");
-    if (hasCrlf(body.name) || hasCrlf(body.email) || hasCrlf(body.phone) || hasCrlf(body.notes))
+    if (hasCrlf(body.name) || hasCrlf(body.email) || hasCrlf(body.phone) || hasCrlf(body.address) || hasCrlf(body.notes))
       return Response.json({ error: "Ugyldigt tegn i input." }, { status: 400 });
 
     // ── Email format validering ──────────────────────────
@@ -97,7 +98,7 @@ export async function POST(request) {
       return Response.json({ error: "Indtast venligst en gyldig e-mailadresse." }, { status: 400 });
 
     // ── Inputlængde-begrænsning ──────────────────────────
-    if (body.name.length > 120 || body.email.length > 200 || (body.notes ?? "").length > 1000)
+    if (body.name.length > 120 || body.email.length > 200 || body.address.length > 200 || (body.notes ?? "").length > 1000)
       return Response.json({ error: "Et eller flere felter er for lange." }, { status: 400 });
 
     // ── Tjek at telefon indeholder cifre ────────────────
@@ -135,6 +136,7 @@ export async function POST(request) {
       name:           body.name,
       email:          body.email,
       phone:          body.phone ?? "",
+      address:        body.address.trim(),
       course:         courseString,
       notes:          body.notes ?? "",
       payment_status: "pending",
@@ -148,11 +150,14 @@ export async function POST(request) {
 
     let { data, error } = await supabase.from("participants").insert([row]).select();
 
-    // Findes en valgfri kolonne (source/consent_at) ikke i databasen endnu, må
-    // tilmeldingen ikke gå tabt — gem uden de valgfri felter og log det.
-    if (error && (source || consentAt) && manglerKolonne(error)) {
-      console.warn("[booking] valgfri kolonne mangler — kør scripts/add_participant_source.sql + scripts/add_participant_consent.sql. Gemmer uden.");
-      ({ data, error } = await supabase.from("participants").insert([baseRow]).select());
+    // Findes en nyere kolonne (address/source/consent_at) ikke i databasen endnu,
+    // må tilmeldingen ikke gå tabt — gem uden dem og log det. Adressen lægges i
+    // bemærkningerne, så den stadig kan ses i admin.
+    if (error && manglerKolonne(error)) {
+      console.warn("[booking] kolonne mangler — kør scripts/add_participant_address.sql, add_participant_source.sql og add_participant_consent.sql. Gemmer uden.");
+      const { address, ...rest } = baseRow;
+      const fallbackRow = { ...rest, notes: [`Adresse: ${address}`, rest.notes].filter(Boolean).join("\n") };
+      ({ data, error } = await supabase.from("participants").insert([fallbackRow]).select());
     }
 
     if (error) {
@@ -168,6 +173,7 @@ export async function POST(request) {
       name:   body.name,
       email:  body.email,
       phone:  body.phone ?? "",
+      address: body.address.trim(),
       notes:  body.notes ?? "",
       course,
       date,

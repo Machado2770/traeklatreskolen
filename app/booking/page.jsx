@@ -20,6 +20,7 @@ export default function BookingPage() {
     name: "",
     email: "",
     phone: "",
+    address: "",
     course: courseOptions[0],
     notes: "",
     website: "", // honeypot — must stay empty
@@ -67,7 +68,7 @@ export default function BookingPage() {
 
     setStatus("Tilmelding modtaget! Vi sender bekræftelse pr. email.");
     window.gtag?.("event", "generate_lead", { event_category: "booking", event_label: form.course });
-    setForm({ name: "", email: "", phone: "", course: courseOptions[0], notes: "", website: "" });
+    setForm({ name: "", email: "", phone: "", address: "", course: courseOptions[0], notes: "", website: "" });
     setConsent(false);
     setCourseLabel(null);
   }
@@ -138,6 +139,18 @@ export default function BookingPage() {
               onChange={(e) => setForm({ ...form, phone: e.target.value })}
               required
               placeholder="+45 12 34 56 78"
+              style={inputStyle}
+            />
+          </Field>
+
+          <Field label="Adresse *">
+            <input
+              value={form.address}
+              onChange={(e) => setForm({ ...form, address: e.target.value })}
+              required
+              maxLength={200}
+              autoComplete="street-address"
+              placeholder="Vej og nr., postnr. og by"
               style={inputStyle}
             />
           </Field>

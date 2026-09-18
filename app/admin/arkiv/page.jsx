@@ -76,7 +76,7 @@ export default function ArkivPage() {
             <table style={{ width:"100%", borderCollapse:"collapse" }}>
               <thead>
                 <tr style={{ background:"#eef3ef" }}>
-                  {["Navn","Email","Telefon","Status","Oprettet"].map(l=>(
+                  {["Navn","Email","Telefon","Adresse","Status","Oprettet"].map(l=>(
                     <th key={l} style={th}>{l}</th>
                   ))}
                 </tr>
@@ -87,6 +87,7 @@ export default function ArkivPage() {
                     <td style={td}>{r.name}</td>
                     <td style={td}>{r.email}</td>
                     <td style={td}>{r.phone||"—"}</td>
+                    <td style={td}>{r.address||"—"}</td>
                     <td style={td}><span style={{...pill,...statusColors(r.payment_status)}}>
                       {r.payment_status==="paid"?"Betalt":r.payment_status==="cancelled"?"Annulleret":"Afventer"}
                     </span></td>
