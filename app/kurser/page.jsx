@@ -2,6 +2,7 @@ import Image from "next/image";
 import { getCourses } from "@/lib/getCourses";
 import VideoSection from "@/app/components/VideoSection";
 import ProofStrip from "@/app/components/ProofStrip";
+import SaveBadge from "@/app/components/SaveBadge";
 
 export const dynamic = "force-dynamic";
 
@@ -156,6 +157,7 @@ function CourseCard({ item }) {
       <div style={cardBody}>
         <div style={tagRow}>
           <span style={priceTag}>{item.price}</span>
+          <SaveBadge slug={item.slug} />
           {item.level && <span style={levelTag}>{item.level}</span>}
           {item.duration && <span style={durationTag}>⏱ {item.duration}</span>}
         </div>

@@ -9,6 +9,7 @@ import {
   jsonLdScript,
   parsePrice,
 } from "@/lib/jsonld";
+import SaveBadge from "@/app/components/SaveBadge";
 
 export const metadata = {
   title: "Træklatreskolen – Kurser og oplevelser i træklatring",
@@ -236,6 +237,7 @@ export default async function Home() {
                   <h3 style={cardTitle}>{item.title}</h3>
                   <p style={cardText}>{item.short}</p>
                   <p style={cardPrice}>{item.price}</p>
+                  <SaveBadge slug={item.slug} style={{ marginTop: 8 }} />
                 </div>
               </a>
             ))}

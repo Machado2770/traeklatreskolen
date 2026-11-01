@@ -7,6 +7,7 @@ import {
   organizationLd,
   jsonLdScript,
 } from "@/lib/jsonld";
+import SaveBadge from "@/app/components/SaveBadge";
 
 export const dynamic = "force-dynamic";
 
@@ -179,13 +180,16 @@ export default async function TraeklatreuddannelsePage() {
               <div style={forlobCard}>
                 <span style={forlobKicker}>Samlet forløb</span>
                 <h3 style={forlobTitle}>Samlet instruktørforløb</h3>
-                {priceOf("instruktorforlob") && (
-                  <span style={forlobPrice}>{priceOf("instruktorforlob")}</span>
-                )}
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", marginBottom: 16 }}>
+                  {priceOf("instruktorforlob") && (
+                    <span style={{ ...forlobPrice, marginBottom: 0 }}>{priceOf("instruktorforlob")}</span>
+                  )}
+                  <SaveBadge show />
+                </div>
                 <p style={forlobText}>
                   Begynderkursus, instruktøruddannelse og eksamen i ét sammenhængende forløb —
-                  fordelt over ca. 8 mødedage, til en samlet pris der er
-                  billigere end modulerne hver for sig. Du slutter med det færdige instruktørbevis.
+                  fordelt over ca. 8 mødedage, og du sparer 1.000 kr. i forhold
+                  til at tage modulerne hver for sig. Du slutter med det færdige instruktørbevis.
                   Gyldigt førstehjælpsbevis er en forudsætning for eksamen.
                 </p>
                 <a href="/kurser/instruktorforlob" style={forlobBtn}>Se det samlede forløb →</a>

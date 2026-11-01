@@ -4,6 +4,7 @@ import Image from "next/image";
 import { getCourseBySlug, getCourses } from "@/lib/getCourses";
 import { notFound } from "next/navigation";
 import { graph, courseLd, breadcrumbLd, jsonLdScript } from "@/lib/jsonld";
+import SaveBadge from "@/app/components/SaveBadge";
 
 export async function generateMetadata({ params }) {
   const item = await getCourseBySlug(params.slug);
@@ -46,6 +47,7 @@ export default async function KursusDetaljePage({ params }) {
         <div>
           <div style={tagRow}>
             <span style={priceTag}>{item.price}</span>
+            <SaveBadge slug={item.slug} />
             <span style={levelTag}>{item.level}</span>
             {item.duration && <span style={durationTag}>⏱ {item.duration}</span>}
           </div>
